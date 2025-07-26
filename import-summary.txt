@@ -1,0 +1,102 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* HundredEightV1.apk
+* bellsounds\
+* bellsounds\10463__batchku__gbell-9-1-pp.aif
+* bellsounds\124754__tec-studios__mono-bell-9-f-16sec.wav
+* bellsounds\131348__kaonaya__bell-at-daitokuji-temple-kyoto.wav
+* bellsounds\144495__wuola__medieval-bell-c4.aiff
+* bellsounds\15076__jovica__little-bell-c1.wav
+* bellsounds\160733__mornagar__bell-1.wav
+* bellsounds\171482__xicecoffeex__savannah-bell.wav
+* bellsounds\173000__keykrusher__bicycle-bell-2.wav
+* bellsounds\178646__zabuhailo__bronzebell1.wav
+* bellsounds\180278__rodny5__surreal-bell.wav
+* bellsounds\196107__aiwha__bell.wav
+* bellsounds\235267__godowan__bell-1.wav
+* bellsounds\239967__fratz__dong.wav
+* bellsounds\258179__kwahmah-02__bellping2.flac
+* bellsounds\264594__cdrk__reception-bell.flac
+* bellsounds\30161__herbertboland__belltinystrike.wav
+* bellsounds\32304__acclivity__shipsbell.wav
+* bellsounds\74920__juskiddink__bell6.wav
+* bellsounds\78402__ottophokus__service-bell-1.wav
+* bellsounds\78506__joedeshon__desk-bell-one-time-01.wav
+* bellsounds\79438__kyster__bell-08.wav
+* bellsounds\85803__sandyrb__tubular-bell-strike-009.wav
+* bellsounds\99625__tec-studios__bell003mono.wav
+* bellsounds\bell_bike.ogg
+* bellsounds\bell_desk.ogg
+* bellsounds\shot_in_357_magnum.ogg
+* bellsounds\templebell_soundbiiblecom_756181215.wav
+* bellsounds\tinkerbell1.ogg
+* ic_launcher-web.png
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:21.0.3
+android-support-v7-appcompat.jar => com.android.support:appcompat-v7:21.0.3
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+android-support-v7-appcompat => [com.android.support:appcompat-v7:21.0.3]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* lint.xml => app\lint.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

@@ -1,0 +1,280 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+MERGED from [com.google.android.gms:play-services-ads:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-17.0.0.aar\13526c6f46213e713cad502ffeea9df2\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:customtabs:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customtabs-28.0.0.aar\3a0f3485030eb93e704d35764ba62ae3\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-ads-identifier:16.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-identifier-16.0.0.aar\73e92f4d36cf42c78d8eef4b4409d8dd\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:17:1-42:12
+MERGED from [com.google.android.gms:play-services-gass:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-gass-17.0.0.aar\e09c23c11a218c3e8446acbfe7b89076\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:17:1-30:12
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-v4-28.0.0.aar\016f6cf8da591d17d19902cf01d8ad5f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\034ab6afaa744957ee8f0c5084de7c78\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\5f71c08ea2fe6c1294e31e5ce06f2a6a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\fb905d166be69c2edd34667b5ba025f3\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\deb6d7751d083f6341c18c8812e5f9c8\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8db5613052bdc6e2ddf2f3bf0a81748a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\60e616ff5e60c0c6e4caab79373dbc4d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\a6d832c706a58dfb81b6a543c27c5610\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\9fdd4879f1dee1b10b60d08606045593\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\a5ff3a0dfef3b30afd4be5d3a8bc30ef\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\bd46a498b419779f2fda4d691af417ed\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\018a0eb67e3abe04670e13da148bbbb2\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\b2a6ecf1131d51a6a960ec7df6a3a26c\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\998c92575865a60763c2646132169707\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\37c3c579ebac6af2b7fc1befcf990282\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-media-compat-28.0.0.aar\8ff59a631155cce0a6688b3f530a3b27\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\965cb3b1eb9ccdf74a4d7ad073912bfb\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\9908bcb4360399edf0b071160a272423\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\0470e3db1c1587d685bb48fc8f36b18a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\786fece852c2798c28524a0f86feac3b\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\d1571d2445872f1572be0c8dba876b11\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\59fad8d1f50250981f66c26a8891c170\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\ba38d9941dcdeef9749b22225aefb5bc\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\9c903b1b1fdb90cd43bea00b6c9dd43e\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\526c39510b30f713fea809633be568ce\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\69d6ac89d6bc44069169cdf68e49fe3e\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d3ef6c91ac4caef07b2c71eaa310583d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-ads-base:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-base-17.0.0.aar\cd748703cb334b22e225430722fcb516\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.3] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-base-16.0.3.aar\7ee8ea8babec138564c361ecffdb64a0\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+	package
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:3:5-39
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:1-43:12
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:5:5-67
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:23:5-67
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:6:5-81
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:7:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:25:5-68
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:7:22-65
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:8:5-75
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:8:22-72
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:9:22-77
+application
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:11:5-41:19
+MERGED from [com.google.android.gms:play-services-ads-identifier:16.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-identifier-16.0.0.aar\73e92f4d36cf42c78d8eef4b4409d8dd\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-ads-identifier:16.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-identifier-16.0.0.aar\73e92f4d36cf42c78d8eef4b4409d8dd\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:26:5-40:19
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:26:5-40:19
+MERGED from [com.google.android.gms:play-services-gass:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-gass-17.0.0.aar\e09c23c11a218c3e8446acbfe7b89076\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-gass:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-gass-17.0.0.aar\e09c23c11a218c3e8446acbfe7b89076\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:27:5-28:19
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:27:5-28:19
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\965cb3b1eb9ccdf74a4d7ad073912bfb\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\965cb3b1eb9ccdf74a4d7ad073912bfb\AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-ads-base:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-base-17.0.0.aar\cd748703cb334b22e225430722fcb516\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-ads-base:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-base-17.0.0.aar\cd748703cb334b22e225430722fcb516\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.3] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-base-16.0.3.aar\7ee8ea8babec138564c361ecffdb64a0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.3] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-base-16.0.3.aar\7ee8ea8babec138564c361ecffdb64a0\AndroidManifest.xml:7:5-20
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:22:18-91
+	android:label
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:14:9-41
+	android:icon
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:13:9-45
+	android:allowBackup
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:15:9-44
+meta-data#com.google.android.gms.ads.APPLICATION_ID
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:18:9-20:69
+	android:value
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:20:13-67
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:19:13-69
+activity#com.tkprof.HundredEightV.MainActivity
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:22:9-31:20
+	android:screenOrientation
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:25:13-49
+	android:label
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:24:13-45
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:23:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:26:13-30:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:27:17-69
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:27:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:29:17-77
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:29:27-74
+activity#com.tkprof.HundredEightV.SettingsActivityN
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:32:9-39:20
+	android:parentActivityName
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:35:13-55
+	android:label
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:34:13-62
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:33:13-46
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:36:13-38:73
+	android:value
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:38:17-70
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:37:17-63
+activity#com.tkprof.HundredEightV.Util
+ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:40:9-42
+	android:name
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml:40:19-39
+uses-sdk
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+MERGED from [com.google.android.gms:play-services-ads:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-17.0.0.aar\13526c6f46213e713cad502ffeea9df2\AndroidManifest.xml:21:5-23:62
+MERGED from [com.google.android.gms:play-services-ads:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-17.0.0.aar\13526c6f46213e713cad502ffeea9df2\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:customtabs:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customtabs-28.0.0.aar\3a0f3485030eb93e704d35764ba62ae3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customtabs:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customtabs-28.0.0.aar\3a0f3485030eb93e704d35764ba62ae3\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:16.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-identifier-16.0.0.aar\73e92f4d36cf42c78d8eef4b4409d8dd\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:16.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-identifier-16.0.0.aar\73e92f4d36cf42c78d8eef4b4409d8dd\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-gass:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-gass-17.0.0.aar\e09c23c11a218c3e8446acbfe7b89076\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-gass:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-gass-17.0.0.aar\e09c23c11a218c3e8446acbfe7b89076\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-v4-28.0.0.aar\016f6cf8da591d17d19902cf01d8ad5f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-v4-28.0.0.aar\016f6cf8da591d17d19902cf01d8ad5f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\034ab6afaa744957ee8f0c5084de7c78\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\034ab6afaa744957ee8f0c5084de7c78\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\5f71c08ea2fe6c1294e31e5ce06f2a6a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\5f71c08ea2fe6c1294e31e5ce06f2a6a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\fb905d166be69c2edd34667b5ba025f3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\fb905d166be69c2edd34667b5ba025f3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\deb6d7751d083f6341c18c8812e5f9c8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\deb6d7751d083f6341c18c8812e5f9c8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8db5613052bdc6e2ddf2f3bf0a81748a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8db5613052bdc6e2ddf2f3bf0a81748a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\60e616ff5e60c0c6e4caab79373dbc4d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\60e616ff5e60c0c6e4caab79373dbc4d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\a6d832c706a58dfb81b6a543c27c5610\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\a6d832c706a58dfb81b6a543c27c5610\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\9fdd4879f1dee1b10b60d08606045593\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\9fdd4879f1dee1b10b60d08606045593\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\a5ff3a0dfef3b30afd4be5d3a8bc30ef\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\a5ff3a0dfef3b30afd4be5d3a8bc30ef\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\bd46a498b419779f2fda4d691af417ed\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\bd46a498b419779f2fda4d691af417ed\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\018a0eb67e3abe04670e13da148bbbb2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\018a0eb67e3abe04670e13da148bbbb2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\b2a6ecf1131d51a6a960ec7df6a3a26c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\b2a6ecf1131d51a6a960ec7df6a3a26c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\998c92575865a60763c2646132169707\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\998c92575865a60763c2646132169707\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\37c3c579ebac6af2b7fc1befcf990282\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\37c3c579ebac6af2b7fc1befcf990282\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-media-compat-28.0.0.aar\8ff59a631155cce0a6688b3f530a3b27\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-media-compat-28.0.0.aar\8ff59a631155cce0a6688b3f530a3b27\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\9bcda0c9dbe4206d42f100d76b4cce61\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\965cb3b1eb9ccdf74a4d7ad073912bfb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\965cb3b1eb9ccdf74a4d7ad073912bfb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\9908bcb4360399edf0b071160a272423\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\9908bcb4360399edf0b071160a272423\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\0470e3db1c1587d685bb48fc8f36b18a\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\0470e3db1c1587d685bb48fc8f36b18a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\786fece852c2798c28524a0f86feac3b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\786fece852c2798c28524a0f86feac3b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\d1571d2445872f1572be0c8dba876b11\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\d1571d2445872f1572be0c8dba876b11\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\59fad8d1f50250981f66c26a8891c170\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\59fad8d1f50250981f66c26a8891c170\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\ba38d9941dcdeef9749b22225aefb5bc\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\ba38d9941dcdeef9749b22225aefb5bc\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\9c903b1b1fdb90cd43bea00b6c9dd43e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\9c903b1b1fdb90cd43bea00b6c9dd43e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\526c39510b30f713fea809633be568ce\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\526c39510b30f713fea809633be568ce\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\69d6ac89d6bc44069169cdf68e49fe3e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\69d6ac89d6bc44069169cdf68e49fe3e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d3ef6c91ac4caef07b2c71eaa310583d\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d3ef6c91ac4caef07b2c71eaa310583d\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-base:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-base-17.0.0.aar\cd748703cb334b22e225430722fcb516\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-ads-base:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-base-17.0.0.aar\cd748703cb334b22e225430722fcb516\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.3] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-base-16.0.3.aar\7ee8ea8babec138564c361ecffdb64a0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.3] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-base-16.0.3.aar\7ee8ea8babec138564c361ecffdb64a0\AndroidManifest.xml:5:5-44
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.google.android.gms:play-services-ads:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-17.0.0.aar\13526c6f46213e713cad502ffeea9df2\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\hongw\AndroidStudioProjects\HundredEightVows\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:16.0.2] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-measurement-sdk-api-16.0.2.aar\5669fd265be1b7eaa060000fbf7694d3\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:24:22-76
+activity#com.google.android.gms.ads.AdActivity
+ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:29:9-33:64
+	android:exported
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:32:13-37
+	android:configChanges
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:31:13-122
+	android:theme
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:33:13-61
+	android:name
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:30:13-65
+provider#com.google.android.gms.ads.MobileAdsInitProvider
+ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:35:9-39:39
+	android:authorities
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:37:13-73
+	android:exported
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:38:13-37
+	android:initOrder
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:39:13-36
+	android:name
+		ADDED from [com.google.android.gms:play-services-ads-lite:17.0.0] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-ads-lite-17.0.0.aar\61c01ab4f8d0c2d917de40694f727669\AndroidManifest.xml:36:13-76
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\hongw\.gradle\caches\transforms-1\files-1.1\play-services-basement-16.0.1.aar\aeb176ec08fccd305d8c7a98c730b9a9\AndroidManifest.xml:24:13-58
