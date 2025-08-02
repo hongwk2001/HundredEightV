@@ -97,7 +97,7 @@
         <activity
             android:name="com.tkprof.hundredeightv.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+            android:theme="@style/Theme.HundredEightV" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

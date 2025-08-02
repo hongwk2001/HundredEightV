@@ -4,7 +4,24 @@
             "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-2:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\f99f51048c4772caca4fab3864c3bc72\\transformed\\appcompat-1.7.1\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\fcbbe1f421e88197e909a5f1e59845d1\\transformed\\material-1.12.0\\res\\values-large-v4\\values-large-v4.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,169,285,407",
+                        "endColumns": "113,115,121,133",
+                        "endOffsets": "164,280,402,536"
+                    },
+                    "to": {
+                        "startLines": "11,12,13,14",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "752,866,982,1104",
+                        "endColumns": "113,115,121,133",
+                        "endOffsets": "861,977,1099,1233"
+                    }
+                },
+                {
+                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\cebfacf82df52df4b77b4075e4d89954\\transformed\\appcompat-1.7.1\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

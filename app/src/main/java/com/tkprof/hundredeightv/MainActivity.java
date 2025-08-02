@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -26,13 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GestureDetectorCompat;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import org.json.JSONArray;
@@ -121,6 +122,9 @@ GestureDetector.OnDoubleTapListener   {
         {setContentView(R.layout.activity_main_land);}
   //      Log.i("oncreate", "Begin2 ");
 
+		// In your MainActivity's onCreate method
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
 		tv_Cnt =   findViewById(R.id.count) ;
         t_cnta =   findViewById(R.id.count_a) ;

@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.material)
     // Add this line for core library desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs) // Or directly "com.android.tools:desugar_jdk_libs:2.0.4"
 
