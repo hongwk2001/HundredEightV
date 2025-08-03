@@ -383,7 +383,8 @@ GestureDetector.OnDoubleTapListener   {
 			//Release Tobble btn
             tb1.setChecked(false);
 
-			Intent intent = new Intent(this, SettingsActivityN.class);
+
+			Intent intent = new Intent(this, SettingsActivity.class);
 			intent.setType("text/plain");
 			intent.putExtra(Intent.EXTRA_TEXT, "News for you!");
 

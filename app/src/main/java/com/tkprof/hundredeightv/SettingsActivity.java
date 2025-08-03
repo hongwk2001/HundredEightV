@@ -16,7 +16,7 @@ import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
-public class SettingsActivityN extends AppCompatActivity { // Extend AppCompatActivity
+public class SettingsActivity extends AppCompatActivity {
 
     // Keep sBindPreferenceSummaryToValueListener and bindPreferenceSummaryToValue here
     // or move them into GeneralPreferenceFragment if only used there.
