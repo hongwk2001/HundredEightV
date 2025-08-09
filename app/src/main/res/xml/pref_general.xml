@@ -74,5 +74,5 @@
         android:title="@string/bgcolor" />
 
     <Preference
-        android:summary="version:12 Oct2018-3"/>
+        android:summary="version: Aug2025"/>
 </PreferenceScreen>
