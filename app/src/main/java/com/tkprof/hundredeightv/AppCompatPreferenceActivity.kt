@@ -16,21 +16,16 @@ import androidx.appcompat.app.AppCompatDelegate
  */
 abstract class AppCompatPreferenceActivity : PreferenceActivity() {
 
-    private val appCompatDelegate: AppCompatDelegate by lazy {
-        AppCompatDelegate.create(this, null)
-    }
+    private lateinit var appCompatDelegate: AppCompatDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Warning: As in the original Java code, super.onCreate() is called here,
-        // and then appCompatDelegate.onCreate() will also effectively call super.onCreate()
-        // on this Activity again. This means PreferenceActivity.onCreate() is called twice.
-        super.onCreate(savedInstanceState)
-
+        appCompatDelegate = AppCompatDelegate.create(this, null) // Or your AppCompatCallback
         appCompatDelegate.installViewFactory()
-        appCompatDelegate.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) // Assuming you have a layout file
-        // ... other UI setup
+        appCompatDelegate.onCreate(savedInstanceState) // This internally calls Activity.onCreate()
+        super.onCreate(savedInstanceState)
     }
+
+    private var mDelegate: AppCompatDelegate? = null
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
