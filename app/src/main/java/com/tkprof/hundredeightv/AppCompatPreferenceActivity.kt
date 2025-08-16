@@ -12,7 +12,7 @@
 //
 ///**
 // * A [PreferenceActivity] which implements and proxies the necessary calls
-// * to be used with AppCompat.
+// * to be used with AppCompat
 // */
 //abstract class AppCompatPreferenceActivity : PreferenceActivity() {
 //
