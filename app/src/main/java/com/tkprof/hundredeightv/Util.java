@@ -10,13 +10,10 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 public class Util extends Activity{
 	  private static final String LOG_TAG = "Util";
@@ -47,7 +44,7 @@ public class Util extends Activity{
 	    		try {
 	    	        BufferedReader reader = 
 	    	        		//new BufferedReader(new InputStreamReader(new FileInputStream(myFile), "UTF-8"));
-	    	        		new BufferedReader(new InputStreamReader(assetManager.open(fileName), StandardCharsets.UTF_8));
+	    	        		new BufferedReader(new InputStreamReader(assetManager.open(fileName), "UTF-8"));
 	    	        String line;
 	    	        while ((line = reader.readLine()) != null) {
 	    	          builder.append(line);
@@ -55,8 +52,8 @@ public class Util extends Activity{
 	    	        reader.close();
 
 	    	    } catch (IOException e) {
-					Log.e("MyActivityTag", "Error during I/O operation: " + e.getMessage(), e); // Include the exception for the full stack trace in logs
-				}
+	    	      e.printStackTrace();
+	    	    }
 	    	    return builder.toString();
 	    	  }
 
@@ -76,15 +73,18 @@ public class Util extends Activity{
 	        public void onLoadComplete(SoundPool soundPool, int sampleId,
 	            int status) {
 	          loaded = true;
+	         // playSound(act);  // for debug
 	        }
 	      }); 
+	     // soundID = soundPool.load(act,  R.raw.templebell_soundbiiblecom_756181215, 1); 
 	      try {
 			soundID = soundPool.load(asst.openFd( fileName), 1);
 		//	Toast.makeText(act, fileName + "loaded", Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			Toast.makeText(act, fileName + " Fail ", Toast.LENGTH_SHORT).show();
-			Log.e("MyActivityTag", "Error initSound: " + e.getMessage(), e); // Include the exception for the full stack trace in logs
-		  }
+			e.printStackTrace();
+		}
 	  }
       
 	    public static  void playSound(Activity act ) {
@@ -129,30 +129,12 @@ public class Util extends Activity{
 			      try {
 					soundID = soundPool.load(asst.openFd(fileName), 1);
 				//	Toast.makeText(act, fileName + "loaded", Toast.LENGTH_SHORT).show();
-				  } catch (IOException e) {
-					  // Log the detailed exception for developers
-					  Log.e("FileOperations", "Error accessing file: " + fileName, e); // Added a tag and more context
-
-					  // Provide more specific user feedback
-					  String errorMessage = "Failed to access " + fileName + ". ";
-					  if (e instanceof java.nio.file.NoSuchFileException) { // Example of checking specific exception type
-						  errorMessage += "The file was not found.";
-					  } else if (e instanceof java.io.FileNotFoundException) {
-						  errorMessage += "The file could not be found or opened.";
-					  } else if (e instanceof java.net.SocketTimeoutException) { // If this could be network related
-						  errorMessage += "The connection timed out. Please check your network.";
-					  } else {
-						  errorMessage += "Please try again later."; // Generic fallback
-					  }
-
-					  // It's often better to show a Snackbar for errors that don't require immediate dismissal
-					  // or for longer messages.
-					  Snackbar.make(act.findViewById(android.R.id.content), errorMessage, Snackbar.LENGTH_LONG).show();
-					  // Or, if a Toast is preferred for its brevity:
-					  // Toast.makeText(act, errorMessage, Toast.LENGTH_LONG).show(); // Use LENGTH_LONG for errors
-				  }
-
-		  }
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					Toast.makeText(act, fileName + " Fail ", Toast.LENGTH_SHORT).show();
+					e.printStackTrace();
+				}
+			  }
 		       
 	
 	    public File getDir() {

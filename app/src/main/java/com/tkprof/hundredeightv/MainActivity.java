@@ -25,6 +25,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GestureDetectorCompat;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -77,9 +78,10 @@ GestureDetector.OnDoubleTapListener   {
 
     TextToSpeech ttobj;
 	
-	private GestureDetector mDetector;
+	private GestureDetectorCompat  mDetector;
 
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
                                           String key) {
 
 		sharedPref=  sharedPreferences;
@@ -110,12 +112,15 @@ GestureDetector.OnDoubleTapListener   {
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+    //	 Log.i("oncreate", "BNEgin0");
         super.onCreate(savedInstanceState);
+    //    Log.i("oncreate", "BNEgin1");
         if (getResources().getConfiguration().orientation
-				== Configuration.ORIENTATION_PORTRAIT ){
-          	setContentView(R.layout.activity_main);
-        }else        {
-			setContentView(R.layout.activity_main_land);}
+        == Configuration.ORIENTATION_PORTRAIT ){
+          setContentView(R.layout.activity_main);
+        }else
+        {setContentView(R.layout.activity_main_land);}
+  //      Log.i("oncreate", "Begin2 ");
 
 		// In your MainActivity's onCreate method
 		Toolbar toolbar = findViewById(R.id.toolbar);
@@ -142,8 +147,9 @@ GestureDetector.OnDoubleTapListener   {
 				+ sharedPref.getString( "bellsound",  getString(R.string.pref_default_bellsound));
         
         Util.initSound(this, assetManager, audio_file );
-
-        mDetector = new GestureDetector(this,this);
+//        Util.initSound(this);
+         
+        mDetector = new GestureDetectorCompat(this,this); 
         mDetector.setOnDoubleTapListener(this);
         
         ttobj=new TextToSpeech(getApplicationContext(), 
@@ -157,6 +163,11 @@ GestureDetector.OnDoubleTapListener   {
       	      });
 
 
+// following gemini ad , just so long
+//		MobileAds.initialize(this,	"ca-app-pub-8979756439452342~1904313389");
+//		mInterstitialAd = new InterstitialAd(this);
+//		mInterstitialAd.setAdUnitId("ca-app-pub-8979756439452342/7964602504");
+//        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 		// 1. Initialize the Mobile Ads SDK
 		// Your AdMob App ID (ca-app-pub-8979756439452342~1904313389) should be in AndroidManifest.xml
@@ -281,9 +292,9 @@ GestureDetector.OnDoubleTapListener   {
 
 		//currentLayout.setBackgroundColor(getApplicationContext().getColor(R.color.grey1));
 
-//		currentLayout.setBackgroundColor(getApplicationContext().getColor(
-//		getResources().getIdentifier(sharedPref.getString("bgcolor", "white")
-//                          , "color", getPackageName())));
+		currentLayout.setBackgroundColor(getApplicationContext().getColor(
+		getResources().getIdentifier(sharedPref.getString("bgcolor", "white")
+                          , "color", getPackageName())));
 
 		//-----
 
@@ -385,9 +396,7 @@ GestureDetector.OnDoubleTapListener   {
          
         return super.onOptionsItemSelected(item);
     }
-
-	// In your Activity or a constants file
-	private static final String PREFS_NAME = "com.tkprof.hundredeightv.PREFERENCES"; // Choose a unique name
+       
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -396,7 +405,8 @@ GestureDetector.OnDoubleTapListener   {
 //    	Toast.makeText(this, "Main.onActivityResult Called",
 //                Toast.LENGTH_SHORT).show();
 
-		sharedPref = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+     	sharedPref =
+ 	     	PreferenceManager.getDefaultSharedPreferences(this);
 
 //       Log.d( "sharePrefAll:" , sharedPref.getAll().toString()) ;
          // These day, expected setup updated when back from setting screen,
@@ -649,10 +659,9 @@ GestureDetector.OnDoubleTapListener   {
     }
     
     @Override 
-    public boolean onTouchEvent(MotionEvent event){
-		if (mDetector != null && mDetector.onTouchEvent(event)) {
-			return true;
-		}
+    public boolean onTouchEvent(MotionEvent event){ 
+        this.mDetector.onTouchEvent(event);
+        // Be sure to call the superclass implementation
         return super.onTouchEvent(event);
     }
  

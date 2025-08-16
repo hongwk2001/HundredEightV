@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -23,10 +22,10 @@ public class SettingsActivity extends AppCompatActivity {
     // or move them into GeneralPreferenceFragment if only used there.
     // Ensure they use androidx.preference types as discussed.
 
-    private static final Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
             new Preference.OnPreferenceChangeListener() {
                 @Override
-                public boolean onPreferenceChange(@NonNull androidx.preference.Preference preference, Object value) {
+                public boolean onPreferenceChange(androidx.preference.Preference preference, Object value) {
                     String stringValue = value.toString();
                     if (preference instanceof androidx.preference.ListPreference) {
                         androidx.preference.ListPreference listPreference = (androidx.preference.ListPreference) preference;
@@ -104,6 +103,14 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")));
         }
 
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            int id = item.getItemId();
+//            if (id == android.R.id.home) {
+//                return false; // This allows the Activity's onOptionsItemSelected to handle it.
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
     }
 
     // Helper method (if you still need to check for tablets, though
