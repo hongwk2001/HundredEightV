@@ -1,0 +1,78 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="10.0"
+        android:inputType="numberDecimal"
+        android:key="interval"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/interval" />
+
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="108"
+        android:inputType="number"
+        android:key="file_line_cnt"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/file_line_cnt" />
+
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="0"
+        android:inputType="number"
+        android:key="count_a"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/count_a" />
+
+    <EditTextPreference
+        android:defaultValue="0"
+        android:inputType="number"
+        android:key="count_b"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/count_b" />
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+     dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="@string/korean108Value"
+        android:entries="@array/file_choice_titles"
+        android:entryValues="@array/file_choice_values"
+        android:key="file_name"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/file_to_read" />
+
+
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+      dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="@string/pref_default_bellsound"
+        android:entries="@array/bellSoundChoiceValues"
+        android:entryValues="@array/bellSoundChoiceValues"
+        android:key="bellsound"
+        android:title="@string/selectBellSound" />
+
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="@string/white"
+        android:entries="@array/colorValues"
+        android:entryValues="@array/colorValues"
+        android:key="bgcolor"
+        app:summary="Choose background color"
+        android:title="@string/bgcolor" />
+
+    <Preference
+        android:summary="version: Aug2025"/>
+</PreferenceScreen>

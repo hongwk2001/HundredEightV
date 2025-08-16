@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name">HundredEightVows</string>
+    <string name="vow_file_access_label">Accessing vow text files</string>
+
+    <string name="setting">Here you can setup</string>
+
+    <string name="count">Count</string>
+    <string name="zero" translatable="false">0</string>
+
+    <string name="target">Target</string>    <string name="repeat_cnt">Repeat Count</string>
+
+    <string name="interval">Interval</string>
+    <string name="remain">Remain Seconds</string>
+    <string name="count_a">Count A: </string>
+    <string name="count_b">Count B: </string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="keep_screen_on">Keep Screen On without touch</string>
+
+    <string name="play_sound">Play Sound</string>
+
+    <string name="cbx_tts_number">TTS Count</string>
+    <string name="cbx_tts_text">TTS Text</string>
+
+    <string name="file_to_read">File to read</string>
+
+    <string name="menu_settingsn">Settings N</string>
+    <string name="file_line_cnt">Lines of File</string>
+
+    <string name="korean108">Korean 108</string>
+    <string name="korean108Value">108vow.txt</string>
+    <string name="eng108">English 108(HyunGak)</string>
+    <string name="korean103vow">Catholic 103wi</string>
+    <string name="nonRelVow">Non religious 108 vow</string>
+    <string name="soundpath">bellsounds/</string>
+
+    <string name="title_activity_settings_n">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string-array name="file_choice_titles">
+        <item>@string/korean108</item>
+        <item>@string/eng108</item>
+        <item>@string/korean103vow</item>
+        <item>@string/nonRelVow</item>
+    </string-array>
+
+    <string-array name="file_choice_values">
+        <item>108vow.txt</item>
+        <item>108vows_Eng.txt</item>
+        <item>103vow.txt</item>
+        <item>nonRel108vow.txt</item>
+    </string-array>
+
+    <string name="slower">Slower</string>
+    <string name="faster">Faster</string>
+    <string name="thankyou">Thank you</string>
+    <string name="selectBellSound">Select bell sound</string>
+
+    <string name="pref_default_bellsound">1.templebell.wav</string>
+
+    <string-array name="bellSoundChoiceValues">
+        <item>1.templebell.wav</item>
+        <item>2.jovica__little-bell.wav</item>
+        <item>3.herbertboland.wav</item>
+        <item>4.ottophokus.wav</item>
+        <item>5.tec-studios__bell003mono.wav</item>
+        <item>6_xicecoffeex__savannah-bell.wav</item>
+        <item>7_keykrusher__bicycle-bell.wav</item>
+        <item>8_surreal-bell.wav</item>
+        <item>9_aiwha__bell.wav</item>
+        <item>10_godowan__bell-1.wav</item>
+        <item>11__kwahmah_ping.flac</item>
+        <item>12_cdrk__reception-bell.flac</item>
+        <item>13_bell_bike.ogg</item>
+
+    </string-array>
+
+    <string name="white">white</string>
+    <string name="bgcolor">Background Color</string>
+
+    <string-array name="colorValues">
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>purple</item>
+        <item>white</item>
+        <item>grey1</item>
+        <item>grey2</item>
+        <item>grey3</item>
+
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+
+</resources>
