@@ -256,5 +256,6 @@
     <string name="tv_ads_error_message_text">문제가 발생했습니다</string>
     <string msgid="3140233346420563315" name="v7_preference_off">"사용 안함"</string>
     <string msgid="89551595707643515" name="v7_preference_on">"사용"</string>
+    <string name="vow_file_access_label">엑세스 절 관련 파일</string>
     <string name="white">white</string>
 </resources>
