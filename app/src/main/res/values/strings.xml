@@ -5,7 +5,6 @@
     <string name="setting">Here you can setup</string>
 
     <string name="count">Count</string>
-    <string name="zero" translatable="false">0</string>
 
     <string name="target">Target</string>    <string name="repeat_cnt">Repeat Count</string>
 
