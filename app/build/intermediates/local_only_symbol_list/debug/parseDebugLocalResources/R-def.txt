@@ -10,9 +10,11 @@ array multi_select_list_preference_default_value
 array pref_sync_frequency_titles
 array pref_sync_frequency_values
 color black
+color blue
 color purple_200
 color purple_500
 color purple_700
+color red
 color teal_200
 color teal_700
 color white
@@ -94,7 +96,9 @@ string start
 string target
 string thankyou
 string title_activity_settings_n
+string vow_file_access_label
 string white
+string zero
 style AppBaseTheme
 style AppTheme
 style Theme.HundredEightV

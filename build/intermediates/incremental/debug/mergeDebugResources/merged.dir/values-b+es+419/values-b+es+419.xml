@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back_button_text">Cerrar</string>
+    <string name="error_message_description_text">Se produjo un error al obtener más detalles sobre este anuncio</string>
+    <string name="fallback_image_content_descriptor">¿Por qué este anun.?</string>
+    <string name="tv_ads_error_message_text">Se produjo un error</string>
+</resources>

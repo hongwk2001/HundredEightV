@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-2:/values-en-rIE/values-en-rIE.xml",
+            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-73:/values-en-rIE/values-en-rIE.xml",
             "map": [
                 {
-                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\c02eb33affd8e0fe9e8b1a43a6ce6f4a\\transformed\\tv-ads-1.0.1\\res\\values-en-rIE\\values.xml",
+                    "source": "/Users/mac/.gradle/caches/8.13/transforms/c02eb33affd8e0fe9e8b1a43a6ce6f4a/transformed/tv-ads-1.0.1/res/values-en-rIE/values.xml",
                     "from": {
                         "startLines": "4,5,8,11",
                         "startColumns": "0,0,0,0",

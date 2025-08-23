@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.tkprof.hundredeightv-mergeDebugResources-69:/values-b+es+419/values-b+es+419.xml",
+            "map": [
+                {
+                    "source": "/Users/mac/.gradle/caches/8.13/transforms/206ff4bd1024c64c6502fbf5f52a64ac/transformed/tv-ads-1.0.1/res/values-b+es+419/values.xml",
+                    "from": {
+                        "startLines": "4,5,8,11",
+                        "startColumns": "0,0,0,0",
+                        "startOffsets": "203,251,542,757",
+                        "endColumns": "47,117,78,69",
+                        "endOffsets": "250,368,620,826"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,107,229,312",
+                        "endColumns": "51,121,82,73",
+                        "endOffsets": "102,224,307,381"
+                    }
+                }
+            ]
+        }
+    ]
+}

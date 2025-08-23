@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-2:/values-v30/values-v30.xml",
+            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-73:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\932786c0c117eb167e6c6bbe6ca20a6c\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "source": "/Users/mac/.gradle/caches/8.13/transforms/932786c0c117eb167e6c6bbe6ca20a6c/transformed/material3-release/res/values-v30/values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

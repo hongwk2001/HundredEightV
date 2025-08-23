@@ -31,5 +31,6 @@
     <string name="target">목표</string>
     <string name="thankyou">감사합니다</string>
     <string name="title_activity_settings_n">설정</string>
+    <string name="vow_file_access_label">엑세스 절 관련 파일</string>
     <string name="white">white</string>
 </resources>

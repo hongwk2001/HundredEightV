@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-2:/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "outputFile": "com.tkprof.hundredeightv.app-mergeDebugResources-73:/values-sw360dp-v13/values-sw360dp-v13.xml",
             "map": [
                 {
-                    "source": "D:\\Android\\Sdk\\caches\\8.13\\transforms\\0dadd51ceefb526b3ccb03572c7a54a1\\transformed\\preference-1.2.1\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
+                    "source": "/Users/mac/.gradle/caches/8.13/transforms/0dadd51ceefb526b3ccb03572c7a54a1/transformed/preference-1.2.1/res/values-sw360dp-v13/values-sw360dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

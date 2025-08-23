@@ -1,266 +1,266 @@
 [
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_baseline_settings_black_18.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/baseline_settings_black_18.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-anydpi/ic_launcher.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_ic_action_expand.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/ic_action_expand.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_baseline_settings_black_48.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/baseline_settings_black_48.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxxhdpi_baseline_settings_black_36.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxxhdpi/baseline_settings_black_36.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_ic_settings.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/ic_settings.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_ic_settings.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/ic_settings.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_ic_action_collapse.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/ic_action_collapse.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_baseline_settings_black_24.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/baseline_settings_black_24.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_ic_launcher.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/ic_launcher.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_ic_settings.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/ic_settings.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_baseline_settings_black_18.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/baseline_settings_black_18.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_ic_action_collapse.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/ic_action_collapse.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_ic_launcher.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_ic_setting.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/ic_setting.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/layout_activity_settings.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/layout/activity_settings.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_ic_launcher.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/ic_launcher.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/menu_main.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/menu/main.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_ic_notifications_black_24dp.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/ic_notifications_black_24dp.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_baseline_settings_black_36.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/baseline_settings_black_36.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_ic_setting.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/ic_setting.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_baseline_settings_black_24.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/baseline_settings_black_24.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/menu_main.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/menu/main.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_baseline_settings_black_48.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/baseline_settings_black_48.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_ic_setting.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/ic_setting.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_ic_action_expand.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/ic_action_expand.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-anydpi/ic_launcher_round.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_baseline_settings_black_48.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/baseline_settings_black_48.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_baseline_settings_black_48.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/baseline_settings_black_48.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_ic_setting.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/ic_setting.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxxhdpi_baseline_settings_black_24.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxxhdpi/baseline_settings_black_24.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxxhdpi_baseline_settings_black_24.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxxhdpi/baseline_settings_black_24.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_ic_setting.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/ic_setting.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxxhdpi_baseline_settings_black_18.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxxhdpi/baseline_settings_black_18.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/layout_activity_main_land.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/layout/activity_main_land.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_baseline_settings_black_36.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/baseline_settings_black_36.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_ic_action_collapse.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/ic_action_collapse.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/xml_backup_rules.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/xml/backup_rules.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_ic_launcher.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_baseline_settings_black_24.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/baseline_settings_black_24.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxxhdpi_baseline_settings_black_18.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxxhdpi/baseline_settings_black_18.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/xml_data_extraction_rules.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_baseline_settings_black_36.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/baseline_settings_black_36.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_box.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/box.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_ic_action_expand.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/ic_action_expand.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_baseline_settings_black_18.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/baseline_settings_black_18.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_baseline_settings_black_36.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/baseline_settings_black_36.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_baseline_settings_black_24.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/baseline_settings_black_24.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_ic_setting.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/ic_setting.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/layout_activity_main_land.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/layout/activity_main_land.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_ic_settings.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/ic_settings.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/xml_data_extraction_rules.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/xml/data_extraction_rules.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/xml_pref_general.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/xml/pref_general.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_baseline_settings_black_24.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/baseline_settings_black_24.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_ic_action_collapse.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/ic_action_collapse.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_baseline_settings_black_36.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/baseline_settings_black_36.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_ic_action_collapse.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/ic_action_collapse.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_baseline_settings_black_18.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/baseline_settings_black_18.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_baseline_settings_black_18.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/baseline_settings_black_18.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/layout_activity_main.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/layout/activity_main.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_ic_action_expand.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/ic_action_expand.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_ic_info_black_24dp.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/ic_info_black_24dp.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_baseline_settings_black_48.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/baseline_settings_black_48.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_ic_settings.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/ic_settings.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_ic_action_expand.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/ic_action_expand.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_baseline_settings_black_36.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/baseline_settings_black_36.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxxhdpi_baseline_settings_black_48.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxxhdpi/baseline_settings_black_48.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_baseline_settings_black_18.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/baseline_settings_black_18.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_baseline_settings_black_24.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/baseline_settings_black_24.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_baseline_settings_black_24.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/baseline_settings_black_24.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_ic_sync_black_24dp.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/ic_sync_black_24dp.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-mdpi_baseline_settings_black_36.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-mdpi/baseline_settings_black_36.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxxhdpi_baseline_settings_black_36.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxxhdpi/baseline_settings_black_36.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_baseline_settings_black_18.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/baseline_settings_black_18.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_ic_sync_black_24dp.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/ic_sync_black_24dp.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_ic_settings.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/ic_settings.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/xml_backup_rules.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/xml/backup_rules.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_ic_launcher.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/ic_launcher.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_ic_action_collapse.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/ic_action_collapse.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/xml_pref_general.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/xml/pref_general.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_ic_setting.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/ic_setting.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_ic_setting.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/ic_setting.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_ic_settings.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/ic_settings.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable_ic_info_black_24dp.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable/ic_info_black_24dp.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/layout_activity_settings.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/layout/activity_settings.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_ic_settings.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/ic_settings.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_ic_launcher.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/ic_launcher.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_ic_launcher.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_ic_action_expand.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/ic_action_expand.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxhdpi_baseline_settings_black_48.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxhdpi/baseline_settings_black_48.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_baseline_settings_black_48.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/baseline_settings_black_48.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xhdpi_ic_action_collapse.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xhdpi/ic_action_collapse.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-hdpi_baseline_settings_black_36.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-hdpi/baseline_settings_black_36.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-xxxhdpi/ic_launcher.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_baseline_settings_black_18.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/baseline_settings_black_18.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable-hdpi_baseline_settings_black_24.png.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable-hdpi/baseline_settings_black_24.png"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_ic_action_expand.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/ic_action_expand.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/ic_launcher_background.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/layout_activity_main.xml.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/layout/activity_main.xml"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxxhdpi_baseline_settings_black_48.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxxhdpi/baseline_settings_black_48.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_box.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/box.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-mdpi_ic_action_collapse.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-mdpi/ic_action_collapse.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xhdpi_ic_action_expand.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xhdpi/ic_action_expand.png"
     },
     {
-        "merged": "com.tkprof.hundredeightv.app-debug-4:/drawable_ic_notifications_black_24dp.xml.flat",
-        "source": "com.tkprof.hundredeightv.app-main-6:/drawable/ic_notifications_black_24dp.xml"
+        "merged": "com.tkprof.hundredeightv.app-debug-75:/drawable-xxhdpi_baseline_settings_black_48.png.flat",
+        "source": "com.tkprof.hundredeightv.app-main-77:/drawable-xxhdpi/baseline_settings_black_48.png"
     }
 ]
