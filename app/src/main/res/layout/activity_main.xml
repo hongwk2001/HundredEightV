@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLinearLayout1"
     android:layout_width="match_parent"
@@ -22,28 +23,33 @@
         android:id="@+id/TableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/AppBaseTheme"
+        android:visibility="visible"
         tools:context="com.tkprof.hundredeightv.MainActivity">
 
         <TableRow
             android:id="@+id/tableRow01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="1dip">
+            android:padding="1dip"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/count" />
+                android:text="@string/count"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/zero"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         </TableRow>
 
@@ -58,31 +64,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/remain" />
+                android:text="@string/remain"
+                android:layout_weight="2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
                 android:id="@+id/remain_e"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageButton
-                android:id="@+id/btn_slower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/slower"
-                android:onClick="f_onClickSlower"
-                android:src="@drawable/ic_action_collapse" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <ImageButton
                 android:id="@+id/btn_faster"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:minWidth="60dp"
+                android:layout_weight="5"
                 android:contentDescription="@string/faster"
                 android:onClick="f_onClickFaster"
-                android:src="@drawable/ic_action_expand" />
+                app:srcCompat="@drawable/outline_arrow_drop_up_24" />
+
+            <ImageButton
+                android:id="@+id/btn_slower"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minWidth="60dp"
+                android:layout_weight="5"
+                android:contentDescription="@string/slower"
+                android:onClick="f_onClickSlower"
+                app:srcCompat="@drawable/outline_arrow_drop_down_24" />
+
 
         </TableRow>
 
@@ -90,33 +103,40 @@
             android:id="@+id/tableRow03"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dip">
+            android:paddingTop="2dp"
+            android:paddingEnd="2dp">
 
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/count_a" />
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/count_a"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <TextView
                 android:id="@+id/count_a"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="start" />
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/count_b" />
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/count_b"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <TextView
                 android:id="@+id/count_b"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="start" />
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         </TableRow>
 
@@ -157,13 +177,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="f_onToggleClicked"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/primary_text_dark"
                 android:textOff="@string/start"
                 android:textOn="@string/pause" />
 
 
         </TableRow>
     </TableLayout>
-     
+
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
@@ -171,6 +193,7 @@
         android:layout_margin="3dp"
         android:gravity="center"
         android:padding="1dip"
+        android:textColor="@color/my_text_color"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
