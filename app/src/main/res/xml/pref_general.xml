@@ -29,7 +29,7 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/count_a" />
+        android:title="Count A:" />
 
     <EditTextPreference
         android:defaultValue="0"
