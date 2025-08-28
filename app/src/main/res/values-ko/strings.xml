@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">읽으면서 하는 108배</string>
-    <string name="vow_file_access_label">엑세스 절 관련 파일</string>
-
     <string name="setting">설정</string>
     
     <string name="count">개수</string>

@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">HundredEightVows</string>
-    <string name="vow_file_access_label">Accessing vow text files</string>
-
     <string name="setting">Here you can setup</string>
 
     <string name="count">Count</string>
-    <string name="zero" translatable="false">0</string>
 
-    <string name="target">Target</string>    <string name="repeat_cnt">Repeat Count</string>
+    <string name="target">Target</string>
+    <string name="repeat_cnt">Repeat Count</string>
 
     <string name="interval">Interval</string>
     <string name="remain">Remain Seconds</string>

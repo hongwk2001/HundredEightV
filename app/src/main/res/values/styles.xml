@@ -12,7 +12,6 @@
         -->
     </style>
 
-
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
@@ -32,5 +31,17 @@
            <!-- Customize your theme here. -->
        </style>
 
+        <!-- Custom style for all TextViews -->
+        <style name="GlobalTextViewStyle" parent="Widget.AppCompat.TextView">
+            <item name="android:textColor">@color/my_text_color</item>
+            <!-- You can add other common TextView attributes here -->
+        </style>
 
-        </resources>
+        <!-- Custom style for all CheckBoxes -->
+        <!-- For CheckBox, textColor often refers to the label next to the box -->
+        <style name="GlobalCheckboxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+            <item name="android:textColor">@color/my_text_color</item>
+            <!-- You can add other common CheckBox attributes here -->
+        </style>
+
+ </resources>
