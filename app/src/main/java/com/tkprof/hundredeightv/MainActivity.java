@@ -25,6 +25,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 
 import com.google.android.gms.ads.AdRequest;
@@ -286,17 +287,19 @@ GestureDetector.OnDoubleTapListener   {
 
 		//-- set BG COLOR test
 		//Set an id to the layout
-		LinearLayout currentLayout =
-				(LinearLayout) findViewById(R.id.mainLinearLayout1);
+		LinearLayout currentLayout = (LinearLayout) findViewById(R.id.mainLinearLayout1);
 
+		String colorName = sharedPref.getString("bgcolor", "white");
+		int colorResId = getResources().getIdentifier(colorName, "color", getPackageName());
 
-		//currentLayout.setBackgroundColor(getApplicationContext().getColor(R.color.grey1));
-
-		currentLayout.setBackgroundColor(getApplicationContext().getColor(
-		getResources().getIdentifier(sharedPref.getString("bgcolor", "white")
-                          , "color", getPackageName())));
-
-		//-----
+		if (colorResId != 0) {
+			currentLayout.setBackgroundColor(ContextCompat.getColor(this, colorResId));
+		} else {
+			// Handle the case where the color resource is not found
+			Log.w("Main.f_LoadVariables", "Background color resource not found: " + colorName);
+			// Set a default background color programmatically or from a known valid resource
+			currentLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white)); // Assuming you have a color named 'white'
+		}
 
         String sound_filename = sharedPref.getString("bellsound", getString(R.string.pref_default_bellsound));
 		AssetManager assetManager = getAssets();
