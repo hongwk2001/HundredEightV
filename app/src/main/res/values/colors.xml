@@ -6,6 +6,21 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
+    <color name="purple">#800080</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey1">#CCCCCC</color> <!-- Example: Light Grey -->
+    <color name="grey2">#888888</color> <!-- Example: Medium Grey -->
+    <color name="grey3">#444444</color> <!-- Example: Dark Grey -->
+
+    <!-- More descriptive names (see suggestion 2) -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="textColorPrimary">#DE000000</color> <!-- 87% Black -->
+    <color name="backgroundColor">#FFFFFF</color>
+
     <color name="my_text_color">#FF000000</color>
 </resources>

@@ -321,7 +321,6 @@ GestureDetector.OnDoubleTapListener   {
         	ct.cancel(); 
         }
 
-
         if(ttobj !=null){
             ttobj.stop();
             ttobj.shutdown();

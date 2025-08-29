@@ -11,6 +11,7 @@
         android:singleLine="true"
         android:title="@string/interval" />
 
+    <PreferenceCategory />
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:defaultValue="108"
@@ -21,6 +22,8 @@
         android:singleLine="true"
         android:title="@string/file_line_cnt" />
 
+    <PreferenceCategory />
+
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:defaultValue="0"
@@ -30,7 +33,7 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/count_a" />
-
+    <PreferenceCategory />
     <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
@@ -39,6 +42,8 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/count_b" />
+
+    <PreferenceCategory />
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
      dismiss it. -->
@@ -52,7 +57,7 @@
         android:positiveButtonText="@null"
         android:title="@string/file_to_read" />
 
-
+    <PreferenceCategory />
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
       dismiss it. -->
@@ -64,6 +69,8 @@
         android:key="bellsound"
         android:title="@string/selectBellSound" />
 
+    <PreferenceCategory />
+
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
         android:defaultValue="@string/white"
@@ -72,6 +79,7 @@
         android:key="bgcolor"
         app:summary="Choose background color"
         android:title="@string/bgcolor" />
+    <PreferenceCategory />
 
     <Preference
         android:summary="version:Aug2025"/>
