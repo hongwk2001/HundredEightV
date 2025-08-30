@@ -27,6 +27,7 @@
         </activity>
         <!-- Add this declaration for SettingsActivityN -->
         <activity android:name=".SettingsActivity"
+            android:label="@string/menu_settings"
             android:theme="@style/Theme.HundredEightV"/>
         <!-- Your AdMob App ID -->
         <meta-data

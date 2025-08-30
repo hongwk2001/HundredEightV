@@ -31,6 +31,7 @@
     <string name="white">white</string>
     <string name="bgcolor">배경색</string>
 
+
     <string name="play_sound">벨소리 울리기</string>
 
     <string name="file_to_read">읽을 화일</string>
@@ -38,7 +39,7 @@
 
 
   <!--    <string name="menu_settings">설정</string> -->
-    <string name="menu_settingsn">설정</string>
+    <string name="menu_settings">설정</string>
     <!--    <string name="menu_settingss">설정</string> -->
     <string name="korean108Value">108vow.txt</string>
     <string name="soundpath">bellsounds/</string>
