@@ -28,7 +28,12 @@
         <!-- Add this declaration for SettingsActivityN -->
         <activity android:name=".SettingsActivity"
             android:label="@string/menu_settings"
-            android:theme="@style/Theme.HundredEightV"/>
+            android:theme="@style/Theme.HundredEightV">
+<!--            android:parentActivityName=".MainActivity"-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".MainActivity" />-->
+        </activity>
         <!-- Your AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

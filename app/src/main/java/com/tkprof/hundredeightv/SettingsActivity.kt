@@ -48,18 +48,17 @@ class SettingsActivity : AppCompatActivity() {
 
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { // Changed from onMenuItemSelected
-        val id = item.getItemId()
-        if (id == android.R.id.home) {
-            // This is the standard way to handle Up navigation in AppCompatActivity
-            // NavUtils.navigateUpFromSameTask(this) is also an option if you have
-            // specific parent activity logic in your manifest.
-            if (!super.onOptionsItemSelected(item)) { // Allows fragment to handle first
-                NavUtils.navigateUpFromSameTask(this)
+    // In SettingsActivity.kt
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // This is where NavUtils.navigateUpFromSameTask is likely called
+                NavUtils.navigateUpFromSameTask(this) // This line was causing the crash
+                true
             }
-            return true
+            // Handle other menu items
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     // You likely won't need onIsMultiPane() or isValidFragment()
