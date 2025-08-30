@@ -178,10 +178,9 @@
                 android:layout_weight="1"
                 android:onClick="f_onToggleClicked"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/primary_text_dark"
+                android:textColor="@android:color/primary_text_light"
                 android:textOff="@string/start"
                 android:textOn="@string/pause" />
-
 
         </TableRow>
     </TableLayout>
@@ -193,7 +192,8 @@
         android:layout_margin="3dp"
         android:gravity="center"
         android:padding="1dip"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/my_text_color"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="34dp" />
 
 </LinearLayout>
