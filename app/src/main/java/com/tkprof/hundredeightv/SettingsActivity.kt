@@ -1,166 +1,136 @@
+
 package com.tkprof.hundredeightv
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.NavUtils
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.util.Objects
 
-// Remove: import android.preference.PreferenceActivity;
-
 class SettingsActivity : AppCompatActivity() {
+
+    private var mInterstitialAd: InterstitialAd? = null
+    private val adUnitId = AD_UNIT_ID
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings) // Create this layout file
+        setContentView(R.layout.activity_settings)
 
-        // 1. Find the toolbar
+        // Set up toolbar
         val toolbar: Toolbar = findViewById(R.id.settings_toolbar)
-
-        // 2. Set it as the support action bar
         setSupportActionBar(toolbar)
-
-        // 3. Enable the Up button (back arrow)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
-        // 4. Load your PreferenceFragment
+        // Load Preference fragment
         if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.settings_container, GeneralPreferenceFragment())
                 .commit()
         }
+
+        // Initialize AdMob & load ad
+        MobileAds.initialize(this) {}
+        loadInterstitialAd()
     }
 
-    // Handle the Up button press to navigate back
+    private fun loadInterstitialAd() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this, adUnitId, adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+            }
+
+            override fun onAdFailedToLoad(loadAdError: com.google.android.gms.ads.LoadAdError) {
+                mInterstitialAd = null
+            }
+        })
+    }
+
+    private fun showAdOrFinish() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(this)
+            mInterstitialAd = null
+        }
+        finish()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed() // Or finish() if it's a simpler case
+        showAdOrFinish()
         return true
     }
 
+    @SuppressLint("GestureBackNavigation")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        showAdOrFinish()
 
+    }
 
-    // In SettingsActivity.kt
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                // This is where NavUtils.navigateUpFromSameTask is likely called
-                NavUtils.navigateUpFromSameTask(this) // This line was causing the crash
+                showAdOrFinish()
                 true
             }
-            // Handle other menu items
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    // You likely won't need onIsMultiPane() or isValidFragment()
-    // with this AppCompatActivity + PreferenceFragmentCompat setup,
-    // as multi-pane is usually handled differently (e.g., with multiple fragments)
-    // and isValidFragment was specific to PreferenceActivity's header system.
     class GeneralPreferenceFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.pref_general, rootKey)
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "count_a"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "count_b"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "interval"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "file_name"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "file_line_cnt"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "bellsound"
-                    )
-                )
-            )
-            bindPreferenceSummaryToValue(
-                Objects.requireNonNull<Preference?>(
-                    findPreference<Preference?>(
-                        "bgcolor"
-                    )
-                )
-            )
-        } //        @Override
-        //        public boolean onOptionsItemSelected(MenuItem item) {
-        //            int id = item.getItemId();
-        //            if (id == android.R.id.home) {
-        //                return false; // This allows the Activity's onOptionsItemSelected to handle it.
-        //            }
-        //            return super.onOptionsItemSelected(item);
-        //        }
+
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_a")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_b")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("interval")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_name")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_line_cnt")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
+            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))
+        }
     }
 
     companion object {
-        // Keep sBindPreferenceSummaryToValueListener and bindPreferenceSummaryToValue here
-        // or move them into GeneralPreferenceFragment if only used there.
-        // Ensure they use androidx.preference types as discussed.
-        private val sBindPreferenceSummaryToValueListener: Preference.OnPreferenceChangeListener =
-            object : Preference.OnPreferenceChangeListener {
-                override fun onPreferenceChange(preference: Preference, value: Any): Boolean {
-                    val stringValue = value.toString()
-                    if (preference is ListPreference) {
-                        val listPreference = preference
-                        val index = listPreference.findIndexOfValue(stringValue)
-                        preference.setSummary(if (index >= 0) listPreference.getEntries()[index] else null)
-                    } else {
-                        preference.setSummary(stringValue)
-                    }
-                    return true
+
+        private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
+        private val sBindPreferenceSummaryToValueListener =
+            Preference.OnPreferenceChangeListener { preference, value ->
+                val stringValue = value.toString()
+                if (preference is ListPreference) {
+                    val index = preference.findIndexOfValue(stringValue)
+                    preference.summary =
+                        if (index >= 0) preference.entries[index] else null
+                } else {
+                    preference.summary = stringValue
                 }
+                true
             }
 
         private fun bindPreferenceSummaryToValue(preference: Preference) {
-            preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener)
+            preference.onPreferenceChangeListener = sBindPreferenceSummaryToValueListener
             sBindPreferenceSummaryToValueListener.onPreferenceChange(
                 preference,
-                PreferenceManager.getDefaultSharedPreferences(preference.getContext())
-                    .getString(preference.getKey(), "")
+                PreferenceManager.getDefaultSharedPreferences(preference.context)
+                    .getString(preference.key, "")
             )
         }
 
-
-        // Helper method (if you still need to check for tablets, though
-        // multi-pane with PreferenceFragmentCompat is done differently)
         private fun isXLargeTablet(context: Context): Boolean {
-            return (context.getResources().getConfiguration().screenLayout
+            return (context.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE
         }
     }
 }
+
