@@ -177,8 +177,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="f_onToggleClicked"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/primary_text_dark"
                 android:textOff="@string/start"
                 android:textOn="@string/pause" />
 
