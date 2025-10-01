@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,9 +25,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
-import com.tkprof.hundredeightv.Util.Companion.initSound
-import com.tkprof.hundredeightv.Util.Companion.loadFile2String
-import com.tkprof.hundredeightv.Util.Companion.playSound
+import com.tkprof.HundredEightV.Util.Companion.initSound
+import com.tkprof.HundredEightV.Util.Companion.loadFile2String
+import com.tkprof.HundredEightV.Util.Companion.playSound
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.Locale

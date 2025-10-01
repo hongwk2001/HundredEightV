@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppBaseTheme"
         android:visibility="visible"
-        tools:context="com.tkprof.hundredeightv.MainActivity">
+        tools:context="com.tkprof.HundredEightV.MainActivity">
 
         <TableRow
             android:id="@+id/tableRow01"
@@ -191,7 +191,8 @@
         android:layout_margin="3dp"
         android:gravity="center"
         android:padding="1dip"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/my_text_color"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="32sp" />
 
 </LinearLayout>
