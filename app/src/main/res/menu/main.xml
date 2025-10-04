@@ -7,7 +7,7 @@
         android:id="@+id/menu_settingsn"
         android:orderInCategory="100"
         android:icon="@drawable/baseline_settings_black_36"
-        android:title="@string/menu_settingsn"
+        android:title="@string/menu_settings"
         app:showAsAction="ifRoom"/>
 
     <!--<item-->
