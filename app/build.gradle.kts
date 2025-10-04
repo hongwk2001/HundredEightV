@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.tkprof.hundredeightv"
+    namespace = "com.tkprof.HundredEightV"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.tkprof.hundredeightv"
+        applicationId = "com.tkprof.HundredEightV"
         minSdk = 27
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 14
+        versionName = "Oct2025"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

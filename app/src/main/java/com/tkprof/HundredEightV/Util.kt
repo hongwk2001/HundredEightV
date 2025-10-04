@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.app.Activity
 import android.content.res.AssetManager

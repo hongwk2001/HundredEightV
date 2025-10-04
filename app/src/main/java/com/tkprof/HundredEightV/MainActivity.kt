@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,18 +25,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.initialization.InitializationStatus
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.tkprof.hundredeightv.Util.Companion.initSound
-import com.tkprof.hundredeightv.Util.Companion.loadFile2String
-import com.tkprof.hundredeightv.Util.Companion.playSound
+import com.tkprof.HundredEightV.Util.Companion.initSound
+import com.tkprof.HundredEightV.Util.Companion.loadFile2String
+import com.tkprof.HundredEightV.Util.Companion.playSound
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.Locale
@@ -97,7 +88,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         Log.d("Main:onPause", "Called")
     }
 
-    private var mInterstitialAd: InterstitialAd? = null
+// TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+    //private var mInterstitialAd: InterstitialAd? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -162,72 +155,80 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         // 1. Initialize the Mobile Ads SDK
         // Your AdMob App ID (ca-app-pub-8979756439452342~1904313389) should be in AndroidManifest.xml
-        MobileAds.initialize(this, object : OnInitializationCompleteListener {
-            override fun onInitializationComplete(initializationStatus: InitializationStatus) {
-                Log.d(TAG, "Mobile Ads SDK initialized.")
-                // It's best practice to load ads after SDK initialization.
-                loadInterstitialAd()
-            }
-        })
+
+
+        // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+
+//        MobileAds.initialize(this, object : OnInitializationCompleteListener {
+//            override fun onInitializationComplete(initializationStatus: InitializationStatus) {
+//                Log.d(TAG, "Mobile Ads SDK initialized.")
+//                // It's best practice to load ads after SDK initialization.
+//                loadInterstitialAd()
+//            }
+//        })
     }
 
-    // 2. Method to load the Interstitial Ad
-    private fun loadInterstitialAd() {
-        val adRequest = AdRequest.Builder().build()
 
-        InterstitialAd.load(
-            this, AD_UNIT_ID, adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    // The mInterstitialAd reference will be null until an ad is loaded.
-                    this@MainActivity.mInterstitialAd = interstitialAd
-                    Log.i(TAG, "onAdLoaded")
 
-                    // 3. Set FullScreenContentCallback (Highly Recommended)
-                    mInterstitialAd!!.setFullScreenContentCallback(object :
-                        FullScreenContentCallback() {
-                        override fun onAdClicked() {
-                            // Called when a click is recorded for an ad.
-                            Log.d(TAG, "Ad was clicked.")
-                        }
+    // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
 
-                        override fun onAdDismissedFullScreenContent() {
-                            // Called when ad is dismissed.
-                            // Set the ad reference to null so you don't show the ad a second time.
-                            Log.d(TAG, "Ad dismissed fullscreen content.")
-                            mInterstitialAd = null
-                            // IMPORTANT: Load the next ad once the current one is dismissed
-                            loadInterstitialAd()
-                        }
-
-                        override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                            // Called when ad fails to show.
-                            Log.e(
-                                TAG,
-                                "Ad failed to show fullscreen content: " + adError.getMessage()
-                            )
-                            mInterstitialAd = null
-                        }
-
-                        override fun onAdImpression() {
-                            // Called when an impression is recorded for an ad.
-                            Log.d(TAG, "Ad recorded an impression.")
-                        }
-
-                        override fun onAdShowedFullScreenContent() {
-                            // Called when ad is shown.
-                            Log.d(TAG, "Ad showed fullscreen content.")
-                        }
-                    })
-                }
-
-                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    // Handle the error
-                    Log.d(TAG, "Failed to load interstitial ad: " + loadAdError.getMessage())
-                    mInterstitialAd = null
-                }
-            })
-    }
+    // 2. Method to load the Interstitial Ad -- put back
+//    private fun loadInterstitialAd() {
+//        val adRequest = AdRequest.Builder().build()
+//
+//        InterstitialAd.load(
+//            this, AD_UNIT_ID, adRequest,
+//            object : InterstitialAdLoadCallback() {
+//                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                    // The mInterstitialAd reference will be null until an ad is loaded.
+//                    this@MainActivity.mInterstitialAd = interstitialAd
+//                    Log.i(TAG, "onAdLoaded")
+//
+//                    // 3. Set FullScreenContentCallback (Highly Recommended)
+//                    mInterstitialAd!!.setFullScreenContentCallback(object :
+//                        FullScreenContentCallback() {
+//                        override fun onAdClicked() {
+//                            // Called when a click is recorded for an ad.
+//                            Log.d(TAG, "Ad was clicked.")
+//                        }
+//
+//                        override fun onAdDismissedFullScreenContent() {
+//                            // Called when ad is dismissed.
+//                            // Set the ad reference to null so you don't show the ad a second time.
+//                            Log.d(TAG, "Ad dismissed fullscreen content.")
+//                            mInterstitialAd = null
+//                            // IMPORTANT: Load the next ad once the current one is dismissed
+//                            loadInterstitialAd()
+//                        }
+//
+//                        override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+//                            // Called when ad fails to show.
+//                            Log.e(
+//                                TAG,
+//                                "Ad failed to show fullscreen content: " + adError.getMessage()
+//                            )
+//                            mInterstitialAd = null
+//                        }
+//
+//                        override fun onAdImpression() {
+//                            // Called when an impression is recorded for an ad.
+//                            Log.d(TAG, "Ad recorded an impression.")
+//                        }
+//
+//                        override fun onAdShowedFullScreenContent() {
+//                            // Called when ad is shown.
+//                            Log.d(TAG, "Ad showed fullscreen content.")
+//                        }
+//                    })
+//                }
+//
+//                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+//                    // Handle the error
+//                    Log.d(TAG, "Failed to load interstitial ad: " + loadAdError.getMessage())
+//                    mInterstitialAd = null
+//                }
+//            })
+//    }
 
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save the user's current game state 
@@ -359,14 +360,15 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             f_Pause()
 
             // Inside your onOptionsItemSelected method or wherever you want to show the ad:
-            if (mInterstitialAd != null) {
-                mInterstitialAd!!.show(this) // 'this' refers to your Activity
-            } else {
-                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                // Optional: You might want to try loading an ad here if it's null,
-                // though it's generally better to have ads pre-loaded.
-                // loadInterstitialAd(); // Make sure you have this method defined as shown previously
-            }
+            // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd!!.show(this) // 'this' refers to your Activity
+//            } else {
+//                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+//                // Optional: You might want to try loading an ad here if it's null,
+//                // though it's generally better to have ads pre-loaded.
+//                 loadInterstitialAd(); // Make sure you have this method defined as shown previously
+//           }
 
             //Release Tobble btn
             tb1!!.setChecked(false)
@@ -731,7 +733,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         // IMPORTANT: Replace with your actual Ad Unit ID for interstitial ads
         // For testing, you can use Google's test ad unit ID: "ca-app-pub-3940256099942544/1033173712"
-        private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
+
+        // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+       // private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
 
 
         private const val SETTING_ACTIVITY = 10

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppBaseTheme"
         android:visibility="visible"
-        tools:context="com.tkprof.hundredeightv.MainActivity">
+        tools:context="com.tkprof.HundredEightV.MainActivity">
 
         <TableRow
             android:id="@+id/tableRow01"
@@ -177,8 +177,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="f_onToggleClicked"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/primary_text_dark"
                 android:textOff="@string/start"
                 android:textOn="@string/pause" />
 
@@ -193,7 +191,8 @@
         android:layout_margin="3dp"
         android:gravity="center"
         android:padding="1dip"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/my_text_color"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="32sp" />
 
 </LinearLayout>

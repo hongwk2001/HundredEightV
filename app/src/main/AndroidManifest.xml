@@ -25,20 +25,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Add this declaration for SettingsActivityN -->
         <activity android:name=".SettingsActivity"
             android:label="@string/menu_settings"
             android:theme="@style/Theme.HundredEightV">
-<!--            android:parentActivityName=".MainActivity"-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value=".MainActivity" />-->
         </activity>
         <!-- Your AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8979756439452342~1904313389"/>
         <!-- ... other elements -->
+
+
     </application>
+    <!-- For apps targeting Android 13 or higher & GMA SDK version 20.3.0 or lower -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
 </manifest>

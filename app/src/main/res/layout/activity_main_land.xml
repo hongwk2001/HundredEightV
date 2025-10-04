@@ -8,7 +8,7 @@
     android:id="@+id/TableLayout"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context="com.tkprof.hundredeightv.MainActivity" >
+    tools:context="com.tkprof.HundredEightV.MainActivity" >
 
   <TableRow
       android:id="@+id/tableRow01"
