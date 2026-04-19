@@ -18,8 +18,7 @@
     </style>
        <!-- Base application theme. -->
        <style name="Theme.HundredEightV" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-           <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-           <!-- Customize your theme here. -->
+           <!-- Removed deprecated android:statusBarColor for Android 15 edge-to-edge compliance -->
        </style>
 
         <!-- Custom style for all TextViews -->

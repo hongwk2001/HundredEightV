@@ -21,10 +21,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.tkprof.HundredEightV.Util.Companion.initSound
 import com.tkprof.HundredEightV.Util.Companion.loadFile2String
 import com.tkprof.HundredEightV.Util.Companion.playSound
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         //	 Log.i("oncreate", "BNEgin0");
         super.onCreate(savedInstanceState)
         //    Log.i("oncreate", "BNEgin1");
@@ -103,6 +107,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             setContentView(R.layout.activity_main)
         } else {
             setContentView(R.layout.activity_main_land)
+        }
+
+        // Apply window insets to prevent the UI from being covered by system bars
+        val mainView = findViewById<View>(R.id.mainLinearLayout1)
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
         }
 
         //      Log.i("oncreate", "Begin2 ");
@@ -270,14 +284,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         //-- set BG COLOR test
         //Set an id to the layout
-        val currentLayout = findViewById<View?>(R.id.mainLinearLayout1) as LinearLayout
+        val currentLayout = findViewById<View?>(R.id.mainLinearLayout1) as LinearLayout?
 
         val colorName: String = sharedPref!!.getString("bgcolor", "white")!!
         val colorResId = getResources().getIdentifier(colorName, "color", getPackageName())
 
-        if (colorResId != 0) {
+        if (colorResId != 0 && currentLayout != null) {
             currentLayout.setBackgroundColor(ContextCompat.getColor(this, colorResId))
-        } else {
+        } else if (currentLayout != null) {
             // Handle the case where the color resource is not found
             Log.w("Main.f_LoadVariables", "Background color resource not found: " + colorName)
             // Set a default background color programmatically or from a known valid resource
