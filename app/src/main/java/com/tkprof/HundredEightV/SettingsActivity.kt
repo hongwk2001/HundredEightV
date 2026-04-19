@@ -6,8 +6,12 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -24,8 +28,19 @@ class SettingsActivity : AppCompatActivity() {
     private val adUnitId = AD_UNIT_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        // Apply window insets to prevent the UI from being covered by system bars
+        val mainView = findViewById<View>(R.id.settings_container)?.parent as? View
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
 
         // Set up toolbar
         val toolbar: Toolbar = findViewById(R.id.settings_toolbar)
@@ -133,4 +148,3 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 }
-
