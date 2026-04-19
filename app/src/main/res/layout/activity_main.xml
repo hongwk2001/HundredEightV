@@ -49,7 +49,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="0"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/black" />
 
         </TableRow>
 
@@ -66,7 +67,8 @@
                 android:gravity="center"
                 android:text="@string/remain"
                 android:layout_weight="2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/remain_e"
@@ -74,7 +76,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/black" />
 
             <ImageButton
                 android:id="@+id/btn_faster"
@@ -112,7 +115,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/count_a"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/count_a"
@@ -120,7 +124,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="0dp"
@@ -128,7 +133,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/count_b"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/count_b"
@@ -136,7 +142,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/black" />
 
         </TableRow>
 
@@ -160,7 +167,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="@string/cbx_tts_number" />
+                android:text="@string/cbx_tts_number"
+                android:textColor="@color/black" />
 
             <CheckBox
                 android:id="@+id/cbx_tts_text"
@@ -168,7 +176,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="@string/cbx_tts_text" />
+                android:text="@string/cbx_tts_text"
+                android:textColor="@color/black" />
 
 
             <ToggleButton
