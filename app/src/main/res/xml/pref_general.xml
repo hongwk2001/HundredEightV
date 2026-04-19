@@ -1,7 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:defaultValue="10.0"
         android:inputType="numberDecimal"
@@ -9,10 +8,11 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/interval" />
+        android:title="@string/interval"
+        android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
     <EditTextPreference
         android:defaultValue="108"
         android:inputType="number"
@@ -20,11 +20,11 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/file_line_cnt" />
+        android:title="@string/file_line_cnt"
+        android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
 
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
@@ -32,8 +32,11 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/count_a" />
+        android:title="@string/count_a"
+        android:layout="@layout/preference_horizontal" />
+
     <PreferenceCategory />
+
     <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
@@ -41,13 +44,11 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/count_b" />
+        android:title="@string/count_b"
+        android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
 
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-     dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
         android:defaultValue="@string/korean108Value"
         android:entries="@array/file_choice_titles"
@@ -55,32 +56,33 @@
         android:key="file_name"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/file_to_read" />
+        android:title="@string/file_to_read"
+        android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
 
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-      dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
         android:defaultValue="@string/pref_default_bellsound"
         android:entries="@array/bellSoundChoiceValues"
         android:entryValues="@array/bellSoundChoiceValues"
         android:key="bellsound"
-        android:title="@string/selectBellSound" />
+        android:title="@string/selectBellSound"
+        android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
 
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
         android:defaultValue="@string/white"
         android:entries="@array/colorValues"
         android:entryValues="@array/colorValues"
         android:key="bgcolor"
-        app:summary="Choose background color"
-        android:title="@string/bgcolor" />
+        android:title="@string/bgcolor"
+        android:layout="@layout/preference_horizontal" />
+
     <PreferenceCategory />
 
     <Preference
-        android:summary="version:Aug2025"/>
+        android:key="version_info"
+        android:layout="@layout/preference_horizontal" />
+
 </PreferenceScreen>

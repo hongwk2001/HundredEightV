@@ -274,6 +274,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         interval_sec = sharedPref!!.getString("interval", "9.4")!!.toDouble()
         Log.d("Main.f_LoadVariables", "interval_sec:" + interval_sec)
 
+        // Set initial interval value to remain_e TextView
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
+
         //Default Korean
         val fileName: String = sharedPref!!.getString("file_name", "108vow.txt")!!
         file_line_cnt = sharedPref!!.getString("file_line_cnt", "108")!!.toInt()
@@ -429,7 +432,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         if (toggle_on) {
             f_Start()
-        } else {
+        }
+        else {
             f_Pause()
         }
     }
@@ -499,7 +503,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 toggle_on = false
                 saveCurrentCount = false
                 f_Pause()
-                Log.d("countdownTimer", "onfinish")
                 Toast.makeText(
                     getApplicationContext(),
                     getString(R.string.thankyou),
@@ -570,7 +573,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
 
-    fun f_onClickSlower(view: View?) {
+    fun f_onClickSlower(view: View) {
         this.interval_sec = this.interval_sec?.plus(0.2)
         interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
 
@@ -581,7 +584,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         ).show()
     }
 
-    fun f_onClickFaster(view: View?) {
+    fun f_onClickFaster(view: View) {
         this.interval_sec = this.interval_sec?.minus(0.2)
         interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
 
@@ -664,7 +667,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         try {
             if (new_cnt > file_line_cnt) {
                 ii = new_cnt % file_line_cnt
-            } else {
+            }
+            else {
                 ii = new_cnt
             }
             Log.d(
@@ -755,7 +759,5 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         private const val SETTING_ACTIVITY = 10
 
         const val SWIPE_MIN_DISTANCE: Int = 120
-        const val SWIPE_MAX_OFF_PATH: Int = 250
-        const val SWIPE_THRESHOLD_VELOCITY: Int = 200
     }
 }

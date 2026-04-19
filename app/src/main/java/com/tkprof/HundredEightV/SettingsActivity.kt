@@ -1,12 +1,12 @@
 
 package com.tkprof.HundredEightV
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -58,6 +58,13 @@ class SettingsActivity : AppCompatActivity() {
         // Initialize AdMob & load ad
         MobileAds.initialize(this) {}
         loadInterstitialAd()
+
+        // Handle back press using OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showAdOrFinish()
+            }
+        })
     }
 
     private fun loadInterstitialAd() {
@@ -86,13 +93,6 @@ class SettingsActivity : AppCompatActivity() {
         return true
     }
 
-    @SuppressLint("GestureBackNavigation")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        showAdOrFinish()
-
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -114,6 +114,20 @@ class SettingsActivity : AppCompatActivity() {
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_line_cnt")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))
+
+            // Set version name dynamically
+            val versionPreference: Preference? = findPreference("version_info")
+            versionPreference?.summary = "version: " + getAppVersionName(requireContext())
+        }
+
+        private fun getAppVersionName(context: Context): String {
+            try {
+                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                return packageInfo.versionName ?: "N/A"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return "N/A"
         }
     }
 
@@ -140,11 +154,6 @@ class SettingsActivity : AppCompatActivity() {
                 PreferenceManager.getDefaultSharedPreferences(preference.context)
                     .getString(preference.key, "")
             )
-        }
-
-        private fun isXLargeTablet(context: Context): Boolean {
-            return (context.resources.configuration.screenLayout
-                    and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE
         }
     }
 }

@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
        <!-- Base application theme. -->
-       <style name="Theme.HundredEightV" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+       <style name="Theme.HundredEightV" parent="Theme.MaterialComponents.Light.NoActionBar">
            <!-- Removed deprecated android:statusBarColor for Android 15 edge-to-edge compliance -->
        </style>
 
