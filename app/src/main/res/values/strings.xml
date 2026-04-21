@@ -25,11 +25,17 @@
     <string name="menu_settings">Settings</string>
     <string name="file_line_cnt">Lines of File</string>
 
-    <string name="korean108">Korean 108</string>
-    <string name="korean108Value">108vow.txt</string>
-    <string name="eng108">English 108(HyunGak)</string>
+    <string name="korean108">BTN Korean 108</string>
+
+    <string name="eng108">English 108 Vow (HyunGak)</string>
     <string name="korean103vow">Catholic 103wi</string>
     <string name="nonRelVow">Non religious 108 vow</string>
+
+    <string name="eng108Sungsan">English 108 Vow (Sungsan)</string>
+    <string name="vn108Vow">Vietnamese 108 Vow</string>
+    <string name="krishna108">108 Names of Lord Krishna</string>
+    <string name="rosary108">108 Verses Precious Crystal Rosary</string>
+
     <string name="soundpath">bellsounds/</string>
 
     <string name="title_activity_settings_n">Settings</string>
@@ -42,6 +48,10 @@
         <item>@string/eng108</item>
         <item>@string/korean103vow</item>
         <item>@string/nonRelVow</item>
+        <item>@string/eng108Sungsan</item>
+        <item>@string/vn108Vow</item>
+        <item>@string/krishna108</item>
+        <item>@string/rosary108</item>
     </string-array>
 
     <string-array name="file_choice_values">
@@ -49,6 +59,10 @@
         <item>108vows_Eng.txt</item>
         <item>103vow.txt</item>
         <item>nonRel108vow.txt</item>
+        <item>108vow_eng_sungsan.json</item>
+        <item>108_lay_tai_nha_don_gian.json</item>
+        <item>108_names_of_Lord_Krishna.json</item>
+        <item>108verses_Precious_Crystal_Rosary.json</item>
     </string-array>
 
     <string name="slower">Slower</string>
@@ -56,26 +70,26 @@
     <string name="thankyou">Thank you</string>
     <string name="selectBellSound">Select bell sound</string>
 
-    <string name="pref_default_bellsound">1.templebell.wav</string>
+    <string name="pref_default_bellsound" translatable="false">bell_01_temple.wav</string>
 
     <string-array name="bellSoundChoiceValues">
-        <item>1.templebell.wav</item>
-        <item>2.jovica__little-bell.wav</item>
-        <item>3.herbertboland.wav</item>
-        <item>4.ottophokus.wav</item>
-        <item>5.tec-studios__bell003mono.wav</item>
-        <item>6_xicecoffeex__savannah-bell.wav</item>
-        <item>7_keykrusher__bicycle-bell.wav</item>
-        <item>8_surreal-bell.wav</item>
-        <item>9_aiwha__bell.wav</item>
-        <item>10_godowan__bell-1.wav</item>
-        <item>11__kwahmah_ping.flac</item>
-        <item>12_cdrk__reception-bell.flac</item>
-        <item>13_bell_bike.ogg</item>
+        <item>bell_01_temple.wav</item>
+        <item>bell_02_little.wav</item>
+        <item>bell_03_herbert.wav</item>
+        <item>bell_04_otto.wav</item>
+        <item>bell_05_tec.wav</item>
+        <item>bell_06_savannah.wav</item>
+        <item>bell_07_bicycle.wav</item>
+        <item>bell_08_surreal.wav</item>
+        <item>bell_09_aiwha.wav</item>
+        <item>bell_10_godowan.wav</item>
+        <item>bell_11_kwahmah.flac</item>
+        <item>bell_12_reception.flac</item>
+        <item>bell_13_bike.ogg</item>
 
     </string-array>
 
-    <string name="white">white</string>
+    <string name="white" translatable="false">white</string>
     <string name="bgcolor">Background Color</string>
 
     <string-array name="colorValues">

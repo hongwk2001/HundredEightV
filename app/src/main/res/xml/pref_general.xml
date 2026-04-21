@@ -50,14 +50,13 @@
     <PreferenceCategory />
 
     <ListPreference
-        android:defaultValue="@string/korean108Value"
+        android:defaultValue="@string/korean108"
         android:entries="@array/file_choice_titles"
         android:entryValues="@array/file_choice_values"
         android:key="file_name"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/file_to_read"
-        android:layout="@layout/preference_horizontal" />
+        android:title="@string/file_to_read" />
 
     <PreferenceCategory />
 

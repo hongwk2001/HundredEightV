@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">읽으면서 하는 108배</string>
+    <string name="app_name">들으면서 하는 108배</string>
     <string name="setting">설정</string>
     
     <string name="count">개수</string>
@@ -27,7 +27,6 @@
     <string name="slower">느리게</string>
     <string name="faster">빠르게</string>
 
-
     <string name="white">white</string>
     <string name="bgcolor">배경색</string>
 
@@ -41,7 +40,6 @@
   <!--    <string name="menu_settings">설정</string> -->
     <string name="menu_settings">설정</string>
     <!--    <string name="menu_settingss">설정</string> -->
-    <string name="korean108Value">108vow.txt</string>
     <string name="soundpath">bellsounds/</string>
 
 
@@ -52,9 +50,14 @@
 
     <string name="pref_default_bellsound">1.templebell.wav</string>
 
-    <string name="korean108">한글 나를 깨우는 108배</string>
-    <string name="eng108">영문 나를 깨우는 108배(현각스님 번역)</string>
-    <string name="korean103vow">천주교 103위 성인 108배</string>
+    <string name="korean108">불교방송 나를 깨우는 108배</string>
+    <string name="eng108">영문 나를 깨우는 108배(현각스님)</string>
+    <string name="korean103vow">천주교 103위 성인</string>
     <string name="nonRelVow">비종교인 108배</string>
+
+    <string name="eng108Sungsan">영문 108배 (숭산스님 번역)</string>
+    <string name="vn108Vow">베트남어 108배</string>
+    <string name="krishna108">흰두 크리슈나의 108가지 이름</string>
+    <string name="rosary108">108구슬 보배 염주문</string>
 
 </resources>

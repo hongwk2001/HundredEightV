@@ -6,7 +6,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.preference.PreferenceManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
@@ -28,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.preference.PreferenceManager
 import com.tkprof.HundredEightV.Util.Companion.initSound
 import com.tkprof.HundredEightV.Util.Companion.loadFile2String
 import com.tkprof.HundredEightV.Util.Companion.playSound

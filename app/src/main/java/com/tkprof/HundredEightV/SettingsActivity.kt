@@ -1,11 +1,10 @@
-
 package com.tkprof.HundredEightV
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,9 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -55,6 +56,11 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
 
+        // Close Button Setup
+        findViewById<Button>(R.id.btn_close_settings).setOnClickListener {
+            showAdOrFinish()
+        }
+
         // Initialize AdMob & load ad
         MobileAds.initialize(this) {}
         loadInterstitialAd()
@@ -81,11 +87,25 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun showAdOrFinish() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(this)
-            mInterstitialAd = null
+        val ad = mInterstitialAd
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    // Called when ad is dismissed.
+                    mInterstitialAd = null
+                    finish()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    // Called when ad fails to show.
+                    mInterstitialAd = null
+                    finish()
+                }
+            }
+            ad.show(this)
+        } else {
+            finish()
         }
-        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -122,7 +142,7 @@ class SettingsActivity : AppCompatActivity() {
 
         private fun getAppVersionName(context: Context): String {
             try {
-                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val packageInfo = context.packageName.let { context.packageManager.getPackageInfo(it, 0) }
                 return packageInfo.versionName ?: "N/A"
             } catch (e: Exception) {
                 e.printStackTrace()
