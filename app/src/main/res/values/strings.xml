@@ -70,23 +70,22 @@
     <string name="thankyou">Thank you</string>
     <string name="selectBellSound">Select bell sound</string>
 
-    <string name="pref_default_bellsound" translatable="false">bell_01_temple.wav</string>
+    <string name="pref_default_bellsound" translatable="false">1.templebell.wav</string>
 
     <string-array name="bellSoundChoiceValues">
-        <item>bell_01_temple.wav</item>
-        <item>bell_02_little.wav</item>
-        <item>bell_03_herbert.wav</item>
-        <item>bell_04_otto.wav</item>
-        <item>bell_05_tec.wav</item>
-        <item>bell_06_savannah.wav</item>
-        <item>bell_07_bicycle.wav</item>
-        <item>bell_08_surreal.wav</item>
-        <item>bell_09_aiwha.wav</item>
-        <item>bell_10_godowan.wav</item>
-        <item>bell_11_kwahmah.flac</item>
-        <item>bell_12_reception.flac</item>
-        <item>bell_13_bike.ogg</item>
-
+        <item>1.templebell.wav</item>
+        <item>2_jovica__little-bell.wav</item>
+        <item>3.herbertboland.wav</item>
+        <item>4.ottophokus.wav</item>
+        <item>5.tec-studios__bell003mono.wav</item>
+        <item>6_xicecoffeex__savannah-bell.wav</item>
+        <item>7_keykrusher__bicycle-bell.wav</item>
+        <item>8_surreal-bell.wav</item>
+        <item>9_aiwha__bell.wav</item>
+        <item>10_godowan__bell-1.wav</item>
+        <item>11__kwahmah_ping.flac</item>
+        <item>12_cdrk__reception-bell.flac</item>
+        <item>13_bell_bike.ogg</item>
     </string-array>
 
     <string name="white" translatable="false">white</string>

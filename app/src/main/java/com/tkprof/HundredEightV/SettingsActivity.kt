@@ -92,13 +92,13 @@ class SettingsActivity : AppCompatActivity() {
             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     // Called when ad is dismissed.
-                    mInterstitialAd = null
+                    //mInterstitialAd = null
                     finish()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                     // Called when ad fails to show.
-                    mInterstitialAd = null
+                    //mInterstitialAd = null
                     finish()
                 }
             }
