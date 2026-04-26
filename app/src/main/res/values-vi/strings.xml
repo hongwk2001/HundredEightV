@@ -10,8 +10,8 @@
 
     <string name="interval">Khoảng cách (giây)</string>
     <string name="remain">Thời gian còn lại</string>
-    <string name="count_a">Tổng A: </string>
-    <string name="count_b">Tổng B: </string>
+    <string name="count_a">Hôm nay: </string>
+    <string name="count_b">Tổng cộng: </string>
     <string name="start">Bắt đầu</string>
     <string name="pause">Tạm dừng</string>
     <string name="keep_screen_on">Giữ màn hình luôn sáng</string>
@@ -24,7 +24,6 @@
     <string name="file_to_read">Tệp để đọc</string>
 
     <string name="menu_settings">Cài đặt</string>
-    <string name="file_line_cnt">Số dòng của tệp</string>
 
     <string name="korean108">Tiếng Hàn 108</string>
     <string name="eng108">Tiếng Anh 108 (HyunGak)</string>
@@ -35,6 +34,7 @@
     <string name="vn108Vow">108 Lời Nguyện (Tiếng Việt)</string>
     <string name="krishna108">108 Tên của Thần Krishna</string>
     <string name="rosary108">108 Câu chuỗi hạt quý giá</string>
+    <string name="touchingEarth6">Chạm vào Trái đất (6 Lời nguyện)</string>
 
     <string name="soundpath">bellsounds/</string>
 
@@ -46,4 +46,10 @@
     <string name="selectBellSound">Chọn tiếng chuông</string>
 
     <string name="bgcolor">Màu nền</string>
+
+    <string name="done_today">Hôm nay: </string>
+    <string name="overall">Tổng cộng: </string>
+    <string name="main_page">Tiếp tục</string>
+    <string name="begin">Bắt đầu</string>
+
 </resources>

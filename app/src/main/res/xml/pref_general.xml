@@ -14,18 +14,6 @@
     <PreferenceCategory />
 
     <EditTextPreference
-        android:defaultValue="108"
-        android:inputType="number"
-        android:key="file_line_cnt"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/file_line_cnt"
-        android:layout="@layout/preference_horizontal" />
-
-    <PreferenceCategory />
-
-    <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
         android:key="count_a"

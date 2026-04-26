@@ -61,12 +61,13 @@
                 android:id="@+id/tableRow02"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dip">
+                android:padding="5dip"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/remain"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -75,27 +76,57 @@
                 <TextView
                     android:id="@+id/remain_e"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:minWidth="40dp"
                     android:gravity="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/black" />
 
-                <ImageButton
-                    android:id="@+id/btn_faster"
+                <Button
+                    android:id="@+id/btn_minus_1"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/faster"
-                    android:onClick="f_onClickFaster"
-                    app:srcCompat="@drawable/outline_arrow_drop_up_24" />
+                    android:minWidth="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="-1s"
+                    android:textSize="12sp" />
 
-                <ImageButton
-                    android:id="@+id/btn_slower"
+                <Button
+                    android:id="@+id/btn_faster"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/slower"
+                    android:onClick="f_onClickFaster"
+                    android:minWidth="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="-0.2s"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_slower"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:onClick="f_onClickSlower"
-                    app:srcCompat="@drawable/outline_arrow_drop_down_24" />
+                    android:minWidth="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="+0.2s"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_plus_1"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="+1s"
+                    android:textSize="12sp" />
 
             </TableRow>
 

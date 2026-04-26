@@ -15,12 +15,15 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -33,6 +36,8 @@ import com.tkprof.HundredEightV.Util.Companion.loadFile2String
 import com.tkprof.HundredEightV.Util.Companion.playSound
 import org.json.JSONArray
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var ttobj: TextToSpeech? = null
 
     private var mDetector: GestureDetectorCompat? = null
+    private var lastFlingTime: Long = 0
 
 
     override fun onSharedPreferenceChanged(
@@ -70,7 +76,45 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         key: String?
     ) {
         sharedPref = sharedPreferences
-        f_LoadVariables()
+        if (key == null) {
+            f_LoadVariables()
+            return
+        }
+
+        when (key) {
+            "interval" -> {
+                interval_sec = sharedPreferences.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+                Log.d("Main.onPrefChanged", "interval_sec updated: $interval_sec")
+            }
+            "bgcolor" -> applyBackgroundColor()
+            "bellsound" -> {
+                val sound_filename = sharedPreferences.getString("bellsound", getString(R.string.pref_default_bellsound))
+                initSound(this, assets, getString(R.string.soundpath) + sound_filename)
+            }
+            "file_name" -> {
+                val fileName = sharedPreferences.getString("file_name", "108vow.txt") ?: "108vow.txt"
+                f_File2JsonArray(fileName)
+            }
+            "tts_number" -> {
+                val checked = sharedPreferences.getBoolean("tts_number", true)
+                if (cbx_tts_number?.isChecked != checked) {
+                    cbx_tts_number?.isChecked = checked
+                }
+            }
+            "tts_text" -> {
+                val checked = sharedPreferences.getBoolean("tts_text", true)
+                if (cbx_tts_text?.isChecked != checked) {
+                    cbx_tts_text?.isChecked = checked
+                }
+            }
+            "current_cnt", "count_a", "count_b" -> {
+                // Optional: Update counts if changed elsewhere (e.g. SettingsActivity)
+                tv_Cnt?.text = sharedPreferences.getString("current_cnt", "0")
+                t_cnta?.text = sharedPreferences.getString("count_a", "0")
+                t_cntb?.text = sharedPreferences.getString("count_b", "0")
+            }
+        }
     }
 
     override fun onResume() {
@@ -102,7 +146,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         
         setupUI()
 
+        f_CheckDailyReset()
         f_LoadVariables()
+        
         val assetManager = getAssets()
 
         val audio_file = (getString(R.string.soundpath)
@@ -122,6 +168,74 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                     }
                 }
             })
+
+        // Handle back button
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showPauseDialog()
+            }
+        })
+
+        // Check for Auto Start extra
+        if (intent.getBooleanExtra("AUTO_START", false)) {
+            // Wait a tiny bit for UI to be ready, or just call it if setupUI is done
+            tb1?.isChecked = true
+            toggle_on = true
+            f_Start(isResume = false)
+        }
+    }
+
+    private fun showPauseDialog() {
+        val wasRunning = toggle_on
+        f_Pause()
+        
+        if (wasRunning) {
+            tb1?.isChecked = false
+            toggle_on = false
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.dialog_pause_title)
+        builder.setMessage(R.string.dialog_pause_message)
+        builder.setCancelable(false)
+
+        builder.setPositiveButton(R.string.dialog_btn_continue) { _, _ ->
+            tb1?.isChecked = true
+            toggle_on = true
+            f_Start(isResume = true)
+        }
+
+        builder.setNegativeButton(R.string.dialog_btn_end) { _, _ ->
+            f_SaveSharedpref()
+            val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
+            val intent = Intent(this@MainActivity, EndActivity::class.java)
+            intent.putExtra("DONE_TODAY", bowsDoneToday)
+            startActivity(intent)
+            finish()
+        }
+
+        builder.setNeutralButton(R.string.dialog_btn_back_to_start) { _, _ ->
+            f_SaveSharedpref()
+            val intent = Intent(this@MainActivity, StartActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+        }
+
+        builder.show()
+    }
+
+    private fun f_CheckDailyReset() {
+        val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val today = sdf.format(Date())
+        val lastDate = sharedPref!!.getString("last_use_date", "")
+        
+        if (lastDate != today) {
+            sharedPref!!.edit()
+                .putString("count_a", "0")
+                .putString("last_use_date", today)
+                .apply()
+        }
     }
 
     private fun setupUI() {
@@ -131,6 +245,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         val currentCntB = t_cntb?.text?.toString()
         val currentText = t_text?.text?.toString()
         val isToggled = tb1?.isChecked ?: false
+        val isTtsNumberChecked = cbx_tts_number?.isChecked ?: sharedPref?.getBoolean("tts_number", true) ?: true
+        val isTtsTextChecked = cbx_tts_text?.isChecked ?: sharedPref?.getBoolean("tts_text", true) ?: true
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.activity_main)
@@ -142,8 +258,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         if (mainView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                // Apply the insets as padding to the view. This ensures that the 
-                // content doesn't overlap with system UI elements like the status bar or navigation bar.
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
                 insets
             }
@@ -167,9 +281,81 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         if (currentCntB != null) t_cntb?.text = currentCntB
         if (currentText != null) t_text?.text = currentText
         tb1?.isChecked = isToggled
+        
+        cbx_tts_number?.isChecked = isTtsNumberChecked
+        cbx_tts_text?.isChecked = isTtsTextChecked
+
+        // Add listeners to save state immediately and prevent reverting when other preferences change
+        cbx_tts_number?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit()?.putBoolean("tts_number", isChecked)?.apply()
+        }
+        cbx_tts_text?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit()?.putBoolean("tts_text", isChecked)?.apply()
+        }
+
+        // New listeners for +/- 1s buttons
+        findViewById<Button>(R.id.btn_minus_1)?.setOnClickListener {
+            changeInterval(-1.0)
+        }
+        findViewById<Button>(R.id.btn_plus_1)?.setOnClickListener {
+            changeInterval(1.0)
+        }
 
         // Re-apply background color
         applyBackgroundColor()
+    }
+
+    private fun changeInterval(delta: Double) {
+        interval_sec = (interval_sec ?: 9.4) + delta
+        if (interval_sec!! < 1.0) interval_sec = 1.0
+        interval_sec = Math.round(interval_sec!! * 10.0) / 10.0
+        saveInterval()
+        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+        
+        if (toggle_on) {
+            f_RestartTimerOnly()
+        }
+        
+        Toast.makeText(this, "Interval: $interval_sec", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun f_RestartTimerOnly() {
+        if (ct != null) {
+            ct!!.cancel()
+            ct = null
+        }
+        
+        remainSecs()
+
+        val current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
+        val interval_ms = (interval_sec!! * 1000).toLong()
+
+        if (remainingItemsAfterCurrent > 0) {
+            val total_ms = remainingItemsAfterCurrent * interval_ms
+            // Add a small 200ms buffer and logic check to prevent an immediate skip
+            ct = object : CountDownTimer(total_ms + 200, interval_ms) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (millisUntilFinished > total_ms) return
+                    f_NextWords(1, true)
+                }
+
+                override fun onFinish() {
+                    tb1!!.isChecked = false
+                    toggle_on = false
+                    saveCurrentCount = false
+                    f_Pause()
+                    f_SaveSharedpref()
+
+                    val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
+                    val intent = Intent(this@MainActivity, EndActivity::class.java)
+                    intent.putExtra("DONE_TODAY", bowsDoneToday)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            ct!!.start()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -220,17 +406,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             t_cntb!!.setText(sharedPref!!.getString("count_b", "0"))
         }
 
-        cbx_tts_number!!.setChecked(sharedPref!!.getBoolean("tts_number", true))
-        cbx_tts_text!!.setChecked(sharedPref!!.getBoolean("tts_text", true))
+        cbx_tts_number?.isChecked = sharedPref!!.getBoolean("tts_number", true)
+        cbx_tts_text?.isChecked = sharedPref!!.getBoolean("tts_text", true)
 
-        interval_sec = sharedPref!!.getString("interval", "9.4")!!.toDouble()
-        Log.d("Main.f_LoadVariables", "interval_sec:" + interval_sec)
+        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+        Log.d("Main.f_LoadVariables", "interval_sec: $interval_sec")
 
         findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
 
         val fileName: String = sharedPref!!.getString("file_name", "108vow.txt")!!
-        file_line_cnt = sharedPref!!.getString("file_line_cnt", "108")!!.toInt()
-
+        
         applyBackgroundColor()
 
         val sound_filename: String =
@@ -269,8 +454,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         editor.putString("count_a", t_cnta!!.getText().toString())
         editor.putString("count_b", t_cntb!!.getText().toString())
 
-        editor.putBoolean("tts_number", cbx_tts_number!!.isChecked())
-        editor.putBoolean("tts_text", cbx_tts_text!!.isChecked())
+        editor.putBoolean("tts_number", cbx_tts_number?.isChecked ?: true)
+        editor.putBoolean("tts_text", cbx_tts_text?.isChecked ?: true)
 
         editor.apply()
     }
@@ -307,28 +492,64 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var toggle_on: Boolean = false
 
     fun f_onToggleClicked(view: View) {
-        toggle_on = (view as ToggleButton).isChecked()
-        if (toggle_on) {
-            f_Start()
+        val isChecked = (view as ToggleButton).isChecked()
+        if (isChecked) {
+            toggle_on = true
+            f_Start(isResume = false)
         }
         else {
-            f_Pause()
+            showPauseDialog()
         }
     }
 
-    fun f_Start() {
-        var Current_cnt = tv_Cnt!!.getText().toString().toInt()
-        file_line_cnt = sharedPref!!.getString("file_line_cnt", "108")!!.toInt()
-        interval_sec = sharedPref!!.getString("interval", "9.4")!!.toDouble()
+    fun f_Start(isResume: Boolean) {
+        f_Pause() 
+
+        var current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        if (Current_cnt >= file_line_cnt) {
+        if (!isResume && current_cnt_val >= file_line_cnt) {
+            current_cnt_val = 0
             tv_Cnt!!.setText("0")
-            Current_cnt = 0
         }
 
-        f_CountDownTimer((file_line_cnt - Current_cnt), interval_sec!!)
+        if (!isResume) {
+            f_NextWords(1, true)
+            current_cnt_val = tv_Cnt!!.getText().toString().toInt()
+        } else {
+            remainSecs()
+        }
+
+        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
+        val interval_ms = (interval_sec!! * 1000).toLong()
+
+        if (remainingItemsAfterCurrent > 0) {
+            val total_ms = remainingItemsAfterCurrent * interval_ms
+            // Buffer to prevent immediate skip
+            ct = object : CountDownTimer(total_ms + 200, interval_ms) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (millisUntilFinished > total_ms) return
+                    f_NextWords(1, true)
+                }
+
+                override fun onFinish() {
+                    tb1!!.isChecked = false
+                    toggle_on = false
+                    saveCurrentCount = false
+                    f_Pause()
+                    f_SaveSharedpref()
+
+                    val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
+                    val intent = Intent(this@MainActivity, EndActivity::class.java)
+                    intent.putExtra("DONE_TODAY", bowsDoneToday)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            ct!!.start()
+        }
     }
 
     fun f_Pause() {
@@ -348,39 +569,26 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
 
-    private fun f_CountDownTimer(target_count: Int, countDownInterval_sec: Double) {
-        val countDownInterval_milisec = (countDownInterval_sec * 1000).toInt()
-        val tc = (target_count) * countDownInterval_milisec
+    private fun f_ManualJump(i: Int) {
+        val wasRunning = toggle_on
+        f_Pause() 
+        
+        f_NextWords(i, true)
 
-        ct = object : CountDownTimer(tc.toLong(), countDownInterval_milisec.toLong()) {
-            override fun onTick(millisUntilFinished: Long) {
-                f_NextWords(1, true)
-            }
-
-            override fun onFinish() {
-                tb1!!.setChecked(false)
-                toggle_on = false
-                saveCurrentCount = false
-                f_Pause()
-                Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.thankyou),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        if (wasRunning) {
+            f_RestartTimerOnly()
         }
-
-        ct!!.start()
     }
 
     private fun f_NextWords(i: Int, setRemainSeconds: Boolean) {
-        var Current_cnt = tv_Cnt!!.getText().toString().toInt()
+        var Current_cnt = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
 
-        if (i == -1 && Current_cnt == 0) {
+        val nextCnt = Current_cnt + i
+        if (nextCnt < 0 || nextCnt > file_line_cnt) {
             return
         }
-
-        Current_cnt = Current_cnt + i
+        
+        Current_cnt = nextCnt
 
         if (sharedPref!!.getBoolean("play_sound", true)) {
             playSound(this)
@@ -388,10 +596,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         f_ReadJsonObject(Current_cnt)
 
-        if (setRemainSeconds) remainSecs()
+        if (setRemainSeconds) {
+            remainSecs()
+        }
 
-        var Current_ca = t_cnta!!.getText().toString().toInt()
-        var Current_cb = t_cntb!!.getText().toString().toInt()
+        var Current_ca = t_cnta!!.getText().toString().toIntOrNull() ?: 0
+        var Current_cb = t_cntb!!.getText().toString().toIntOrNull() ?: 0
 
         Current_ca = Current_ca + i
         Current_cb = Current_cb + i
@@ -405,11 +615,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     fun f_ReadText() {
         var toSpeak = ""
-        if (cbx_tts_number!!.isChecked()) {
+        if (cbx_tts_number?.isChecked == true) {
             toSpeak = tv_Cnt!!.getText().toString()
         }
 
-        if (cbx_tts_text!!.isChecked()) {
+        if (cbx_tts_text?.isChecked == true) {
             toSpeak = toSpeak + " " + t_text!!.getText().toString()
         }
 
@@ -420,17 +630,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     fun f_onClickSlower(view: View) {
-        this.interval_sec = this.interval_sec?.plus(0.2)
-        interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
-        saveInterval()
-        Toast.makeText(this, "" + interval_sec, Toast.LENGTH_SHORT).show()
+        changeInterval(0.2)
     }
 
     fun f_onClickFaster(view: View) {
-        this.interval_sec = this.interval_sec?.minus(0.2)
-        interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
-        saveInterval()
-        Toast.makeText(this, "" + interval_sec, Toast.LENGTH_SHORT).show()
+        changeInterval(-0.2)
     }
 
     private fun saveInterval() {
@@ -441,86 +645,125 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     private fun remainSecs() {
         ct_remain?.cancel()
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
+
         ct_remain = object : CountDownTimer((interval_sec!! * 1000).toLong(), 200) {
             override fun onTick(millisUntilFinished: Long) {
-                // Re-finding the view each time because orientation might change
-                findViewById<TextView>(R.id.remain_e)?.setText(
-                    String.format(
-                        Locale.US,
-                        "%.1f",
-                        (Math.round((millisUntilFinished / 100).toFloat())).toFloat() / 10
-                    )
-                )
+                val remain = millisUntilFinished.toDouble() / 1000
+                findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", remain))
             }
 
             override fun onFinish() {
-                findViewById<TextView>(R.id.remain_e)?.setText("0")
+                findViewById<TextView>(R.id.remain_e)?.setText("0.0")
             }
-        }
-        ct_remain!!.start()
+        }.start()
     }
 
-    var jsonArray: JSONArray? = null
-    fun f_File2JsonArray(fileName: String?) {
-        val fileReadStringFeed = loadFile2String(this, fileName)
+    private var jsonArray: JSONArray? = null
+
+    private fun f_File2JsonArray(fileName: String) {
         try {
-            jsonArray = JSONArray(fileReadStringFeed)
+            val jsonString = loadFile2String(this, fileName)
+            jsonArray = JSONArray(jsonString)
+            file_line_cnt = jsonArray!!.length()
         } catch (e: JSONException) {
             e.printStackTrace()
+            file_line_cnt = 0
         }
     }
 
-    fun f_ReadJsonObject(new_cnt: Int) {
-        if (jsonArray == null || new_cnt <= 0) return
-        val ii: Int
+    private fun f_ReadJsonObject(count: Int) {
+        if (jsonArray == null || count <= 0 || count > jsonArray!!.length()) {
+            t_text?.setText("")
+            return
+        }
+
         try {
-            if (new_cnt > file_line_cnt) {
-                ii = new_cnt % file_line_cnt
-            }
-            else {
-                ii = new_cnt
-            }
-            val jsonObject = jsonArray!!.getJSONObject(if (ii == 0) file_line_cnt - 1 else ii - 1)
-            t_text!!.setText(jsonObject.getString("text"))
+            val jsonObject = jsonArray!!.getJSONObject(count - 1)
+            val text = jsonObject.getString("text")
+            t_text?.setText(text)
         } catch (e: JSONException) {
             e.printStackTrace()
+            t_text?.setText("")
         }
+    }
+
+    companion object {
+        const val SETTING_ACTIVITY = 1
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        this.mDetector!!.onTouchEvent(event)
+        if (mDetector!!.onTouchEvent(event)) {
+            return true
+        }
         return super.onTouchEvent(event)
     }
 
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
+    }
 
-    override fun onDown(e: MotionEvent): Boolean = false
-    override fun onShowPress(e: MotionEvent) {}
-    override fun onSingleTapUp(e: MotionEvent): Boolean = false
-    override fun onScroll(e2: MotionEvent?, p1: MotionEvent, distanceY: Float, p3: Float): Boolean = false
-    override fun onLongPress(e: MotionEvent) {}
-
-    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityY: Float, p3: Float): Boolean {
-        e1?.getX()?.minus(e2.getX())?.let {
-            if (it > SWIPE_MIN_DISTANCE) {
-                f_NextWords(1, false)
-            } else if ( it < - SWIPE_MIN_DISTANCE) {
-                f_NextWords(-1, false)
+    override fun onFling(
+        event1: MotionEvent?,
+        event2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        try {
+            if (event1 != null) {
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastFlingTime < 300) {
+                    return false 
+                }
+                
+                val diffY = event2.y - event1.y
+                val diffX = event2.x - event1.x
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        lastFlingTime = currentTime
+                        if (diffX > 0) {
+                            f_ManualJump(-1)
+                        } else {
+                            f_ManualJump(1)
+                        }
+                        return true
+                    }
+                }
             }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
         }
         return false
     }
 
-    override fun onSingleTapConfirmed(e: MotionEvent): Boolean = false
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        f_NextWords(1, false)
+    override fun onLongPress(event: MotionEvent) {}
+
+    override fun onScroll(
+        event1: MotionEvent?,
+        event2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
         return false
     }
-    override fun onDoubleTapEvent(e: MotionEvent): Boolean = false
 
-    companion object {
-        const val KEY_PREF_SYNC_CONN: String = "pref_syncConnectionType"
-        private const val TAG = "MainActivity"
-        private const val SETTING_ACTIVITY = 10
-        const val SWIPE_MIN_DISTANCE: Int = 120
+    override fun onShowPress(event: MotionEvent) {}
+
+    override fun onSingleTapUp(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTap(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTapEvent(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+        return false
     }
 }

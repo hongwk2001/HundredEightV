@@ -15,18 +15,12 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.util.Objects
 
 class SettingsActivity : AppCompatActivity() {
-
-    private var mInterstitialAd: InterstitialAd? = null
-    private val adUnitId = AD_UNIT_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -58,65 +52,32 @@ class SettingsActivity : AppCompatActivity() {
 
         // Close Button Setup
         findViewById<Button>(R.id.btn_close_settings).setOnClickListener {
-            showAdOrFinish()
-        }
-
-        // Initialize AdMob & load ad
-        MobileAds.initialize(this) {}
-        loadInterstitialAd()
-
-        // Handle back press using OnBackPressedDispatcher
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                showAdOrFinish()
-            }
-        })
-    }
-
-    private fun loadInterstitialAd() {
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, adUnitId, adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-            }
-
-            override fun onAdFailedToLoad(loadAdError: com.google.android.gms.ads.LoadAdError) {
-                mInterstitialAd = null
-            }
-        })
-    }
-
-    private fun showAdOrFinish() {
-        val ad = mInterstitialAd
-        if (ad != null) {
-            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    // Called when ad is dismissed.
-                    //mInterstitialAd = null
-                    finish()
-                }
-
-                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    // Called when ad fails to show.
-                    //mInterstitialAd = null
-                    finish()
-                }
-            }
-            ad.show(this)
-        } else {
             finish()
         }
+
+        // Initialize AdMob Banner
+        MobileAds.initialize(this) {}
+        val adView: AdView = findViewById(R.id.adViewSettings)
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        // Handle back press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        showAdOrFinish()
+        finish()
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                showAdOrFinish()
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -131,7 +92,6 @@ class SettingsActivity : AppCompatActivity() {
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_b")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("interval")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_name")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_line_cnt")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))
 
@@ -153,7 +113,6 @@ class SettingsActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
         private val sBindPreferenceSummaryToValueListener =
             Preference.OnPreferenceChangeListener { preference, value ->
                 val stringValue = value.toString()

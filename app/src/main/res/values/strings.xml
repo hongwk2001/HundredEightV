@@ -9,8 +9,8 @@
 
     <string name="interval">Interval</string>
     <string name="remain">Remain Seconds</string>
-    <string name="count_a">Count A: </string>
-    <string name="count_b">Count B: </string>
+    <string name="count_a">Today: </string>
+    <string name="count_b">Overall: </string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
     <string name="keep_screen_on">Keep Screen On without touch</string>
@@ -23,7 +23,6 @@
     <string name="file_to_read">File to read</string>
 
     <string name="menu_settings">Settings</string>
-    <string name="file_line_cnt">Lines of File</string>
 
     <string name="korean108">BTN Korean 108</string>
 
@@ -35,6 +34,7 @@
     <string name="vn108Vow">Vietnamese 108 Vow</string>
     <string name="krishna108">108 Names of Lord Krishna</string>
     <string name="rosary108">108 Verses Precious Crystal Rosary</string>
+    <string name="touchingEarth6">Touching the Earth (6 Vows)</string>
 
     <string name="soundpath">bellsounds/</string>
 
@@ -52,6 +52,7 @@
         <item>@string/vn108Vow</item>
         <item>@string/krishna108</item>
         <item>@string/rosary108</item>
+        <item>@string/touchingEarth6</item>
     </string-array>
 
     <string-array name="file_choice_values">
@@ -63,6 +64,7 @@
         <item>108_lay_tai_nha_don_gian.json</item>
         <item>108_names_of_Lord_Krishna.json</item>
         <item>108verses_Precious_Crystal_Rosary.json</item>
+        <item>touching_the_earth_6vows.json</item>
     </string-array>
 
     <string name="slower">Slower</string>
@@ -90,6 +92,17 @@
 
     <string name="white" translatable="false">white</string>
     <string name="bgcolor">Background Color</string>
+
+    <string name="done_today">Today: </string>
+    <string name="overall">Overall: </string>
+    <string name="main_page">Continue</string>
+    <string name="begin">Begin</string>
+    <string name="dialog_pause_title">Paused</string>
+    <string name="dialog_pause_message">What would you like to do?</string>
+    <string name="dialog_btn_continue">Continue</string>
+    <string name="dialog_btn_end">End Session</string>
+    <string name="dialog_btn_back_to_start">Back to Start</string>
+
 
     <string-array name="colorValues">
         <item>red</item>
