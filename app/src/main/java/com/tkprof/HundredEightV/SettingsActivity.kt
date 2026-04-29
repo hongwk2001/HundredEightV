@@ -1,6 +1,8 @@
 package com.tkprof.HundredEightV
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -101,13 +103,18 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         private fun getAppVersionName(context: Context): String {
-            try {
-                val packageInfo = context.packageName.let { context.packageManager.getPackageInfo(it, 0) }
-                return packageInfo.versionName ?: "N/A"
+            return try {
+                val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    context.packageManager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(0))
+                } else {
+                    @Suppress("DEPRECATION")
+                    context.packageManager.getPackageInfo(context.packageName, 0)
+                }
+                packageInfo.versionName ?: "N/A"
             } catch (e: Exception) {
                 e.printStackTrace()
+                "N/A"
             }
-            return "N/A"
         }
     }
 

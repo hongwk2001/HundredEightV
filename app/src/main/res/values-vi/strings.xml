@@ -42,7 +42,7 @@
 
     <string name="slower">Chậm hơn</string>
     <string name="faster">Nhanh hơn</string>
-    <string name="thankyou">Cảm ơn bạn</string>
+    <string name="goodjob">Làm tốt lắm. Bạn đã vất vả rồi.</string>
     <string name="selectBellSound">Chọn tiếng chuông</string>
 
     <string name="bgcolor">Màu nền</string>
@@ -51,5 +51,11 @@
     <string name="overall">Tổng cộng: </string>
     <string name="main_page">Tiếp tục</string>
     <string name="begin">Bắt đầu</string>
+
+    <string name="dialog_pause_title">Đã tạm dừng</string>
+    <string name="dialog_pause_message">Bạn muốn làm gì tiếp theo?</string>
+    <string name="dialog_btn_continue">Tiếp tục</string>
+    <string name="dialog_btn_end">Kết thúc</string>
+    <string name="dialog_btn_back_to_start">Quay lại bắt đầu</string>
 
 </resources>

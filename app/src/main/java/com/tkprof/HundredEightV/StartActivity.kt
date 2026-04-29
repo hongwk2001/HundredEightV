@@ -9,6 +9,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -70,7 +71,7 @@ class StartActivity : AppCompatActivity() {
             val selectedIndex = spinner.selectedItemPosition
             val selectedValue = values[selectedIndex]
             
-            sharedPref.edit().putString("file_name", selectedValue).apply()
+            sharedPref.edit { putString("file_name", selectedValue) }
             
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("AUTO_START", true)
@@ -101,7 +102,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun saveInterval() {
-        sharedPref.edit().putString("interval", intervalSec.toString()).apply()
+        sharedPref.edit { putString("interval", intervalSec.toString()) }
     }
 
     override fun onResume() {

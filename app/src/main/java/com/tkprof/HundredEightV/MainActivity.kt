@@ -3,9 +3,10 @@ package com.tkprof.HundredEightV
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
@@ -18,22 +19,24 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.GestureDetectorCompat
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
-import com.tkprof.HundredEightV.Util.Companion.initSound
-import com.tkprof.HundredEightV.Util.Companion.loadFile2String
-import com.tkprof.HundredEightV.Util.Companion.playSound
+import com.tkprof.HundredEightV.Util.initSound
+import com.tkprof.HundredEightV.Util.loadFile2String
+import com.tkprof.HundredEightV.Util.playSound
 import org.json.JSONArray
 import org.json.JSONException
 import java.text.SimpleDateFormat
@@ -63,12 +66,20 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var cbx_tts_number: CheckBox? = null
     var cbx_tts_text: CheckBox? = null
     var tb1: ToggleButton? = null
+    var progressBar: ProgressBar? = null
 
 
     var ttobj: TextToSpeech? = null
 
-    private var mDetector: GestureDetectorCompat? = null
+    private var mDetector: GestureDetector? = null
     private var lastFlingTime: Long = 0
+
+    private val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        f_LoadVariables()
+        saveCurrentCount = false
+        toggle_on = false
+    }
 
 
     override fun onSharedPreferenceChanged(
@@ -156,7 +167,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         initSound(this, assetManager, audio_file)
 
-        mDetector = GestureDetectorCompat(this, this)
+        mDetector = GestureDetector(this, this)
         mDetector!!.setOnDoubleTapListener(this)
 
         ttobj = TextToSpeech(
@@ -228,13 +239,13 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     private fun f_CheckDailyReset() {
         val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         val today = sdf.format(Date())
-        val lastDate = sharedPref!!.getString("last_use_date", "")
+        val lastDate = sharedPref?.getString("last_use_date", "")
         
         if (lastDate != today) {
-            sharedPref!!.edit()
-                .putString("count_a", "0")
-                .putString("last_use_date", today)
-                .apply()
+            sharedPref?.edit {
+                putString("count_a", "0")
+                putString("last_use_date", today)
+            }
         }
     }
 
@@ -248,11 +259,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         val isTtsNumberChecked = cbx_tts_number?.isChecked ?: sharedPref?.getBoolean("tts_number", true) ?: true
         val isTtsTextChecked = cbx_tts_text?.isChecked ?: sharedPref?.getBoolean("tts_text", true) ?: true
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setContentView(R.layout.activity_main)
-        } else {
-            setContentView(R.layout.activity_main_land)
-        }
+        setContentView(R.layout.activity_main)
 
         val mainView = findViewById<View>(R.id.mainLinearLayout1)
         if (mainView != null) {
@@ -270,7 +277,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         t_cnta = findViewById(R.id.count_a)
         t_cntb = findViewById(R.id.count_b)
         t_text = findViewById(R.id.text)
-        tb1 = findViewById(R.id.tgbBeginPause)
+        tb1 = findViewById(R.id.tgb_begin_pause)
+        progressBar = findViewById(R.id.progress_remain)
 
         cbx_tts_number = findViewById(R.id.cbx_tts_number)
         cbx_tts_text = findViewById(R.id.cbx_tts_text)
@@ -341,27 +349,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 }
 
                 override fun onFinish() {
-                    tb1!!.isChecked = false
-                    toggle_on = false
-                    saveCurrentCount = false
-                    f_Pause()
-                    f_SaveSharedpref()
-
-                    val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
-                    val intent = Intent(this@MainActivity, EndActivity::class.java)
-                    intent.putExtra("DONE_TODAY", bowsDoneToday)
-                    startActivity(intent)
-                    finish()
+                    f_GoToEndActivity()
                 }
             }
             ct!!.start()
+        } else {
+            f_GoToEndActivity()
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        setupUI()
-    }
+
 
     private fun applyBackgroundColor() {
         val currentLayout = findViewById<View?>(R.id.mainLinearLayout1) as LinearLayout?
@@ -447,17 +444,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     private fun f_SaveSharedpref() {
-        val editor = sharedPref!!.edit()
-        val currnet_cnt = if (toggle_on || saveCurrentCount) tv_Cnt!!.getText().toString() else "0"
-
-        editor.putString("current_cnt", currnet_cnt)
-        editor.putString("count_a", t_cnta!!.getText().toString())
-        editor.putString("count_b", t_cntb!!.getText().toString())
-
-        editor.putBoolean("tts_number", cbx_tts_number?.isChecked ?: true)
-        editor.putBoolean("tts_text", cbx_tts_text?.isChecked ?: true)
-
-        editor.apply()
+        val currnet_cnt = if (toggle_on || saveCurrentCount) tv_Cnt?.text?.toString() ?: "0" else "0"
+        sharedPref?.edit {
+            putString("current_cnt", currnet_cnt)
+            putString("count_a", t_cnta?.text?.toString() ?: "0")
+            putString("count_b", t_cntb?.text?.toString() ?: "0")
+            putBoolean("tts_number", cbx_tts_number?.isChecked ?: true)
+            putBoolean("tts_text", cbx_tts_text?.isChecked ?: true)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -474,21 +468,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             tb1!!.setChecked(false)
 
             val intent = Intent(this, SettingsActivity::class.java)
-            startActivityForResult(intent, SETTING_ACTIVITY)
+            settingsLauncher.launch(intent)
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        f_LoadVariables()
-        saveCurrentCount = false
-        toggle_on = false
-    }
 
+    private var endHandler: Handler? = null
+    private var endRunnable: Runnable? = null
     var toggle_on: Boolean = false
 
     fun f_onToggleClicked(view: View) {
@@ -535,20 +524,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 }
 
                 override fun onFinish() {
-                    tb1!!.isChecked = false
-                    toggle_on = false
-                    saveCurrentCount = false
-                    f_Pause()
-                    f_SaveSharedpref()
-
-                    val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
-                    val intent = Intent(this@MainActivity, EndActivity::class.java)
-                    intent.putExtra("DONE_TODAY", bowsDoneToday)
-                    startActivity(intent)
-                    finish()
+                    f_GoToEndActivity()
                 }
             }
             ct!!.start()
+        } else {
+            f_GoToEndActivity()
         }
     }
 
@@ -563,9 +544,38 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             ct_remain = null
         }
 
+        endRunnable?.let { endHandler?.removeCallbacks(it) }
+
         ttobj?.stop()
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    private fun f_GoToEndActivity() {
+        if (endHandler == null) {
+            endHandler = Handler(Looper.getMainLooper())
+        }
+        endRunnable?.let { endHandler?.removeCallbacks(it) }
+
+        endRunnable = Runnable {
+            if (isFinishing || isDestroyed) return@Runnable
+
+            tb1?.isChecked = false
+            toggle_on = false
+            saveCurrentCount = false
+            f_Pause()
+            f_SaveSharedpref()
+
+            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            val intent = Intent(this@MainActivity, EndActivity::class.java)
+            intent.putExtra("DONE_TODAY", bowsDoneToday)
+            startActivity(intent)
+            finish()
+        }
+
+        // Wait for the final interval to finish + 3 seconds extra
+        val finalDelay = ((interval_sec ?: 9.4) * 1000).toLong() + 3000L
+        endHandler?.postDelayed(endRunnable!!, finalDelay)
     }
 
 
@@ -638,23 +648,26 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
     private fun saveInterval() {
-        val editor = sharedPref!!.edit()
-        editor.putString("interval", "" + interval_sec)
-        editor.apply()
+        sharedPref?.edit { putString("interval", interval_sec.toString()) }
     }
 
     private fun remainSecs() {
         ct_remain?.cancel()
+        val totalMs = ((interval_sec ?: 9.4) * 1000).toLong()
+        progressBar?.max = totalMs.toInt()
+        progressBar?.progress = 0
         findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
 
-        ct_remain = object : CountDownTimer((interval_sec!! * 1000).toLong(), 200) {
+        ct_remain = object : CountDownTimer(totalMs, 40) {
             override fun onTick(millisUntilFinished: Long) {
                 val remain = millisUntilFinished.toDouble() / 1000
                 findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", remain))
+                progressBar?.progress = (totalMs - millisUntilFinished).toInt()
             }
 
             override fun onFinish() {
                 findViewById<TextView>(R.id.remain_e)?.setText("0.0")
+                progressBar?.progress = totalMs.toInt()
             }
         }.start()
     }
