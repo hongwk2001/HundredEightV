@@ -120,7 +120,20 @@
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:text="@string/begin"
+            android:layout_marginBottom="16dp"
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/dialog_btn_end"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView

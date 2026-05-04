@@ -21,20 +21,9 @@
     <string name="cbx_tts_text">TTS Text</string>
 
     <string name="file_to_read">File to read</string>
+    <string name="korean108" translatable="false">108_Vows_by_Sungsan.json</string>
 
     <string name="menu_settings">Settings</string>
-
-    <string name="korean108">BTN Korean 108</string>
-
-    <string name="eng108">English 108 Vow (HyunGak)</string>
-    <string name="korean103vow">Catholic 103wi</string>
-    <string name="nonRelVow">Non religious 108 vow</string>
-
-    <string name="eng108Sungsan">English 108 Vow (Sungsan)</string>
-    <string name="vn108Vow">Vietnamese 108 Vow</string>
-    <string name="krishna108">108 Names of Lord Krishna</string>
-    <string name="rosary108">108 Verses Precious Crystal Rosary</string>
-    <string name="touchingEarth6">Touching the Earth (6 Vows)</string>
 
     <string name="soundpath">bellsounds/</string>
 
@@ -42,29 +31,21 @@
 
     <!-- Strings related to Settings -->
 
-    <!-- Example General settings -->
-    <string-array name="file_choice_titles">
-        <item>@string/korean108</item>
-        <item>@string/eng108</item>
-        <item>@string/korean103vow</item>
-        <item>@string/nonRelVow</item>
-        <item>@string/eng108Sungsan</item>
-        <item>@string/vn108Vow</item>
-        <item>@string/krishna108</item>
-        <item>@string/rosary108</item>
-        <item>@string/touchingEarth6</item>
-    </string-array>
-
     <string-array name="file_choice_values">
-        <item>108vow.txt</item>
-        <item>108vows_Eng.txt</item>
-        <item>103vow.txt</item>
-        <item>nonRel108vow.txt</item>
-        <item>108vow_eng_sungsan.json</item>
-        <item>108_lay_tai_nha_don_gian.json</item>
-        <item>108_names_of_Lord_Krishna.json</item>
-        <item>108verses_Precious_Crystal_Rosary.json</item>
+        <item>불교방송_나를_깨우는_108배.json</item>
+        <item>한국_천주교_103위_순교자_성인.json</item>
+        <item>비종교인_108배.json</item>
+        <item>108_Vows_by_HyunGak.json</item>
+        <item>108_Vows_by_Sungsan.json</item>
+        <item>108_Lời_Nguyện_Tiếng_Việt.json</item>
+        <item>108_verses_Precious_Crystal_Rosary.json</item>
         <item>touching_the_earth_6vows.json</item>
+        <item>사무량심_16.json</item>
+        <item>보왕삼매론_10.json</item>
+        <item>법구경_p1_106.json</item>
+        <item>법구경_p2_105.json</item>
+        <item>법구경_p3_106.json</item>
+        <item>법구경_p4_103.json</item>
     </string-array>
 
     <string name="slower">Slower</string>
@@ -98,10 +79,10 @@
     <string name="main_page">Continue</string>
     <string name="begin">Begin</string>
     <string name="dialog_pause_title">Paused</string>
-    <string name="dialog_pause_message">What would you like to do?</string>
     <string name="dialog_btn_continue">Continue</string>
     <string name="dialog_btn_end">End Session</string>
     <string name="dialog_btn_back_to_start">Back to Start</string>
+    <string name="exit">Exit</string>
 
 
     <string-array name="colorValues">

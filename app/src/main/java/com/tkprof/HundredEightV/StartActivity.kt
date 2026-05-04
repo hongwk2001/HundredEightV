@@ -15,6 +15,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import java.util.Locale
+import kotlin.system.exitProcess
 
 class StartActivity : AppCompatActivity() {
 
@@ -34,16 +35,16 @@ class StartActivity : AppCompatActivity() {
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         spinner = findViewById(R.id.spinner_vow_file)
-
-        val titles = resources.getStringArray(R.array.file_choice_titles)
+ 
         val values = resources.getStringArray(R.array.file_choice_values)
+        val displayValues = values.map { it.replace(".json", "") }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, titles)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayValues)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
         // Set spinner selection to current saved value
-        val currentFile = sharedPref.getString("file_name", "108vow.txt")
+        val currentFile = sharedPref.getString("file_name", null)
         val index = values.indexOf(currentFile)
         if (index >= 0) {
             spinner.setSelection(index)
@@ -81,6 +82,11 @@ class StartActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_settings_start_btn).setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btn_exit).setOnClickListener {
+            finishAffinity()
+            exitProcess(0)
         }
     }
 

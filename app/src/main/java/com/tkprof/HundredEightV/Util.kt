@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.media.AudioManager
 import android.media.SoundPool
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import java.io.BufferedReader
@@ -14,13 +13,6 @@ import java.io.InputStreamReader
 
 object Util {
     private const val LOG_TAG = "Util"
-
-    val isExternalStorageReadable: Boolean
-        get() {
-            val state = Environment.getExternalStorageState()
-            return Environment.MEDIA_MOUNTED == state ||
-                    Environment.MEDIA_MOUNTED_READ_ONLY == state
-        }
 
     @JvmStatic
     fun loadFile2String(context: Context, fileName: String?): String {
@@ -46,7 +38,7 @@ object Util {
     var loaded: Boolean = false
 
     @JvmStatic
-    fun initSound(activity: Activity, assetManager: AssetManager, fileName: String?) {
+    fun initSound(activity: Activity, assetManager: AssetManager, fileName: String?, onLoaded: (() -> Unit)? = null) {
         // Set the hardware buttons to control the music
         activity.volumeControlStream = AudioManager.STREAM_MUSIC
         
@@ -60,6 +52,7 @@ object Util {
             if (status == 0) {
                 loaded = true
                 Log.d(LOG_TAG, "Sound loaded successfully: $fileName")
+                onLoaded?.invoke()
             } else {
                 loaded = false
                 Log.e(LOG_TAG, "Sound load failed with status $status: $fileName")

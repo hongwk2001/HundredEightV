@@ -92,7 +92,6 @@ class SettingsActivity : AppCompatActivity() {
 
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_a")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_b")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("interval")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_name")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))

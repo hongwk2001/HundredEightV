@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
@@ -49,5 +50,13 @@ class EndActivity : AppCompatActivity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
+
+        // Handle back press to exit the app completely
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAffinity()
+                exitProcess(0)
+            }
+        })
     }
 }

@@ -11,14 +11,11 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.GestureDetector
-import android.view.Menu
-import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -48,6 +45,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var ct: CountDownTimer? = null
     var ct_remain: CountDownTimer? = null
     var file_line_cnt: Int = 0
+    private var previousCount = 0
 
     // Default value for user to just f_Start without setup
     var interval_sec: Double? = null
@@ -70,6 +68,10 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     var ttobj: TextToSpeech? = null
+    
+    private var ttsReady = false
+    private var soundReady = false
+    private var isAutoStartTriggered = false
 
     private var mDetector: GestureDetector? = null
     private var lastFlingTime: Long = 0
@@ -104,7 +106,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 initSound(this, assets, getString(R.string.soundpath) + sound_filename)
             }
             "file_name" -> {
-                val fileName = sharedPreferences.getString("file_name", "108vow.txt") ?: "108vow.txt"
+                val fileName = sharedPreferences.getString("file_name", "불교방송_나를_깨우는_108배.json") ?: "불교방송_나를_깨우는_108배.json"
                 f_File2JsonArray(fileName)
             }
             "tts_number" -> {
@@ -160,13 +162,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         f_CheckDailyReset()
         f_LoadVariables()
         
-        val assetManager = getAssets()
-
-        val audio_file = (getString(R.string.soundpath)
-                + sharedPref!!.getString("bellsound", getString(R.string.pref_default_bellsound)))
-
-        initSound(this, assetManager, audio_file)
-
         mDetector = GestureDetector(this, this)
         mDetector!!.setOnDoubleTapListener(this)
 
@@ -176,6 +171,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 override fun onInit(status: Int) {
                     if (status != TextToSpeech.ERROR) {
                         ttobj!!.setLanguage(Locale.KOREA)
+                        ttsReady = true
+                        attemptAutoStart()
                     }
                 }
             })
@@ -187,9 +184,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             }
         })
 
-        // Check for Auto Start extra
-        if (intent.getBooleanExtra("AUTO_START", false)) {
-            // Wait a tiny bit for UI to be ready, or just call it if setupUI is done
+        attemptAutoStart()
+    }
+
+    private fun attemptAutoStart() {
+        if (intent.getBooleanExtra("AUTO_START", false) && ttsReady && soundReady && !isAutoStartTriggered) {
+            isAutoStartTriggered = true
             tb1?.isChecked = true
             toggle_on = true
             f_Start(isResume = false)
@@ -205,35 +205,42 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             toggle_on = false
         }
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.dialog_pause_title)
-        builder.setMessage(R.string.dialog_pause_message)
-        builder.setCancelable(false)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_pause_custom, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
 
-        builder.setPositiveButton(R.string.dialog_btn_continue) { _, _ ->
+        dialogView.findViewById<Button>(R.id.btn_continue).setOnClickListener {
             tb1?.isChecked = true
             toggle_on = true
             f_Start(isResume = true)
+            dialog.dismiss()
         }
 
-        builder.setNegativeButton(R.string.dialog_btn_end) { _, _ ->
-            f_SaveSharedpref()
-            val bowsDoneToday = t_cnta!!.text.toString().toIntOrNull() ?: 0
-            val intent = Intent(this@MainActivity, EndActivity::class.java)
-            intent.putExtra("DONE_TODAY", bowsDoneToday)
-            startActivity(intent)
-            finish()
+        dialogView.findViewById<Button>(R.id.btn_settings).setOnClickListener {
+            val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+            settingsLauncher.launch(intent)
+            dialog.dismiss()
         }
 
-        builder.setNeutralButton(R.string.dialog_btn_back_to_start) { _, _ ->
+        dialogView.findViewById<Button>(R.id.btn_back_to_start).setOnClickListener {
             f_SaveSharedpref()
             val intent = Intent(this@MainActivity, StartActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
             finish()
+            dialog.dismiss()
         }
 
-        builder.show()
+        dialogView.findViewById<Button>(R.id.btn_exit_app).setOnClickListener {
+            saveCurrentCount = true
+            f_SaveSharedpref()
+            finishAffinity()
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun f_CheckDailyReset() {
@@ -261,7 +268,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         setContentView(R.layout.activity_main)
 
-        val mainView = findViewById<View>(R.id.mainLinearLayout1)
+        val mainView = findViewById<View>(R.id.rootLayout)
         if (mainView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -299,14 +306,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
         cbx_tts_text?.setOnCheckedChangeListener { _, isChecked ->
             sharedPref?.edit()?.putBoolean("tts_text", isChecked)?.apply()
-        }
-
-        // New listeners for +/- 1s buttons
-        findViewById<Button>(R.id.btn_minus_1)?.setOnClickListener {
-            changeInterval(-1.0)
-        }
-        findViewById<Button>(R.id.btn_plus_1)?.setOnClickListener {
-            changeInterval(1.0)
         }
 
         // Re-apply background color
@@ -361,7 +360,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     private fun applyBackgroundColor() {
-        val currentLayout = findViewById<View?>(R.id.mainLinearLayout1) as LinearLayout?
+        val currentLayout = findViewById<View?>(R.id.rootLayout)
         val colorName = sharedPref?.getString("bgcolor", "white") ?: "white"
         val colorResId = resources.getIdentifier(colorName, "color", packageName)
 
@@ -411,14 +410,17 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
 
-        val fileName: String = sharedPref!!.getString("file_name", "108vow.txt")!!
+        val fileName: String = sharedPref!!.getString("file_name", "불교방송_나를_깨우는_108배.json")!!
         
         applyBackgroundColor()
 
         val sound_filename: String =
             sharedPref!!.getString("bellsound", getString(R.string.pref_default_bellsound))!!
         val assetManager = getAssets()
-        initSound(this, assetManager, getString(R.string.soundpath) + sound_filename)
+        initSound(this, assetManager, getString(R.string.soundpath) + sound_filename) {
+            soundReady = true
+            runOnUiThread { attemptAutoStart() }
+        }
 
         f_File2JsonArray(fileName)
         
@@ -454,25 +456,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.getItemId()
-
-        if (id == R.id.menu_settingsn) {
-            saveCurrentCount = true
-            f_Pause()
-            tb1!!.setChecked(false)
-
-            val intent = Intent(this, SettingsActivity::class.java)
-            settingsLauncher.launch(intent)
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 
 
@@ -604,7 +587,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             playSound(this)
         }
 
-        f_ReadJsonObject(Current_cnt)
+        f_ReadJsonObject(Current_cnt, shouldSpeak = true)
 
         if (setRemainSeconds) {
             remainSecs()
@@ -620,7 +603,13 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         t_cnta!!.setText(String.format(Locale.US, "%d", Current_ca))
         t_cntb!!.setText(String.format(Locale.US, "%d", Current_cb))
 
-        f_ReadText()
+        blinkView(tv_Cnt!!)
+    }
+
+    private fun blinkView(view: View) {
+        view.animate().alpha(0.2f).setDuration(150).withEndAction {
+            view.animate().alpha(1.0f).setDuration(150).start()
+        }.start()
     }
 
     fun f_ReadText() {
@@ -655,19 +644,19 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         ct_remain?.cancel()
         val totalMs = ((interval_sec ?: 9.4) * 1000).toLong()
         progressBar?.max = totalMs.toInt()
-        progressBar?.progress = 0
+        progressBar?.progress = totalMs.toInt()
         findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
 
         ct_remain = object : CountDownTimer(totalMs, 40) {
             override fun onTick(millisUntilFinished: Long) {
                 val remain = millisUntilFinished.toDouble() / 1000
                 findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", remain))
-                progressBar?.progress = (totalMs - millisUntilFinished).toInt()
+                progressBar?.progress = millisUntilFinished.toInt()
             }
 
             override fun onFinish() {
                 findViewById<TextView>(R.id.remain_e)?.setText("0.0")
-                progressBar?.progress = totalMs.toInt()
+                progressBar?.progress = 0
             }
         }.start()
     }
@@ -685,16 +674,35 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
     }
 
-    private fun f_ReadJsonObject(count: Int) {
+    private fun f_ReadJsonObject(count: Int, shouldSpeak: Boolean = false) {
         if (jsonArray == null || count <= 0 || count > jsonArray!!.length()) {
             t_text?.setText("")
+            previousCount = count
             return
         }
 
         try {
             val jsonObject = jsonArray!!.getJSONObject(count - 1)
             val text = jsonObject.getString("text")
-            t_text?.setText(text)
+            
+            if (t_text?.text?.toString() != text) {
+                val goingForward = count >= previousCount
+                val screenWidth = t_text?.width?.toFloat() ?: 1000f
+                val outTranslation = if (goingForward) -screenWidth else screenWidth
+                val inTranslation = if (goingForward) screenWidth else -screenWidth
+
+                t_text?.animate()?.translationX(outTranslation)?.alpha(0f)?.setDuration(200)?.withEndAction {
+                    t_text?.setText(text)
+                    t_text?.translationX = inTranslation
+                    t_text?.animate()?.translationX(0f)?.alpha(1f)?.setDuration(200)?.withEndAction {
+                        if (shouldSpeak) f_ReadText()
+                    }?.start()
+                }?.start()
+            } else {
+                t_text?.setText(text)
+                if (shouldSpeak) f_ReadText()
+            }
+            previousCount = count
         } catch (e: JSONException) {
             e.printStackTrace()
             t_text?.setText("")

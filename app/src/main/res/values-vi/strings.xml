@@ -23,18 +23,10 @@
 
     <string name="file_to_read">Tệp để đọc</string>
 
+    <string name="korean108" translatable="false">108_Lời_Nguyện_Tiếng_Việt.json</string>
+
     <string name="menu_settings">Cài đặt</string>
 
-    <string name="korean108">Tiếng Hàn 108</string>
-    <string name="eng108">Tiếng Anh 108 (HyunGak)</string>
-    <string name="korean103vow">Công giáo 103 vị thánh</string>
-    <string name="nonRelVow">108 Lời nguyện không tôn giáo</string>
-
-    <string name="eng108Sungsan">Tiếng Anh 108 (Sungsan)</string>
-    <string name="vn108Vow">108 Lời Nguyện (Tiếng Việt)</string>
-    <string name="krishna108">108 Tên của Thần Krishna</string>
-    <string name="rosary108">108 Câu chuỗi hạt quý giá</string>
-    <string name="touchingEarth6">Chạm vào Trái đất (6 Lời nguyện)</string>
 
     <string name="soundpath">bellsounds/</string>
 
@@ -53,7 +45,6 @@
     <string name="begin">Bắt đầu</string>
 
     <string name="dialog_pause_title">Đã tạm dừng</string>
-    <string name="dialog_pause_message">Bạn muốn làm gì tiếp theo?</string>
     <string name="dialog_btn_continue">Tiếp tục</string>
     <string name="dialog_btn_end">Kết thúc</string>
     <string name="dialog_btn_back_to_start">Quay lại bắt đầu</string>

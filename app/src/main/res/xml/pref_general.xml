@@ -1,15 +1,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditTextPreference
+    <com.tkprof.HundredEightV.IntervalPreference
         android:defaultValue="10.0"
-        android:inputType="numberDecimal"
         android:key="interval"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/interval"
-        android:layout="@layout/preference_horizontal" />
+        android:title="@string/interval" />
 
     <PreferenceCategory />
 
@@ -39,7 +34,7 @@
 
     <ListPreference
         android:defaultValue="@string/korean108"
-        android:entries="@array/file_choice_titles"
+        android:entries="@array/file_choice_values"
         android:entryValues="@array/file_choice_values"
         android:key="file_name"
         android:negativeButtonText="@null"
