@@ -117,10 +117,10 @@
             android:id="@+id/btn_begin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:text="@string/begin"
-            android:layout_marginBottom="16dp"
             android:textSize="18sp" />
 
         <Button
@@ -130,7 +130,7 @@
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:backgroundTint="@android:color/holo_red_dark"
-            android:text="@string/dialog_btn_end"
+            android:text="@string/exit"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

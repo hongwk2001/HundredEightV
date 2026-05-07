@@ -233,6 +233,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             dialog.dismiss()
         }
 
+        dialogView.findViewById<Button>(R.id.btn_go_to_end).setOnClickListener {
+            f_SaveSharedpref()
+            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            val intent = Intent(this@MainActivity, EndActivity::class.java)
+            intent.putExtra("DONE_TODAY", bowsDoneToday)
+            startActivity(intent)
+            finish()
+            dialog.dismiss()
+        }
+
         dialogView.findViewById<Button>(R.id.btn_exit_app).setOnClickListener {
             saveCurrentCount = true
             f_SaveSharedpref()

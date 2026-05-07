@@ -53,7 +53,7 @@
     <string name="begin">시작하기</string>
     <string name="dialog_pause_title">일시정지</string>
     <string name="dialog_btn_continue">계속하기</string>
-    <string name="dialog_btn_end">끝내기</string>
-    <string name="dialog_btn_back_to_start">시작화면으로 돌아가기</string>
+    <string name="dialog_btn_end">끝화면으로</string>
+    <string name="dialog_btn_back_to_start">시작화면으로</string>
 
 </resources>
