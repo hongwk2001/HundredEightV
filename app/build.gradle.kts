@@ -11,8 +11,8 @@ android {
         applicationId = "com.tkprof.HundredEightV"
         minSdk = 27
         targetSdk = 35
-        versionCode = 18
-        versionName = "05/03/2026"
+        versionCode = 19
+        versionName = "05/06/2026"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

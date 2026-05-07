@@ -27,7 +27,6 @@
     <string name="slower">느리게</string>
     <string name="faster">빠르게</string>
 
-    <string name="white">white</string>
     <string name="bgcolor">배경색</string>
 
 
@@ -35,10 +34,8 @@
 
     <string name="file_to_read">읽을 화일</string>
 
-    <string name="korean108" translatable="false">불교방송_나를_깨우는_108배.json</string>
 
-
-  <!--    <string name="menu_settings">설정</string> -->
+    <!--    <string name="menu_settings">설정</string> -->
     <string name="menu_settings">설정</string>
     <!--    <string name="menu_settingss">설정</string> -->
     <string name="soundpath">bellsounds/</string>
@@ -48,8 +45,6 @@
      <string name="title_activity_settings_n">설정</string>
 
     <string name="selectBellSound">종소리 선택</string>
-
-    <string name="pref_default_bellsound">1.templebell.wav</string>
 
 
     <string name="done_today">오늘: </string>

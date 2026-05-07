@@ -82,7 +82,7 @@
     <string name="dialog_btn_continue">Continue</string>
     <string name="dialog_btn_end">End Session</string>
     <string name="dialog_btn_back_to_start">Back to Start</string>
-    <string name="exit">Exit</string>
+    <string name="exit" translatable="false">Exit</string>
 
 
     <string-array name="colorValues">
@@ -130,5 +130,6 @@
 
     <string-array name="multi_select_list_preference_default_value" />
 
+    <string name="ad_unit_id_banner" translatable="false">ca-app-pub-8979756439452342/2007297307</string>
 
 </resources>
