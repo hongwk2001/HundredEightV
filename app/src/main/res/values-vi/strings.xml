@@ -47,4 +47,8 @@
     <string name="dialog_btn_end">Kết thúc</string>
     <string name="dialog_btn_back_to_start">Quay lại bắt đầu</string>
 
+    <string name="exit">Thoát</string>
+    <string name="about_title">Giới thiệu &amp; Liên hệ</string>
+    <string name="about_content">Ứng dụng 108 Lời Nguyện.\n\nỨng dụng này giúp bạn thực hiện 108 lạy với khoảng thời gian và âm thanh có thể tùy chỉnh.\n\nThông tin liên hệ:\nBilly Wookyoung Hong (홍우경)\nhongwk2001@yahoo.com\n\nVui lòng liên hệ với tôi nếu bạn có ý tưởng mới hoặc văn bản mới muốn thêm vào.</string>
+
 </resources>

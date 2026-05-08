@@ -64,6 +64,11 @@
     <PreferenceCategory />
 
     <Preference
+        android:key="about_page"
+        android:title="@string/about_title"
+        android:layout="@layout/preference_horizontal" />
+
+    <Preference
         android:key="version_info"
         android:layout="@layout/preference_horizontal" />
 

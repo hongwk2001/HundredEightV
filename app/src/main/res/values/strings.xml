@@ -132,4 +132,7 @@
 
     <string name="ad_unit_id_banner" translatable="false">ca-app-pub-8979756439452342/2007297307</string>
 
+    <string name="about_title">About &amp; Contact</string>
+    <string name="about_content">Hundred Eight Vows Application.\n\nThis app helps you perform 108 bows with customizable intervals and sound.\n\nContact Info:\nBilly Wookyoung Hong\nhongwk2001@yahoo.com\n\nPlease contact me for new ideas or if you have new text you would like to add.</string>
+
 </resources>

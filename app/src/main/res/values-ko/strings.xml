@@ -56,4 +56,8 @@
     <string name="dialog_btn_end">끝화면으로</string>
     <string name="dialog_btn_back_to_start">시작화면으로</string>
 
+    <string name="exit">종료</string>
+    <string name="about_title">정보 및 연락처</string>
+    <string name="about_content">108배 도우미 애플리케이션.\n\n이 앱은 설정된 간격과 소리에 맞춰 108배를 하도록 도와줍니다.\n\n연락처:\n홍우경 (Billy Wookyoung Hong)\nhongwk2001@yahoo.com\n\n새로운 아이디어나 추가하고 싶은 문구가 있다면 연락주세요.</string>
+
 </resources>

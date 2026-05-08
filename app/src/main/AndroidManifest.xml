@@ -52,6 +52,13 @@
             android:theme="@style/Theme.HundredEightV">
         </activity>
 
+        <activity android:name=".AboutActivity"
+            android:label="@string/about_title"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:theme="@style/Theme.HundredEightV">
+        </activity>
+
         <!-- Your AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

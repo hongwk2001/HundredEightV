@@ -1,6 +1,7 @@
 package com.tkprof.HundredEightV
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -99,6 +100,14 @@ class SettingsActivity : AppCompatActivity() {
             // Set version name dynamically
             val versionPreference: Preference? = findPreference("version_info")
             versionPreference?.summary = "version: " + getAppVersionName(requireContext())
+
+            // Handle About page click
+            val aboutPreference: Preference? = findPreference("about_page")
+            aboutPreference?.setOnPreferenceClickListener {
+                val intent = Intent(requireContext(), AboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
         }
 
         private fun getAppVersionName(context: Context): String {
