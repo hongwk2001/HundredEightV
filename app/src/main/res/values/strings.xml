@@ -33,19 +33,20 @@
 
     <string-array name="file_choice_values">
         <item>불교방송_나를_깨우는_108배.json</item>
-        <item>한국_천주교_103위_순교자_성인.json</item>
+        <item>행복을_찾는_108배_이준원.json</item>
         <item>비종교인_108배.json</item>
-        <item>108_Vows_by_HyunGak.json</item>
-        <item>108_Vows_by_Sungsan.json</item>
-        <item>108_Lời_Nguyện_Tiếng_Việt.json</item>
-        <item>108_verses_Precious_Crystal_Rosary.json</item>
-        <item>touching_the_earth_6vows.json</item>
+        <item>한국_천주교_103위_순교자_성인.json</item>
         <item>사무량심_16.json</item>
         <item>보왕삼매론_10.json</item>
         <item>법구경_p1_106.json</item>
         <item>법구경_p2_105.json</item>
         <item>법구경_p3_106.json</item>
         <item>법구경_p4_103.json</item>
+        <item>108_Vows_by_HyunGak.json</item>
+        <item>108_Vows_by_Sungsan.json</item>
+        <item>108_Lời_Nguyện_Tiếng_Việt.json</item>
+        <item>108_verses_Precious_Crystal_Rosary.json</item>
+        <item>touching_the_earth_6vows.json</item>
     </string-array>
 
     <string name="slower">Slower</string>

@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ProgressBar
@@ -490,8 +489,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         var current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
         interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
         if (!isResume && current_cnt_val >= file_line_cnt) {
             current_cnt_val = 0
             tv_Cnt!!.setText("0")
@@ -540,8 +537,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         endRunnable?.let { endHandler?.removeCallbacks(it) }
 
         ttobj?.stop()
-
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     private fun f_GoToEndActivity() {
