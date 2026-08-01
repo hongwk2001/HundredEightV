@@ -1,4 +1,4 @@
-package com.tkprof.HundredEightV
+package com.tkprof.hundredeightv
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -30,9 +30,10 @@ import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
-import com.tkprof.HundredEightV.Util.initSound
-import com.tkprof.HundredEightV.Util.loadFile2String
-import com.tkprof.HundredEightV.Util.playSound
+import com.tkprof.hundredeightv.R
+import com.tkprof.hundredeightv.Util.initSound
+import com.tkprof.hundredeightv.Util.loadFile2String
+import com.tkprof.hundredeightv.Util.playSound
 import org.json.JSONArray
 import org.json.JSONException
 import java.text.SimpleDateFormat

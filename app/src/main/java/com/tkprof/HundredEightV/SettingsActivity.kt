@@ -1,4 +1,4 @@
-package com.tkprof.HundredEightV
+package com.tkprof.hundredeightv
 
 import android.content.Context
 import android.content.Intent
@@ -18,6 +18,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.tkprof.hundredeightv.R
 
 class SettingsActivity : AppCompatActivity() {
 

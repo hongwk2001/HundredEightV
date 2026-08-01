@@ -1,18 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.tkprof.HundredEightV"
-    compileSdk = 35
+    namespace = "com.tkprof.hundredeightv"
+    compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.tkprof.HundredEightV"
+        applicationId = "com.tkprof.hundredeightv"
         minSdk = 27
-        targetSdk = 35
-        versionCode = 21
-        versionName = "05/09/2026"
+        targetSdk = 37
+        versionCode = 22
+        versionName = "07/31/2026"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,10 +31,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "21"
     }
 
     buildFeatures {

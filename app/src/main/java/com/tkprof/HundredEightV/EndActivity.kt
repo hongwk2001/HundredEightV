@@ -1,4 +1,4 @@
-package com.tkprof.HundredEightV
+package com.tkprof.hundredeightv
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.tkprof.hundredeightv.R
 
 class EndActivity : AppCompatActivity() {
 

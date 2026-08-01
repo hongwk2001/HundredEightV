@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.tkprof.HundredEightV.IntervalPreference
+    <com.tkprof.hundredeightv.IntervalPreference
         android:defaultValue="10.0"
         android:key="interval"
         android:title="@string/interval" />
