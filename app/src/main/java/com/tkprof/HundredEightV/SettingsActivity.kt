@@ -115,6 +115,17 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
+        override fun onDisplayPreferenceDialog(preference: Preference) {
+            if (preference is ColorListPreference) {
+                val dialogFragment = ColorPreferenceDialogFragmentCompat.newInstance(preference.key)
+                @Suppress("DEPRECATION")
+                dialogFragment.setTargetFragment(this, 0)
+                dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
+            } else {
+                super.onDisplayPreferenceDialog(preference)
+            }
+        }
+
         private fun getAppVersionName(context: Context): String {
             return try {
                 val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

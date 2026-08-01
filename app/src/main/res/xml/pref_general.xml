@@ -55,9 +55,9 @@
 
     <PreferenceCategory />
 
-    <ListPreference
+    <com.tkprof.hundredeightv.ColorListPreference
         android:defaultValue="@string/white"
-        android:entries="@array/colorValues"
+        android:entries="@array/colorLabels"
         android:entryValues="@array/colorValues"
         android:key="bgcolor"
         android:title="@string/bgcolor"

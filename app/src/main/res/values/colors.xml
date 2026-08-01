@@ -7,14 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
 
-    <color name="red">#FF0000</color>
-    <color name="blue">#0000FF</color>
-    <color name="green">#00FF00</color>
-    <color name="purple">#800080</color>
+    <color name="red">#FFF0F0</color>
+    <color name="blue">#F0F8FF</color>
+    <color name="green">#F5FFF5</color>
+    <color name="purple">#F8F0FF</color>
+    <color name="cream">#FFFBF0</color>
+    <color name="sand">#F5F5E6</color>
     <color name="white">#FFFFFF</color>
-    <color name="grey1">#CCCCCC</color> <!-- Example: Light Grey -->
-    <color name="grey2">#888888</color> <!-- Example: Medium Grey -->
-    <color name="grey3">#444444</color> <!-- Example: Dark Grey -->
+    <color name="grey1">#F7F7F7</color>
+    <color name="grey2">#EEEEEE</color>
+    <color name="grey3">#E0E0E0</color>
 
     <!-- More descriptive names (see suggestion 2) -->
     <color name="colorPrimary">#6200EE</color>
