@@ -3,33 +3,40 @@ package com.tkprof.HundredEightV
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.preference.PreferenceManager
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.GestureDetector
-import android.view.Menu
-import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
+import android.widget.Button
 import android.widget.CheckBox
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.GestureDetectorCompat
-import com.tkprof.HundredEightV.Util.Companion.initSound
-import com.tkprof.HundredEightV.Util.Companion.loadFile2String
-import com.tkprof.HundredEightV.Util.Companion.playSound
+import androidx.core.content.edit
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.preference.PreferenceManager
+import com.tkprof.HundredEightV.Util.initSound
+import com.tkprof.HundredEightV.Util.loadFile2String
+import com.tkprof.HundredEightV.Util.playSound
 import org.json.JSONArray
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
@@ -37,6 +44,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var ct: CountDownTimer? = null
     var ct_remain: CountDownTimer? = null
     var file_line_cnt: Int = 0
+    private var previousCount = 0
 
     // Default value for user to just f_Start without setup
     var interval_sec: Double? = null
@@ -55,11 +63,24 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var cbx_tts_number: CheckBox? = null
     var cbx_tts_text: CheckBox? = null
     var tb1: ToggleButton? = null
+    var progressBar: ProgressBar? = null
 
 
     var ttobj: TextToSpeech? = null
+    
+    private var ttsReady = false
+    private var soundReady = false
+    private var isAutoStartTriggered = false
 
-    private var mDetector: GestureDetectorCompat? = null
+    private var mDetector: GestureDetector? = null
+    private var lastFlingTime: Long = 0
+
+    private val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        f_LoadVariables()
+        saveCurrentCount = false
+        toggle_on = false
+    }
 
 
     override fun onSharedPreferenceChanged(
@@ -67,73 +88,80 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         key: String?
     ) {
         sharedPref = sharedPreferences
-        f_LoadVariables()
+        if (key == null) {
+            f_LoadVariables()
+            return
+        }
+
+        when (key) {
+            "interval" -> {
+                interval_sec = sharedPreferences.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+                Log.d("Main.onPrefChanged", "interval_sec updated: $interval_sec")
+            }
+            "bgcolor" -> applyBackgroundColor()
+            "bellsound" -> {
+                val sound_filename = sharedPreferences.getString("bellsound", getString(R.string.pref_default_bellsound))
+                initSound(this, assets, getString(R.string.soundpath) + sound_filename)
+            }
+            "file_name" -> {
+                val fileName = sharedPreferences.getString("file_name", "불교방송_나를_깨우는_108배.json") ?: "불교방송_나를_깨우는_108배.json"
+                f_File2JsonArray(fileName)
+            }
+            "tts_number" -> {
+                val checked = sharedPreferences.getBoolean("tts_number", true)
+                if (cbx_tts_number?.isChecked != checked) {
+                    cbx_tts_number?.isChecked = checked
+                }
+            }
+            "tts_text" -> {
+                val checked = sharedPreferences.getBoolean("tts_text", true)
+                if (cbx_tts_text?.isChecked != checked) {
+                    cbx_tts_text?.isChecked = checked
+                }
+            }
+            "current_cnt", "count_a", "count_b" -> {
+                // Optional: Update counts if changed elsewhere (e.g. SettingsActivity)
+                tv_Cnt?.text = sharedPreferences.getString("current_cnt", "0")
+                t_cnta?.text = sharedPreferences.getString("count_a", "0")
+                t_cntb?.text = sharedPreferences.getString("count_b", "0")
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        getPreferences(MODE_PRIVATE)
+        PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        getPreferences(MODE_PRIVATE)
+        PreferenceManager.getDefaultSharedPreferences(this)
             .unregisterOnSharedPreferenceChangeListener(this)
         f_SaveSharedpref()
 
-        // Pause !
-        tb1!!.setChecked(false)
-        f_Pause()
+        // Automatically pause when the app loses focus (e.g., incoming phone call)
+        if (toggle_on) {
+            tb1?.isChecked = false
+            toggle_on = false
+            f_Pause()
+        }
         Log.d("Main:onPause", "Called")
     }
 
-// TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
-    //private var mInterstitialAd: InterstitialAd? = null
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        //	 Log.i("oncreate", "BNEgin0");
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        //    Log.i("oncreate", "BNEgin1");
-        if (getResources().getConfiguration().orientation
-            == Configuration.ORIENTATION_PORTRAIT
-        ) {
-            setContentView(R.layout.activity_main)
-        } else {
-            setContentView(R.layout.activity_main_land)
-        }
-
-        //      Log.i("oncreate", "Begin2 ");
-
-        // In your MainActivity's onCreate method
-        val toolbar = findViewById<Toolbar?>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        tv_Cnt = findViewById<TextView>(R.id.count)
-        t_cnta = findViewById<TextView>(R.id.count_a)
-        t_cntb = findViewById<TextView>(R.id.count_b)
-        t_text = findViewById<TextView>(R.id.text)
-        tb1 = findViewById<ToggleButton>(R.id.tgbBeginPause)
-
-        cbx_tts_number = findViewById<CheckBox>(R.id.cbx_tts_number)
-        cbx_tts_text = findViewById<CheckBox>(R.id.cbx_tts_text)
-
+        
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        
+        setupUI()
 
-        // retire Download Feature.
-        //  checkInitialInstall();
+        f_CheckDailyReset()
         f_LoadVariables()
-        val assetManager = getAssets()
-
-        val audio_file = (getString(R.string.soundpath)
-                + sharedPref!!.getString("bellsound", getString(R.string.pref_default_bellsound)))
-
-        initSound(this, assetManager, audio_file)
-
-        //        Util.initSound(this);
-        mDetector = GestureDetectorCompat(this, this)
+        
+        mDetector = GestureDetector(this, this)
         mDetector!!.setOnDoubleTapListener(this)
 
         ttobj = TextToSpeech(
@@ -142,171 +170,278 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                 override fun onInit(status: Int) {
                     if (status != TextToSpeech.ERROR) {
                         ttobj!!.setLanguage(Locale.KOREA)
+                        ttsReady = true
+                        attemptAutoStart()
                     }
                 }
             })
 
+        // Handle back button
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showPauseDialog()
+            }
+        })
 
-        // following gemini ad , just so long
-//		MobileAds.initialize(this,	"ca-app-pub-8979756439452342~1904313389");
-//		mInterstitialAd = new InterstitialAd(this);
-//		mInterstitialAd.setAdUnitId("ca-app-pub-8979756439452342/7964602504");
-//        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        attemptAutoStart()
+    }
 
-        // 1. Initialize the Mobile Ads SDK
-        // Your AdMob App ID (ca-app-pub-8979756439452342~1904313389) should be in AndroidManifest.xml
+    private fun attemptAutoStart() {
+        if (intent.getBooleanExtra("AUTO_START", false) && ttsReady && soundReady && !isAutoStartTriggered) {
+            isAutoStartTriggered = true
+            tb1?.isChecked = true
+            toggle_on = true
+            f_Start(isResume = false)
+        }
+    }
 
+    private fun showPauseDialog() {
+        val wasRunning = toggle_on
+        f_Pause()
+        
+        if (wasRunning) {
+            tb1?.isChecked = false
+            toggle_on = false
+        }
 
-        // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+        val dialogView = layoutInflater.inflate(R.layout.dialog_pause_custom, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
 
-//        MobileAds.initialize(this, object : OnInitializationCompleteListener {
-//            override fun onInitializationComplete(initializationStatus: InitializationStatus) {
-//                Log.d(TAG, "Mobile Ads SDK initialized.")
-//                // It's best practice to load ads after SDK initialization.
-//                loadInterstitialAd()
-//            }
-//        })
+        dialogView.findViewById<Button>(R.id.btn_continue).setOnClickListener {
+            tb1?.isChecked = true
+            toggle_on = true
+            f_Start(isResume = true)
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btn_settings).setOnClickListener {
+            val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+            settingsLauncher.launch(intent)
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btn_back_to_start).setOnClickListener {
+            f_SaveSharedpref()
+            val intent = Intent(this@MainActivity, StartActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btn_go_to_end).setOnClickListener {
+            f_SaveSharedpref()
+            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            val intent = Intent(this@MainActivity, EndActivity::class.java)
+            intent.putExtra("DONE_TODAY", bowsDoneToday)
+            startActivity(intent)
+            finish()
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btn_exit_app).setOnClickListener {
+            saveCurrentCount = true
+            f_SaveSharedpref()
+            finishAffinity()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun f_CheckDailyReset() {
+        val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val today = sdf.format(Date())
+        val lastDate = sharedPref?.getString("last_use_date", "")
+        
+        if (lastDate != today) {
+            sharedPref?.edit {
+                putString("count_a", "0")
+                putString("last_use_date", today)
+            }
+        }
+    }
+
+    private fun setupUI() {
+        // Save current values if they exist
+        val currentCnt = tv_Cnt?.text?.toString()
+        val currentCntA = t_cnta?.text?.toString()
+        val currentCntB = t_cntb?.text?.toString()
+        val currentText = t_text?.text?.toString()
+        val isToggled = tb1?.isChecked ?: false
+        val isTtsNumberChecked = cbx_tts_number?.isChecked ?: sharedPref?.getBoolean("tts_number", true) ?: true
+        val isTtsTextChecked = cbx_tts_text?.isChecked ?: sharedPref?.getBoolean("tts_text", true) ?: true
+
+        setContentView(R.layout.activity_main)
+
+        val mainView = findViewById<View>(R.id.rootLayout)
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
+
+        val toolbar = findViewById<Toolbar?>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        tv_Cnt = findViewById(R.id.count)
+        t_cnta = findViewById(R.id.count_a)
+        t_cntb = findViewById(R.id.count_b)
+        t_text = findViewById(R.id.text)
+        tb1 = findViewById(R.id.tgb_begin_pause)
+        progressBar = findViewById(R.id.progress_remain)
+
+        cbx_tts_number = findViewById(R.id.cbx_tts_number)
+        cbx_tts_text = findViewById(R.id.cbx_tts_text)
+
+        // Restore values
+        if (currentCnt != null) tv_Cnt?.text = currentCnt
+        if (currentCntA != null) t_cnta?.text = currentCntA
+        if (currentCntB != null) t_cntb?.text = currentCntB
+        if (currentText != null) t_text?.text = currentText
+        tb1?.isChecked = isToggled
+        
+        cbx_tts_number?.isChecked = isTtsNumberChecked
+        cbx_tts_text?.isChecked = isTtsTextChecked
+
+        // Add listeners to save state immediately and prevent reverting when other preferences change
+        cbx_tts_number?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit()?.putBoolean("tts_number", isChecked)?.apply()
+        }
+        cbx_tts_text?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit()?.putBoolean("tts_text", isChecked)?.apply()
+        }
+
+        // Re-apply background color
+        applyBackgroundColor()
+    }
+
+    private fun changeInterval(delta: Double) {
+        interval_sec = (interval_sec ?: 9.4) + delta
+        if (interval_sec!! < 1.0) interval_sec = 1.0
+        interval_sec = Math.round(interval_sec!! * 10.0) / 10.0
+        saveInterval()
+        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+        
+        if (toggle_on) {
+            f_RestartTimerOnly()
+        }
+        
+        Toast.makeText(this, "Interval: $interval_sec", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun f_RestartTimerOnly() {
+        if (ct != null) {
+            ct!!.cancel()
+            ct = null
+        }
+        
+        remainSecs()
+
+        val current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
+        val interval_ms = (interval_sec!! * 1000).toLong()
+
+        if (remainingItemsAfterCurrent > 0) {
+            val total_ms = remainingItemsAfterCurrent * interval_ms
+            // Add a small 200ms buffer and logic check to prevent an immediate skip
+            ct = object : CountDownTimer(total_ms + 200, interval_ms) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (millisUntilFinished > total_ms) return
+                    f_NextWords(1, true)
+                }
+
+                override fun onFinish() {
+                    f_GoToEndActivity()
+                }
+            }
+            ct!!.start()
+        } else {
+            f_GoToEndActivity()
+        }
     }
 
 
 
-    // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
+    private fun applyBackgroundColor() {
+        val currentLayout = findViewById<View?>(R.id.rootLayout)
+        val colorName = sharedPref?.getString("bgcolor", "white") ?: "white"
+        val colorResId = resources.getIdentifier(colorName, "color", packageName)
 
-    // 2. Method to load the Interstitial Ad -- put back
-//    private fun loadInterstitialAd() {
-//        val adRequest = AdRequest.Builder().build()
-//
-//        InterstitialAd.load(
-//            this, AD_UNIT_ID, adRequest,
-//            object : InterstitialAdLoadCallback() {
-//                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-//                    // The mInterstitialAd reference will be null until an ad is loaded.
-//                    this@MainActivity.mInterstitialAd = interstitialAd
-//                    Log.i(TAG, "onAdLoaded")
-//
-//                    // 3. Set FullScreenContentCallback (Highly Recommended)
-//                    mInterstitialAd!!.setFullScreenContentCallback(object :
-//                        FullScreenContentCallback() {
-//                        override fun onAdClicked() {
-//                            // Called when a click is recorded for an ad.
-//                            Log.d(TAG, "Ad was clicked.")
-//                        }
-//
-//                        override fun onAdDismissedFullScreenContent() {
-//                            // Called when ad is dismissed.
-//                            // Set the ad reference to null so you don't show the ad a second time.
-//                            Log.d(TAG, "Ad dismissed fullscreen content.")
-//                            mInterstitialAd = null
-//                            // IMPORTANT: Load the next ad once the current one is dismissed
-//                            loadInterstitialAd()
-//                        }
-//
-//                        override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-//                            // Called when ad fails to show.
-//                            Log.e(
-//                                TAG,
-//                                "Ad failed to show fullscreen content: " + adError.getMessage()
-//                            )
-//                            mInterstitialAd = null
-//                        }
-//
-//                        override fun onAdImpression() {
-//                            // Called when an impression is recorded for an ad.
-//                            Log.d(TAG, "Ad recorded an impression.")
-//                        }
-//
-//                        override fun onAdShowedFullScreenContent() {
-//                            // Called when ad is shown.
-//                            Log.d(TAG, "Ad showed fullscreen content.")
-//                        }
-//                    })
-//                }
-//
-//                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-//                    // Handle the error
-//                    Log.d(TAG, "Failed to load interstitial ad: " + loadAdError.getMessage())
-//                    mInterstitialAd = null
-//                }
-//            })
-//    }
+        if (colorResId != 0 && currentLayout != null) {
+            currentLayout.setBackgroundColor(ContextCompat.getColor(this, colorResId))
+        } else if (currentLayout != null) {
+            currentLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        }
+    }
 
     public override fun onSaveInstanceState(outState: Bundle) {
-        // Save the user's current game state 
-
-        // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(outState)
+        outState.putString("saved_cnt", tv_Cnt?.text.toString())
+        outState.putString("saved_cnta", t_cnta?.text.toString())
+        outState.putString("saved_cntb", t_cntb?.text.toString())
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState!!)
-
-        // Restore state members from saved instance
-        tb1!!.setChecked(false)
+        super.onRestoreInstanceState(savedInstanceState)
+        tv_Cnt?.text = savedInstanceState.getString("saved_cnt", "0")
+        t_cnta?.text = savedInstanceState.getString("saved_cnta", "0")
+        t_cntb?.text = savedInstanceState.getString("saved_cntb", "0")
+        tb1?.isChecked = false
         saveCurrentCount = false
     }
 
 
     /* get saved values */
     private fun f_LoadVariables() {
-        tv_Cnt!!.setText(sharedPref!!.getString("current_cnt", "0"))
-
-        t_cnta!!.setText(sharedPref!!.getString("count_a", "0"))
-        t_cntb!!.setText(sharedPref!!.getString("count_b", "0"))
-
-        cbx_tts_number!!.setChecked(sharedPref!!.getBoolean("tts_number", true))
-        cbx_tts_text!!.setChecked(sharedPref!!.getBoolean("tts_text", true))
-
-        interval_sec = sharedPref!!.getString("interval", "9.4")!!.toDouble()
-        Log.d("Main.f_LoadVariables", "interval_sec:" + interval_sec)
-
-        //Default Korean
-        val fileName: String = sharedPref!!.getString("file_name", "108vow.txt")!!
-        file_line_cnt = sharedPref!!.getString("file_line_cnt", "108")!!.toInt()
-
-        Log.d("MainActi.loadvariables", "file_name" + fileName)
-        Log.d("Loadvariables", "" + file_line_cnt)
-
-
-        //-- set BG COLOR test
-        //Set an id to the layout
-        val currentLayout = findViewById<View?>(R.id.mainLinearLayout1) as LinearLayout
-
-        val colorName: String = sharedPref!!.getString("bgcolor", "white")!!
-        val colorResId = getResources().getIdentifier(colorName, "color", getPackageName())
-
-        if (colorResId != 0) {
-            currentLayout.setBackgroundColor(ContextCompat.getColor(this, colorResId))
-        } else {
-            // Handle the case where the color resource is not found
-            Log.w("Main.f_LoadVariables", "Background color resource not found: " + colorName)
-            // Set a default background color programmatically or from a known valid resource
-            currentLayout.setBackgroundColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.white
-                )
-            ) // Assuming you have a color named 'white'
+        val current_val = sharedPref!!.getString("current_cnt", "0")
+        if (tv_Cnt?.text.toString() == "0" || tv_Cnt?.text.toString() == "") {
+             tv_Cnt!!.setText(current_val)
         }
+
+        if (t_cnta?.text.toString() == "0" || t_cnta?.text.toString() == "") {
+            t_cnta!!.setText(sharedPref!!.getString("count_a", "0"))
+        }
+        if (t_cntb?.text.toString() == "0" || t_cntb?.text.toString() == "") {
+            t_cntb!!.setText(sharedPref!!.getString("count_b", "0"))
+        }
+
+        cbx_tts_number?.isChecked = sharedPref!!.getBoolean("tts_number", true)
+        cbx_tts_text?.isChecked = sharedPref!!.getBoolean("tts_text", true)
+
+        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+        Log.d("Main.f_LoadVariables", "interval_sec: $interval_sec")
+
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
+
+        val fileName: String = sharedPref!!.getString("file_name", "불교방송_나를_깨우는_108배.json")!!
+        
+        applyBackgroundColor()
 
         val sound_filename: String =
             sharedPref!!.getString("bellsound", getString(R.string.pref_default_bellsound))!!
         val assetManager = getAssets()
-        initSound(this, assetManager, getString(R.string.soundpath) + sound_filename)
+        initSound(this, assetManager, getString(R.string.soundpath) + sound_filename) {
+            soundReady = true
+            runOnUiThread { attemptAutoStart() }
+        }
 
-        //Load file to JsonArray
-        // only here ?? if setup changes 
         f_File2JsonArray(fileName)
+        
+        // Update text if count > 0
+        val count = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
+        if (count > 0) {
+            f_ReadJsonObject(count)
+        }
     }
 
     public override fun onDestroy() {
-        super.onDestroy() // Always call the superclass
-
-        Log.d(
-            "destroy.f_SaveSharedpref",
-            ("f_SaveSharedpref toggle_on:" + (if (toggle_on) "on" else "Off")
-                    + "  saveCurrentCount:" + (if (saveCurrentCount) " Save " else "No Save"))
-        )
+        super.onDestroy() 
 
         if (ct != null) {
             ct!!.cancel()
@@ -320,128 +455,72 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     private fun f_SaveSharedpref() {
-        // save to profile
-
-        val editor = sharedPref!!.edit()
-        val currnet_cnt = if (toggle_on || saveCurrentCount) tv_Cnt!!.getText().toString() else "0"
-
-        Log.d(
-            "f_SaveSharedpref", ("f_SaveSharedpref toggle_on" + (if (toggle_on) "on" else "Off")
-                    + "  saveCurrentCount:" + (if (saveCurrentCount) " Save " else "No Save"))
-        )
-
-        editor.putString("current_cnt", currnet_cnt)
-        editor.putString("count_a", t_cnta!!.getText().toString())
-        editor.putString("count_b", t_cntb!!.getText().toString())
-
-
-        editor.putBoolean("tts_number", cbx_tts_number!!.isChecked())
-        editor.putBoolean("tts_text", cbx_tts_text!!.isChecked())
-
-        editor.apply()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.getItemId()
-
-        if (id == R.id.menu_settingsn) {
-            //	f_SaveSharedpref();
-
-            saveCurrentCount = true
-            f_Pause()
-
-            // Inside your onOptionsItemSelected method or wherever you want to show the ad:
-            // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
-//            if (mInterstitialAd != null) {
-//                mInterstitialAd!!.show(this) // 'this' refers to your Activity
-//            } else {
-//                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-//                // Optional: You might want to try loading an ad here if it's null,
-//                // though it's generally better to have ads pre-loaded.
-//                 loadInterstitialAd(); // Make sure you have this method defined as shown previously
-//           }
-
-            //Release Tobble btn
-            tb1!!.setChecked(false)
-
-
-            val intent = Intent(this, SettingsActivity::class.java)
-            intent.setType("text/plain")
-            intent.putExtra(Intent.EXTRA_TEXT, "News for you!")
-
-            startActivityForResult(intent, SETTING_ACTIVITY)
-
-            return true
+        val currnet_cnt = if (toggle_on || saveCurrentCount) tv_Cnt?.text?.toString() ?: "0" else "0"
+        sharedPref?.edit {
+            putString("current_cnt", currnet_cnt)
+            putString("count_a", t_cnta?.text?.toString() ?: "0")
+            putString("count_b", t_cntb?.text?.toString() ?: "0")
+            putBoolean("tts_number", cbx_tts_number?.isChecked ?: true)
+            putBoolean("tts_text", cbx_tts_text?.isChecked ?: true)
         }
-
-
-        return super.onOptionsItemSelected(item)
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
 
-//    	Toast.makeText(this, "Main.onActivityResult Called",
-//                Toast.LENGTH_SHORT).show();
-        sharedPref =
-            PreferenceManager.getDefaultSharedPreferences(this)
-
-        //       Log.d( "sharePrefAll:" , sharedPref.getAll().toString()) ;
-        // These day, expected setup updated when back from setting screen,
-        // no confirm, no save button.
-        f_LoadVariables()
-        // save curretcount before going into setting. when back set No so other back buttons to not save count
-        saveCurrentCount = false
-        toggle_on = false
-    }
-
+    private var endHandler: Handler? = null
+    private var endRunnable: Runnable? = null
     var toggle_on: Boolean = false
 
-    // Begin Pause button
     fun f_onToggleClicked(view: View) {
-        // Is the toggle on?
-        toggle_on = (view as ToggleButton).isChecked()
-
-        if (toggle_on) {
-            f_Start()
-        } else {
-            f_Pause()
+        val isChecked = (view as ToggleButton).isChecked()
+        if (isChecked) {
+            toggle_on = true
+            f_Start(isResume = false)
+        }
+        else {
+            showPauseDialog()
         }
     }
 
-    // click f_Start button
-    fun f_Start() {
-        //current_cnt
+    fun f_Start(isResume: Boolean) {
+        f_Pause() 
 
-        var Current_cnt = tv_Cnt!!.getText().toString().toInt()
-        file_line_cnt = sharedPref!!.getString("file_line_cnt", "108")!!.toInt()
-        interval_sec = sharedPref!!.getString("interval", "9.4")!!.toDouble()
+        var current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
-        Log.d(
-            "start0",
-            "currCnt:" + Current_cnt + " tCnt:" + file_line_cnt + " Interval:" + interval_sec
-        )
-
-        // Restart to Continue
-        if (Current_cnt == file_line_cnt) {
+        if (!isResume && current_cnt_val >= file_line_cnt) {
+            current_cnt_val = 0
             tv_Cnt!!.setText("0")
-            Current_cnt = 0
         }
 
-        f_CountDownTimer((file_line_cnt - Current_cnt), interval_sec!!)
+        if (!isResume) {
+            f_NextWords(1, true)
+            current_cnt_val = tv_Cnt!!.getText().toString().toInt()
+        } else {
+            remainSecs()
+        }
+
+        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
+        val interval_ms = (interval_sec!! * 1000).toLong()
+
+        if (remainingItemsAfterCurrent > 0) {
+            val total_ms = remainingItemsAfterCurrent * interval_ms
+            // Buffer to prevent immediate skip
+            ct = object : CountDownTimer(total_ms + 200, interval_ms) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (millisUntilFinished > total_ms) return
+                    f_NextWords(1, true)
+                }
+
+                override fun onFinish() {
+                    f_GoToEndActivity()
+                }
+            }
+            ct!!.start()
+        } else {
+            f_GoToEndActivity()
+        }
     }
 
     fun f_Pause() {
@@ -455,293 +534,262 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             ct_remain = null
         }
 
-        // let it close when not run
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        endRunnable?.let { endHandler?.removeCallbacks(it) }
+
+        ttobj?.stop()
     }
 
+    private fun f_GoToEndActivity() {
+        if (endHandler == null) {
+            endHandler = Handler(Looper.getMainLooper())
+        }
+        endRunnable?.let { endHandler?.removeCallbacks(it) }
 
-    private fun f_CountDownTimer(target_count: Int, countDownInterval_sec: Double) {
-        Log.d(
-            "countDownTimer1",
-            "target_cnt:" + target_count + " intervalSec:" + countDownInterval_sec
-        )
+        endRunnable = Runnable {
+            if (isFinishing || isDestroyed) return@Runnable
 
-        val countDownInterval_milisec = (countDownInterval_sec * 1000).toInt()
-        val tc = (target_count) * countDownInterval_milisec
+            tb1?.isChecked = false
+            toggle_on = false
+            saveCurrentCount = false
+            f_Pause()
+            f_SaveSharedpref()
 
-        ct = object : CountDownTimer(tc.toLong(), countDownInterval_milisec.toLong()) {
-            override fun onTick(millisUntilFinished: Long) {
-                // not really..
-                if (ct_remain != null) {
-                    ct_remain!!.onFinish()
-                }
-                //plusOne();
-                f_NextWords( /*plusMinus*/1,  /*setRemainSec*/true)
-            }
-
-            override fun onFinish() {
-                //re.setText("done!");
-                tb1!!.setChecked(false)
-                toggle_on = false
-                saveCurrentCount = false
-                f_Pause()
-                Log.d("countdownTimer", "onfinish")
-                Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.thankyou),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            val intent = Intent(this@MainActivity, EndActivity::class.java)
+            intent.putExtra("DONE_TODAY", bowsDoneToday)
+            startActivity(intent)
+            finish()
         }
 
-        ct!!.start()
+        // Wait for the final interval to finish + 3 seconds extra
+        val finalDelay = ((interval_sec ?: 9.4) * 1000).toLong() + 3000L
+        endHandler?.postDelayed(endRunnable!!, finalDelay)
     }
 
-    // plus one on tv_odometer
+
+    private fun f_ManualJump(i: Int) {
+        val wasRunning = toggle_on
+        f_Pause() 
+        
+        f_NextWords(i, true)
+
+        if (wasRunning) {
+            f_RestartTimerOnly()
+        }
+    }
+
     private fun f_NextWords(i: Int, setRemainSeconds: Boolean) {
-        var Current_cnt = tv_Cnt!!.getText().toString().toInt()
+        var Current_cnt = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
 
-
-        // Back button, don't go minus, just ignore
-        if (i == -1 && Current_cnt == 0) {
+        val nextCnt = Current_cnt + i
+        if (nextCnt < 0 || nextCnt > file_line_cnt) {
             return
         }
-
-        Current_cnt = Current_cnt + i
-
-        Log.d("f_NextWords", "CCnt:" + Current_cnt)
+        
+        Current_cnt = nextCnt
 
         if (sharedPref!!.getBoolean("play_sound", true)) {
-            // Bell -> Read & Vow 
             playSound(this)
         }
 
-        f_ReadJsonObject(Current_cnt)
+        f_ReadJsonObject(Current_cnt, shouldSpeak = true)
 
+        if (setRemainSeconds) {
+            remainSecs()
+        }
 
-        /* show remaining Pint seconds CountdownTimer
-     	  need to change progressivebar */
-        if (setRemainSeconds) remainSecs()
-
-        var Current_ca = t_cnta!!.getText().toString().toInt()
-        var Current_cb = t_cntb!!.getText().toString().toInt()
+        var Current_ca = t_cnta!!.getText().toString().toIntOrNull() ?: 0
+        var Current_cb = t_cntb!!.getText().toString().toIntOrNull() ?: 0
 
         Current_ca = Current_ca + i
         Current_cb = Current_cb + i
 
-
-        // now change Number on screen 
         tv_Cnt!!.setText(String.format(Locale.US, "%d", Current_cnt))
         t_cnta!!.setText(String.format(Locale.US, "%d", Current_ca))
         t_cntb!!.setText(String.format(Locale.US, "%d", Current_cb))
 
-        f_ReadText()
+        blinkView(tv_Cnt!!)
+    }
+
+    private fun blinkView(view: View) {
+        view.animate().alpha(0.2f).setDuration(150).withEndAction {
+            view.animate().alpha(1.0f).setDuration(150).start()
+        }.start()
     }
 
     fun f_ReadText() {
         var toSpeak = ""
-        if (cbx_tts_number!!.isChecked()) {
+        if (cbx_tts_number?.isChecked == true) {
             toSpeak = tv_Cnt!!.getText().toString()
         }
 
-        if (cbx_tts_text!!.isChecked()) {
+        if (cbx_tts_text?.isChecked == true) {
             toSpeak = toSpeak + " " + t_text!!.getText().toString()
         }
 
-
-        // only when it has length
         if (toSpeak.length > 0) {
             ttobj!!.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
 
-    fun f_onClickSlower(view: View?) {
-        this.interval_sec = this.interval_sec?.plus(0.2)
-        interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
-
-        saveInterval()
-        Toast.makeText(
-            this, "" + interval_sec,
-            Toast.LENGTH_SHORT
-        ).show()
+    fun f_onClickSlower(view: View) {
+        changeInterval(0.2)
     }
 
-    fun f_onClickFaster(view: View?) {
-        this.interval_sec = this.interval_sec?.minus(0.2)
-        interval_sec = Math.round(interval_sec!! * 100.0).toDouble() / 100.0
-
-        saveInterval()
-        Toast.makeText(
-            this, "" + interval_sec,
-            Toast.LENGTH_SHORT
-        ).show()
+    fun f_onClickFaster(view: View) {
+        changeInterval(-0.2)
     }
 
     private fun saveInterval() {
-        // save to profile
-
-        val editor = sharedPref!!.edit()
-        editor.putString("interval", "" + interval_sec)
-
-        editor.apply()
+        sharedPref?.edit { putString("interval", interval_sec.toString()) }
     }
 
     private fun remainSecs() {
-        //  remain 
+        ct_remain?.cancel()
+        val totalMs = ((interval_sec ?: 9.4) * 1000).toLong()
+        progressBar?.max = totalMs.toInt()
+        progressBar?.progress = totalMs.toInt()
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
 
-        val t_remain = findViewById<TextView>(R.id.remain_e)
-
-        //  Log.i("remainSecs", "" + interval_sec);
-        ct_remain = object : CountDownTimer((interval_sec!! * 1000).toLong(), 200) {
+        ct_remain = object : CountDownTimer(totalMs, 40) {
             override fun onTick(millisUntilFinished: Long) {
-                t_remain.setText(
-                    String.format(
-                        Locale.US,
-                        "%.1f",
-                        (Math.round((millisUntilFinished / 100).toFloat())).toFloat() / 10
-                    )
-                )
+                val remain = millisUntilFinished.toDouble() / 1000
+                findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", remain))
+                progressBar?.progress = millisUntilFinished.toInt()
             }
 
             override fun onFinish() {
-                //	Log.i("remainder", "remainder Finished!!");
-                t_remain.setText("0")
+                findViewById<TextView>(R.id.remain_e)?.setText("0.0")
+                progressBar?.progress = 0
             }
-        }
-
-        ct_remain!!.start()
+        }.start()
     }
 
-    //
-    //    public void onClickCheckbox(View view){
-    //
-    //    	Log.d("checkBox","Clicked");
-    //
-    //    	final CheckBox checkBox = findViewById(R.id.keep_screen_on);
-    //        if (checkBox.isChecked()) {
-    //        	Log.d("checkBox","ischecked");
-    //            checkBox.setChecked(true);
-    //
-    //        	getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    //        } else {
-    //        	Log.d("checkBox","Un checked");
-    //        	checkBox.setChecked(false);
-    //        	getWindow().clearFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    //        }
-    //    }
-    var jsonArray: JSONArray? = null
-    fun f_File2JsonArray(fileName: String?) {
-        val fileReadStringFeed = loadFile2String(this, fileName)
+    private var jsonArray: JSONArray? = null
 
-        // this is expensive. load file once use repeatedly. 
+    private fun f_File2JsonArray(fileName: String) {
         try {
-            jsonArray = JSONArray(fileReadStringFeed)
+            val jsonString = loadFile2String(this, fileName)
+            jsonArray = JSONArray(jsonString)
+            file_line_cnt = jsonArray!!.length()
         } catch (e: JSONException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
+            file_line_cnt = 0
         }
     }
 
-    // read Json file and set the value
-    fun f_ReadJsonObject(new_cnt: Int) {
-        val ii: Int
+    private fun f_ReadJsonObject(count: Int, shouldSpeak: Boolean = false) {
+        if (jsonArray == null || count <= 0 || count > jsonArray!!.length()) {
+            t_text?.setText("")
+            previousCount = count
+            return
+        }
 
         try {
-            if (new_cnt > file_line_cnt) {
-                ii = new_cnt % file_line_cnt
+            val jsonObject = jsonArray!!.getJSONObject(count - 1)
+            val text = jsonObject.getString("text")
+            
+            if (t_text?.text?.toString() != text) {
+                val goingForward = count >= previousCount
+                val screenWidth = t_text?.width?.toFloat() ?: 1000f
+                val outTranslation = if (goingForward) -screenWidth else screenWidth
+                val inTranslation = if (goingForward) screenWidth else -screenWidth
+
+                t_text?.animate()?.translationX(outTranslation)?.alpha(0f)?.setDuration(200)?.withEndAction {
+                    t_text?.setText(text)
+                    t_text?.translationX = inTranslation
+                    t_text?.animate()?.translationX(0f)?.alpha(1f)?.setDuration(200)?.withEndAction {
+                        if (shouldSpeak) f_ReadText()
+                    }?.start()
+                }?.start()
             } else {
-                ii = new_cnt
+                t_text?.setText(text)
+                if (shouldSpeak) f_ReadText()
             }
-            Log.d(
-                "jsonObjectRead",
-                "file_line_cnt:" + file_line_cnt + " new cnt:" + new_cnt + " ii:" + ii
-            )
-
-
-            /* integer .. Java starts with 0 */
-            val jsonObject = jsonArray!!.getJSONObject(ii - 1)
-
-            t_text!!.setText(jsonObject.getString("text"))
+            previousCount = count
         } catch (e: JSONException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
+            t_text?.setText("")
         }
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        this.mDetector!!.onTouchEvent(event)
-        // Be sure to call the superclass implementation
-        return super.onTouchEvent(event)
-    }
-
-
-    override fun onDown(e: MotionEvent): Boolean {
-        // TODO Auto-generated method stub
-        return false
-    }
-
-    override fun onShowPress(e: MotionEvent) {
-        // TODO Auto-generated method stub
-    }
-
-    override fun onSingleTapUp(e: MotionEvent): Boolean {
-        // TODO Auto-generated method stub
-        return false
-    }
-
-    override fun onScroll(e2: MotionEvent?, p1: MotionEvent,
-                          distanceY: Float, p3: Float): Boolean {
-        // TODO Auto-generated method stub
-        return false
-    }
-
-    override fun onLongPress(e: MotionEvent) {
-        // TODO Auto-generated method stub
-    }
-
-    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityY: Float, p3: Float): Boolean {
-        e1?.getX()?.minus(e2.getX())?.let {
-            if (it > SWIPE_MIN_DISTANCE) {
-                f_NextWords( /*plusMinus*/1,  /*setRemainSec*/false)
-            } else if ( it < - SWIPE_MIN_DISTANCE) {
-                f_NextWords( /*plusMinus*/-1,  /*setRemainSec*/false)
-            }
-        }
-        return false
-    }
-
-    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-        // TODO Auto-generated method stub
-        return false
-    }
-
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        // TODO Auto-generated method stub
-        f_NextWords( /*plusMinus*/1,  /*setRemainSec*/false)
-        return false
-    }
-
-    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-        // TODO Auto-generated method stub
-        return false
     }
 
     companion object {
-        const val KEY_PREF_SYNC_CONN: String = "pref_syncConnectionType"
-        private const val TAG = "MainActivity"
+        const val SETTING_ACTIVITY = 1
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
+    }
 
-        // IMPORTANT: Replace with your actual Ad Unit ID for interstitial ads
-        // For testing, you can use Google's test ad unit ID: "ca-app-pub-3940256099942544/1033173712"
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (mDetector!!.onTouchEvent(event)) {
+            return true
+        }
+        return super.onTouchEvent(event)
+    }
 
-        // TODO --- NOT NEEDED HERE IF WE ONLY NEED THE ADS ON SETTING, TO PREVENT DOUBLE FIRE UP
-       // private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
+    }
 
+    override fun onFling(
+        event1: MotionEvent?,
+        event2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        try {
+            if (event1 != null) {
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastFlingTime < 300) {
+                    return false 
+                }
+                
+                val diffY = event2.y - event1.y
+                val diffX = event2.x - event1.x
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        lastFlingTime = currentTime
+                        if (diffX > 0) {
+                            f_ManualJump(-1)
+                        } else {
+                            f_ManualJump(1)
+                        }
+                        return true
+                    }
+                }
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return false
+    }
 
-        private const val SETTING_ACTIVITY = 10
+    override fun onLongPress(event: MotionEvent) {}
 
-        const val SWIPE_MIN_DISTANCE: Int = 120
-        const val SWIPE_MAX_OFF_PATH: Int = 250
-        const val SWIPE_THRESHOLD_VELOCITY: Int = 200
+    override fun onScroll(
+        event1: MotionEvent?,
+        event2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return false
+    }
+
+    override fun onShowPress(event: MotionEvent) {}
+
+    override fun onSingleTapUp(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTap(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTapEvent(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+        return false
     }
 }

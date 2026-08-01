@@ -1,31 +1,44 @@
-
 package com.tkprof.HundredEightV
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.util.Objects
 
 class SettingsActivity : AppCompatActivity() {
 
-    private var mInterstitialAd: InterstitialAd? = null
-    private val adUnitId = AD_UNIT_ID
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        // Apply window insets to prevent the UI from being covered by system bars
+        val mainView = findViewById<View>(R.id.settings_container)?.parent as? View
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
 
         // Set up toolbar
         val toolbar: Toolbar = findViewById(R.id.settings_toolbar)
@@ -40,48 +53,34 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
 
-        // Initialize AdMob & load ad
+        // Close Button Setup
+        findViewById<Button>(R.id.btn_close_settings).setOnClickListener {
+            finish()
+        }
+
+        // Initialize AdMob Banner
         MobileAds.initialize(this) {}
-        loadInterstitialAd()
-    }
-
-    private fun loadInterstitialAd() {
+        val adView: AdView = findViewById(R.id.adViewSettings)
         val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, adUnitId, adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-            }
+        adView.loadAd(adRequest)
 
-            override fun onAdFailedToLoad(loadAdError: com.google.android.gms.ads.LoadAdError) {
-                mInterstitialAd = null
+        // Handle back press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
             }
         })
     }
 
-    private fun showAdOrFinish() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(this)
-            mInterstitialAd = null
-        }
-        finish()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
-        showAdOrFinish()
+        finish()
         return true
-    }
-
-    @SuppressLint("GestureBackNavigation")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        showAdOrFinish()
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                showAdOrFinish()
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -94,17 +93,41 @@ class SettingsActivity : AppCompatActivity() {
 
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_a")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_b")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("interval")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_name")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_line_cnt")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
             bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))
+
+            // Set version name dynamically
+            val versionPreference: Preference? = findPreference("version_info")
+            versionPreference?.summary = "version: " + getAppVersionName(requireContext())
+
+            // Handle About page click
+            val aboutPreference: Preference? = findPreference("about_page")
+            aboutPreference?.setOnPreferenceClickListener {
+                val intent = Intent(requireContext(), AboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
+        }
+
+        private fun getAppVersionName(context: Context): String {
+            return try {
+                val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    context.packageManager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(0))
+                } else {
+                    @Suppress("DEPRECATION")
+                    context.packageManager.getPackageInfo(context.packageName, 0)
+                }
+                packageInfo.versionName ?: "N/A"
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "N/A"
+            }
         }
     }
 
     companion object {
 
-        private const val AD_UNIT_ID = "ca-app-pub-8979756439452342/7964602504"
         private val sBindPreferenceSummaryToValueListener =
             Preference.OnPreferenceChangeListener { preference, value ->
                 val stringValue = value.toString()
@@ -126,11 +149,5 @@ class SettingsActivity : AppCompatActivity() {
                     .getString(preference.key, "")
             )
         }
-
-        private fun isXLargeTablet(context: Context): Boolean {
-            return (context.resources.configuration.screenLayout
-                    and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE
-        }
     }
 }
-

@@ -1,177 +1,115 @@
 package com.tkprof.HundredEightV
 
 import android.app.Activity
+import android.content.Context
 import android.content.res.AssetManager
 import android.media.AudioManager
 import android.media.SoundPool
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import java.io.BufferedReader
-import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 
-class Util : Activity() {
-    val isExternalStorageWritable: Boolean
-        /* Checks if external storage is available for read and write */
-        get() {
-            val state = Environment.getExternalStorageState()
-            return Environment.MEDIA_MOUNTED == state
+object Util {
+    private const val LOG_TAG = "Util"
+
+    @JvmStatic
+    fun loadFile2String(context: Context, fileName: String?): String {
+        val builder = StringBuilder()
+        val assetManager = context.assets
+
+        try {
+            val reader =
+                BufferedReader(InputStreamReader(assetManager.open(fileName!!), "UTF-8"))
+            var line: String?
+            while ((reader.readLine().also { line = it }) != null) {
+                builder.append(line)
+            }
+            reader.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
+        return builder.toString()
+    }
 
-    val dir: File
-        get() {
-            // Get the directory for the user's public pictures directory. 
-            val file = File(
-                Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS
-                ), getString(R.string.app_name)
-            )
+    private var soundPool: SoundPool? = null
+    private var soundID = 0
+    var loaded: Boolean = false
 
-            if (!file.exists()) {
-                if (!file.mkdirs()) {
-                    Log.e(
-                        LOG_TAG,
-                        "Directory not created"
-                    )
-                }
-            }
-            return file
-        } /*	    public void download1( ) {
-		      DownloadWebPageTask task = new DownloadWebPageTask();
-		      // Hardcode v3 .
-		      task.execute(new String[] {  "http://www.tkprof.com/bookmark.htm", 
-		    		  "http://www.tkprof.com/bookmark.htm",
-		    		  "http://www.tkprof.com/bookmark.htm"}); 
-		}
-	    */
-    /* public void initialsetup(SharedPreferences sp) {
-               if(sp.getString( "initsetup_done", "No").equals("Yes")){
-                   download();
-                   sp.edit().putString("initsetup_done", "Yes");
-               }
-           }*/
+    @JvmStatic
+    fun initSound(activity: Activity, assetManager: AssetManager, fileName: String?, onLoaded: (() -> Unit)? = null) {
+        // Set the hardware buttons to control the music
+        activity.volumeControlStream = AudioManager.STREAM_MUSIC
+        
+        // Release previous soundPool to avoid memory leaks and track limits
+        soundPool?.release()
+        loaded = false
 
+        soundPool = SoundPool.Builder().setMaxStreams(10).build()
 
-    companion object {
-        private const val LOG_TAG = "Util"
-
-        val isExternalStorageReadable: Boolean
-            /* Checks if external storage is available to at least read */
-            get() {
-                val state = Environment.getExternalStorageState()
-                return Environment.MEDIA_MOUNTED == state ||
-                        Environment.MEDIA_MOUNTED_READ_ONLY == state
-            }
-
-
-        // 
-        @JvmStatic
-        fun loadFile2String(act: Activity, fileName: String?): String {
-            val builder = StringBuilder()
-
-            //File myFile =   Util.openFile(fileName); 
-            val assetManager = act.getAssets()
-
-            try {
-                val reader =
-                    //new BufferedReader(new InputStreamReader(new FileInputStream(myFile), "UTF-8"));
-                    BufferedReader(InputStreamReader(assetManager.open(fileName!!), "UTF-8"))
-                var line: String?
-                while ((reader.readLine().also { line = it }) != null) {
-                    builder.append(line)
-                }
-                reader.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            return builder.toString()
-        }
-
-        private var soundPool: SoundPool? = null
-        private var soundID = 0
-        var loaded: Boolean = false
-
-        @JvmStatic
-        fun initSound(act: Activity, asst: AssetManager, fileName: String?) {
-            // Set the hardware buttons to control the music
-            act.setVolumeControlStream(AudioManager.STREAM_MUSIC)
-            // Load the sound
-            //      soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-            soundPool = SoundPool.Builder().setMaxStreams(10).build()
-
-            soundPool!!.setOnLoadCompleteListener(object : SoundPool.OnLoadCompleteListener {
-                override fun onLoadComplete(
-                    soundPool: SoundPool?, sampleId: Int,
-                    status: Int
-                ) {
-                    loaded = true
-                    // playSound(act);  // for debug
-                }
-            })
-
-            // soundID = soundPool.load(act,  R.raw.templebell_soundbiiblecom_756181215, 1); 
-            try {
-                soundID = soundPool!!.load(asst.openFd(fileName!!), 1)
-                //	Toast.makeText(act, fileName + "loaded", Toast.LENGTH_SHORT).show();
-            } catch (e: IOException) {
-                // TODO Auto-generated catch block
-                Toast.makeText(act, fileName + " Fail ", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            }
-        }
-
-        @JvmStatic
-        fun playSound(act: Activity) {
-            // Getting the user sound settings
-            val audioManager = act.getSystemService(AUDIO_SERVICE) as AudioManager?
-            var actualVolume = 0f
-            var maxVolume = 0f
-            if (audioManager != null) {
-                actualVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-                maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
-            }
-            val volume = actualVolume / maxVolume
-            // Is the sound loaded already?
-            if (loaded) {
-                soundPool!!.play(soundID, volume, volume, 1, 0, 1f)
-                Log.d("Test", "Played sound")
+        soundPool?.setOnLoadCompleteListener { _, _, status ->
+            if (status == 0) {
+                loaded = true
+                Log.d(LOG_TAG, "Sound loaded successfully: $fileName")
+                onLoaded?.invoke()
             } else {
-                Log.d("Util.playSound", "sound not loaded")
+                loaded = false
+                Log.e(LOG_TAG, "Sound load failed with status $status: $fileName")
             }
-
-            // return false;
         }
 
+        try {
+            soundID = soundPool?.load(assetManager.openFd(fileName!!), 1) ?: 0
+        } catch (e: Exception) {
+            Log.e(LOG_TAG, "Error opening sound file: $fileName", e)
+            Toast.makeText(activity, "$fileName Load Fail ", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-        fun initNPlaySound(act: Activity, asst: AssetManager, fileName: String?) {
-            Log.d("Util.initNPlaySound", fileName!!)
-            // Set the hardware buttons to control the music
-            act.setVolumeControlStream(AudioManager.STREAM_MUSIC)
-            // Load the sound
-            //     soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-            soundPool = SoundPool.Builder().setMaxStreams(10).build()
+    @JvmStatic
+    fun playSound(activity: Activity) {
+        val audioManager = activity.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
+        var actualVolume = 0f
+        var maxVolume = 0f
+        if (audioManager != null) {
+            actualVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+            maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
+        }
+        val volume = if (maxVolume > 0) actualVolume / maxVolume else 0.5f
+        
+        if (loaded) {
+            soundPool?.play(soundID, volume, volume, 1, 0, 1f)
+            Log.d(LOG_TAG, "Played sound ID: $soundID")
+        } else {
+            Log.d(LOG_TAG, "Sound not loaded yet")
+        }
+    }
 
-            soundPool!!.setOnLoadCompleteListener(object : SoundPool.OnLoadCompleteListener {
-                override fun onLoadComplete(
-                    soundPool: SoundPool?, sampleId: Int,
-                    status: Int
-                ) {
-                    loaded = true
-                    playSound(act) // for debug
-                }
-            })
+    fun initNPlaySound(activity: Activity, assetManager: AssetManager, fileName: String?) {
+        Log.d(LOG_TAG, "initNPlaySound: $fileName")
+        
+        activity.volumeControlStream = AudioManager.STREAM_MUSIC
+        
+        soundPool?.release()
+        loaded = false
 
-            // soundID = soundPool.load(act,  R.raw.templebell_soundbiiblecom_756181215, 1); 
-            try {
-                soundID = soundPool!!.load(asst.openFd(fileName), 1)
-                //	Toast.makeText(act, fileName + "loaded", Toast.LENGTH_SHORT).show();
-            } catch (e: IOException) {
-                // TODO Auto-generated catch block
-                Toast.makeText(act, fileName + " Fail ", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
+        soundPool = SoundPool.Builder().setMaxStreams(10).build()
+
+        soundPool?.setOnLoadCompleteListener { _, _, status ->
+            if (status == 0) {
+                loaded = true
+                playSound(activity)
+            } else {
+                Log.e(LOG_TAG, "initNPlaySound load failed: $status")
             }
+        }
+
+        try {
+            soundID = soundPool?.load(assetManager.openFd(fileName!!), 1) ?: 0
+        } catch (e: Exception) {
+            Log.e(LOG_TAG, "initNPlaySound error: $fileName", e)
+            Toast.makeText(activity, "$fileName Load Fail ", Toast.LENGTH_SHORT).show()
         }
     }
 }

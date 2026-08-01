@@ -1,20 +1,18 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.tkprof.HundredEightV"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.tkprof.HundredEightV"
         minSdk = 27
-        targetSdk = 36
-        versionCode = 14
-        versionName = "Oct2025"
+        targetSdk = 35
+        versionCode = 21
+        versionName = "05/09/2026"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,7 +38,7 @@ android {
     }
 
     buildFeatures {
-        compose = true
+        viewBinding = true
     }
 }
 
@@ -52,19 +50,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.preference)
 
-    // Lifecycle & Activity
+    // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-
-    // Jetpack Compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
 
     // Google Ads & Media
-    implementation(libs.play.services.ads.api)
+    implementation(libs.play.services.ads)
     implementation(libs.interactivemedia)
 
     // Core library desugaring
@@ -74,11 +64,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    // Debugging
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }
-
