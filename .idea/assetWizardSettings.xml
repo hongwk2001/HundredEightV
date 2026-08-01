@@ -67,7 +67,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="D:\Android\AndroidStudioProjects\HundredEightV\app\src\main\res\drawable-xxxhdpi\ic_launcher.png" />
+                                                <entry key="imagePath" value="D:\Android\AndroidStudioProjects\HundredEightV\temp_resource\108vow_unnamed.jpg" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -91,7 +91,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Android\AndroidStudioProjects\HundredEightV\app\src\main\res\drawable-xxxhdpi\ic_launcher.png" />
+                                                <entry key="imagePath" value="D:\Android\AndroidStudioProjects\HundredEightV\temp_resource\108vow_unnamed.jpg" />
+                                                <entry key="scalingPercent" value="153" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -123,6 +124,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="36818f" />
                                       <entry key="previewDensity" value="hdpi" />
                                     </map>
                                   </option>

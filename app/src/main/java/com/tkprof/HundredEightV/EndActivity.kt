@@ -2,28 +2,38 @@ package com.tkprof.HundredEightV
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import kotlin.system.exitProcess
 
 class EndActivity : AppCompatActivity() {
+
+    private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end)
 
-        MobileAds.initialize(this) {}
-        val adView: AdView = findViewById(R.id.adViewEnd)
+        findViewById<View>(R.id.end_root_layout)?.let { root ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
+
+        adView = findViewById(R.id.adViewEnd)
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adView?.loadAd(adRequest)
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         
@@ -43,7 +53,6 @@ class EndActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btn_exit).setOnClickListener {
             finishAffinity()
-            exitProcess(0)
         }
 
         findViewById<Button>(R.id.btn_settings_end_btn).setOnClickListener {
@@ -55,8 +64,22 @@ class EndActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finishAffinity()
-                exitProcess(0)
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adView?.destroy()
+        super.onDestroy()
     }
 }

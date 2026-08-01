@@ -14,8 +14,8 @@
         android:key="count_a"
         android:maxLines="1"
         android:selectAllOnFocus="true"
-        android:singleLine="true"
         android:title="@string/count_a"
+        app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
@@ -26,8 +26,8 @@
         android:key="count_b"
         android:maxLines="1"
         android:selectAllOnFocus="true"
-        android:singleLine="true"
         android:title="@string/count_b"
+        app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
@@ -39,7 +39,8 @@
         android:key="file_name"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/file_to_read" />
+        android:title="@string/file_to_read"
+        app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory />
 
@@ -49,6 +50,7 @@
         android:entryValues="@array/bellSoundChoiceValues"
         android:key="bellsound"
         android:title="@string/selectBellSound"
+        app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
@@ -59,6 +61,7 @@
         android:entryValues="@array/colorValues"
         android:key="bgcolor"
         android:title="@string/bgcolor"
+        app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />

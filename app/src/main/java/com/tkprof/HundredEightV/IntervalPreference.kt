@@ -3,9 +3,11 @@ package com.tkprof.HundredEightV
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
+import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import java.util.Locale
+import kotlin.math.roundToLong
 
 class IntervalPreference(context: Context, attrs: AttributeSet?) : Preference(context, attrs) {
 
@@ -29,9 +31,9 @@ class IntervalPreference(context: Context, attrs: AttributeSet?) : Preference(co
         var value = sharedPreferences?.getString(key, "9.4")?.toDoubleOrNull() ?: 9.4
         value += delta
         if (value < 1.0) value = 1.0
-        value = Math.round(value * 10.0) / 10.0
+        value = (value * 10.0).roundToLong() / 10.0
         
-        sharedPreferences?.edit()?.putString(key, value.toString())?.apply()
+        sharedPreferences?.edit { putString(key, value.toString()) }
         updateValueDisplay(view)
         
         // Notify change

@@ -131,14 +131,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     override fun onResume() {
         super.onResume()
-        PreferenceManager.getDefaultSharedPreferences(this)
-            .registerOnSharedPreferenceChangeListener(this)
+        sharedPref?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        PreferenceManager.getDefaultSharedPreferences(this)
-            .unregisterOnSharedPreferenceChangeListener(this)
+        sharedPref?.unregisterOnSharedPreferenceChangeListener(this)
         f_SaveSharedpref()
 
         // Automatically pause when the app loses focus (e.g., incoming phone call)
@@ -157,6 +155,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         
         setupUI()
+
+        findViewById<View>(R.id.rootLayout)?.let { root ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
 
         f_CheckDailyReset()
         f_LoadVariables()
@@ -343,7 +349,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         
         remainSecs()
 
-        val current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        val current_cnt_val = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
         val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
         val interval_ms = (interval_sec!! * 1000).toLong()
 
@@ -380,14 +386,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
     }
 
-    public override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("saved_cnt", tv_Cnt?.text.toString())
         outState.putString("saved_cnta", t_cnta?.text.toString())
         outState.putString("saved_cntb", t_cntb?.text.toString())
     }
 
-    public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         tv_Cnt?.text = savedInstanceState.getString("saved_cnt", "0")
         t_cnta?.text = savedInstanceState.getString("saved_cnta", "0")
@@ -473,7 +479,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     var toggle_on: Boolean = false
 
     fun f_onToggleClicked(view: View) {
-        val isChecked = (view as ToggleButton).isChecked()
+        val isChecked = (view as ToggleButton).isChecked
         if (isChecked) {
             toggle_on = true
             f_Start(isResume = false)
@@ -486,17 +492,17 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     fun f_Start(isResume: Boolean) {
         f_Pause() 
 
-        var current_cnt_val = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        var current_cnt_val = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
         interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
 
         if (!isResume && current_cnt_val >= file_line_cnt) {
             current_cnt_val = 0
-            tv_Cnt!!.setText("0")
+            tv_Cnt?.text = "0"
         }
 
         if (!isResume) {
             f_NextWords(1, true)
-            current_cnt_val = tv_Cnt!!.getText().toString().toInt()
+            current_cnt_val = tv_Cnt?.text?.toString()?.toInt() ?: 0
         } else {
             remainSecs()
         }
@@ -579,36 +585,36 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
     private fun f_NextWords(i: Int, setRemainSeconds: Boolean) {
-        var Current_cnt = tv_Cnt!!.getText().toString().toIntOrNull() ?: 0
+        var currentCnt = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
 
-        val nextCnt = Current_cnt + i
+        val nextCnt = currentCnt + i
         if (nextCnt < 0 || nextCnt > file_line_cnt) {
             return
         }
         
-        Current_cnt = nextCnt
+        currentCnt = nextCnt
 
         if (sharedPref!!.getBoolean("play_sound", true)) {
             playSound(this)
         }
 
-        f_ReadJsonObject(Current_cnt, shouldSpeak = true)
+        f_ReadJsonObject(currentCnt, shouldSpeak = true)
 
         if (setRemainSeconds) {
             remainSecs()
         }
 
-        var Current_ca = t_cnta!!.getText().toString().toIntOrNull() ?: 0
-        var Current_cb = t_cntb!!.getText().toString().toIntOrNull() ?: 0
+        var currentCa = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+        var currentCb = t_cntb?.text?.toString()?.toIntOrNull() ?: 0
 
-        Current_ca = Current_ca + i
-        Current_cb = Current_cb + i
+        currentCa += i
+        currentCb += i
 
-        tv_Cnt!!.setText(String.format(Locale.US, "%d", Current_cnt))
-        t_cnta!!.setText(String.format(Locale.US, "%d", Current_ca))
-        t_cntb!!.setText(String.format(Locale.US, "%d", Current_cb))
+        tv_Cnt?.text = String.format(Locale.US, "%d", currentCnt)
+        t_cnta?.text = String.format(Locale.US, "%d", currentCa)
+        t_cntb?.text = String.format(Locale.US, "%d", currentCb)
 
-        blinkView(tv_Cnt!!)
+        tv_Cnt?.let { blinkView(it) }
     }
 
     private fun blinkView(view: View) {
@@ -620,15 +626,15 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     fun f_ReadText() {
         var toSpeak = ""
         if (cbx_tts_number?.isChecked == true) {
-            toSpeak = tv_Cnt!!.getText().toString()
+            toSpeak = tv_Cnt?.text?.toString() ?: ""
         }
 
         if (cbx_tts_text?.isChecked == true) {
-            toSpeak = toSpeak + " " + t_text!!.getText().toString()
+            toSpeak = toSpeak + " " + (t_text?.text?.toString() ?: "")
         }
 
-        if (toSpeak.length > 0) {
-            ttobj!!.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+        if (toSpeak.isNotEmpty()) {
+            ttobj?.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 

@@ -3,6 +3,7 @@ package com.tkprof.HundredEightV
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -10,17 +11,18 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import java.util.Locale
-import kotlin.system.exitProcess
 
 class StartActivity : AppCompatActivity() {
 
     private lateinit var sharedPref: SharedPreferences
     private lateinit var spinner: Spinner
+    private var adView: AdView? = null
     private var intervalSec: Double = 9.4
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,10 +30,19 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        MobileAds.initialize(this) {}
-        val adView: AdView = findViewById(R.id.adViewStart)
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        findViewById<View>(R.id.start_root_layout)?.let { root ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
+
+        adView = findViewById(R.id.adViewStart)
+        adView?.post {
+            val adRequest = AdRequest.Builder().build()
+            adView?.loadAd(adRequest)
+        }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         spinner = findViewById(R.id.spinner_vow_file)
@@ -86,7 +97,6 @@ class StartActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btn_exit).setOnClickListener {
             finishAffinity()
-            exitProcess(0)
         }
     }
 
@@ -113,6 +123,17 @@ class StartActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        adView?.resume()
         updateIntervalDisplay()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adView?.destroy()
+        super.onDestroy()
     }
 }

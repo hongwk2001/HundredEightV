@@ -14,16 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import java.util.Objects
 
 class SettingsActivity : AppCompatActivity() {
+
+    private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -59,10 +57,9 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Initialize AdMob Banner
-        MobileAds.initialize(this) {}
-        val adView: AdView = findViewById(R.id.adViewSettings)
+        adView = findViewById(R.id.adViewSettings)
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adView?.loadAd(adRequest)
 
         // Handle back press
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -75,6 +72,21 @@ class SettingsActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adView?.destroy()
+        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,19 +103,11 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.pref_general, rootKey)
 
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_a")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("count_b")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("file_name")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bellsound")))
-            bindPreferenceSummaryToValue(Objects.requireNonNull(findPreference("bgcolor")))
-
             // Set version name dynamically
-            val versionPreference: Preference? = findPreference("version_info")
-            versionPreference?.summary = "version: " + getAppVersionName(requireContext())
+            findPreference<Preference>("version_info")?.summary = "version: ${getAppVersionName(requireContext())}"
 
             // Handle About page click
-            val aboutPreference: Preference? = findPreference("about_page")
-            aboutPreference?.setOnPreferenceClickListener {
+            findPreference<Preference>("about_page")?.setOnPreferenceClickListener {
                 val intent = Intent(requireContext(), AboutActivity::class.java)
                 startActivity(intent)
                 true
@@ -123,31 +127,6 @@ class SettingsActivity : AppCompatActivity() {
                 e.printStackTrace()
                 "N/A"
             }
-        }
-    }
-
-    companion object {
-
-        private val sBindPreferenceSummaryToValueListener =
-            Preference.OnPreferenceChangeListener { preference, value ->
-                val stringValue = value.toString()
-                if (preference is ListPreference) {
-                    val index = preference.findIndexOfValue(stringValue)
-                    preference.summary =
-                        if (index >= 0) preference.entries[index] else null
-                } else {
-                    preference.summary = stringValue
-                }
-                true
-            }
-
-        private fun bindPreferenceSummaryToValue(preference: Preference) {
-            preference.onPreferenceChangeListener = sBindPreferenceSummaryToValueListener
-            sBindPreferenceSummaryToValueListener.onPreferenceChange(
-                preference,
-                PreferenceManager.getDefaultSharedPreferences(preference.context)
-                    .getString(preference.key, "")
-            )
         }
     }
 }
