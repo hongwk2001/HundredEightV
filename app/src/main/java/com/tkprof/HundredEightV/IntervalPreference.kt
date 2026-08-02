@@ -23,8 +23,8 @@ class IntervalPreference(context: Context, attrs: AttributeSet?) : Preference(co
         updateValueDisplay(valueText)
 
         holder.findViewById(R.id.btn_minus_1).setOnClickListener { changeValue(-1.0, valueText) }
-        holder.findViewById(R.id.btn_minus_02).setOnClickListener { changeValue(-0.2, valueText) }
-        holder.findViewById(R.id.btn_plus_02).setOnClickListener { changeValue(0.2, valueText) }
+        holder.findViewById(R.id.btn_minus_02).setOnClickListener { changeValue(-0.05, valueText) }
+        holder.findViewById(R.id.btn_plus_02).setOnClickListener { changeValue(0.05, valueText) }
         holder.findViewById(R.id.btn_plus_1).setOnClickListener { changeValue(1.0, valueText) }
     }
 
@@ -32,7 +32,7 @@ class IntervalPreference(context: Context, attrs: AttributeSet?) : Preference(co
         var value = sharedPreferences?.getString(key, "9.4")?.toDoubleOrNull() ?: 9.4
         value += delta
         if (value < 1.0) value = 1.0
-        value = (value * 10.0).roundToLong() / 10.0
+        value = (value * 100.0).roundToLong() / 100.0
         
         sharedPreferences?.edit { putString(key, value.toString()) }
         updateValueDisplay(view)
@@ -43,6 +43,6 @@ class IntervalPreference(context: Context, attrs: AttributeSet?) : Preference(co
 
     private fun updateValueDisplay(view: TextView) {
         val value = sharedPreferences?.getString(key, "9.4")?.toDoubleOrNull() ?: 9.4
-        view.text = String.format(Locale.US, "%.1f s", value)
+        view.text = String.format(Locale.US, "%.2f s", value)
     }
 }

@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         when (key) {
             "interval" -> {
                 interval_sec = sharedPreferences.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
-                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", interval_sec)
                 Log.d("Main.onPrefChanged", "interval_sec updated: $interval_sec")
             }
             "bgcolor" -> applyBackgroundColor()
@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                     cbx_tts_text?.isChecked = checked
                 }
             }
+            "tts_speed", "tts_pitch", "tts_voice" -> applyTtsSettings()
             "current_cnt", "count_a", "count_b" -> {
                 // Optional: Update counts if changed elsewhere (e.g. SettingsActivity)
                 tv_Cnt?.text = sharedPreferences.getString("current_cnt", "0")
@@ -154,6 +155,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         super.onCreate(savedInstanceState)
         
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        Util.migratePreferences(this)
         
         setupUI()
 
@@ -331,9 +333,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     private fun changeInterval(delta: Double) {
         interval_sec = (interval_sec ?: 9.4) + delta
         if (interval_sec!! < 1.0) interval_sec = 1.0
-        interval_sec = Math.round(interval_sec!! * 10.0) / 10.0
+        interval_sec = Math.round(interval_sec!! * 100.0) / 100.0
         saveInterval()
-        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.1f", interval_sec)
+        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", interval_sec)
         
         if (toggle_on) {
             f_RestartTimerOnly()
@@ -387,6 +389,26 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
     }
 
+    private fun applyTtsSettings() {
+        if (ttobj == null || !ttsReady) return
+
+        val speedStr = sharedPref?.getString("tts_speed", "1.0") ?: "1.0"
+        val speed = speedStr.toFloatOrNull() ?: 1.0f
+        ttobj?.setSpeechRate(speed)
+
+        val pitchStr = sharedPref?.getString("tts_pitch", "1.0") ?: "1.0"
+        val pitch = pitchStr.toFloatOrNull() ?: 1.0f
+        ttobj?.setPitch(pitch)
+
+        val voiceId = sharedPref?.getString("tts_voice", null)
+        if (voiceId != null) {
+            val voice = ttobj?.voices?.find { it.name == voiceId }
+            if (voice != null) {
+                ttobj?.voice = voice
+            }
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("saved_cnt", tv_Cnt?.text.toString())
@@ -424,11 +446,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
         Log.d("Main.f_LoadVariables", "interval_sec: $interval_sec")
 
-        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", interval_sec))
 
         val fileName: String = sharedPref!!.getString("file_name", "불교방송_나를_깨우는_108배.json")!!
         
         applyBackgroundColor()
+        applyTtsSettings()
 
         val sound_filename: String =
             sharedPref!!.getString("bellsound", getString(R.string.pref_default_bellsound))!!
@@ -641,11 +664,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
 
     fun f_onClickSlower(view: View) {
-        changeInterval(0.2)
+        changeInterval(0.05)
     }
 
     fun f_onClickFaster(view: View) {
-        changeInterval(-0.2)
+        changeInterval(-0.05)
     }
 
     private fun saveInterval() {
@@ -657,17 +680,17 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         val totalMs = ((interval_sec ?: 9.4) * 1000).toLong()
         progressBar?.max = totalMs.toInt()
         progressBar?.progress = totalMs.toInt()
-        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", interval_sec))
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", interval_sec))
 
         ct_remain = object : CountDownTimer(totalMs, 40) {
             override fun onTick(millisUntilFinished: Long) {
                 val remain = millisUntilFinished.toDouble() / 1000
-                findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.1f", remain))
+                findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", remain))
                 progressBar?.progress = millisUntilFinished.toInt()
             }
 
             override fun onFinish() {
-                findViewById<TextView>(R.id.remain_e)?.setText("0.0")
+                findViewById<TextView>(R.id.remain_e)?.setText("0.00")
                 progressBar?.progress = 0
             }
         }.start()

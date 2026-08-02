@@ -7,6 +7,8 @@ import android.media.AudioManager
 import android.media.SoundPool
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import java.io.IOException
 
 object Util {
@@ -72,6 +74,43 @@ object Util {
         Log.d(LOG_TAG, "initNPlaySound: $fileName")
         initSound(activity, assetManager, fileName) {
             playSound(activity)
+        }
+    }
+
+    fun migratePreferences(context: Context) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val keysToMigrate = listOf("tts_speed", "tts_pitch", "interval", "count_a", "count_b", "current_cnt")
+        
+        sharedPref.edit {
+            keysToMigrate.forEach { key ->
+                try {
+                    // Try reading as String, which is what the current app expects
+                    sharedPref.getString(key, null)
+                } catch (e: ClassCastException) {
+                    // If it fails, it's likely an Int or Float from an older version
+                    Log.d(LOG_TAG, "Migrating key: $key from Int/Float to String")
+                    try {
+                        val intValue = sharedPref.getInt(key, -1)
+                        if (intValue != -1) {
+                            val stringValue = if (key == "tts_speed" || key == "tts_pitch") {
+                                (intValue / 10.0).toString()
+                            } else {
+                                intValue.toString()
+                            }
+                            putString(key, stringValue)
+                        }
+                    } catch (e2: ClassCastException) {
+                        try {
+                            val floatValue = sharedPref.getFloat(key, -1f)
+                            if (floatValue != -1f) {
+                                putString(key, floatValue.toString())
+                            }
+                        } catch (e3: Exception) {
+                            Log.e(LOG_TAG, "Failed to migrate key: $key", e3)
+                        }
+                    }
+                }
+            }
         }
     }
 }

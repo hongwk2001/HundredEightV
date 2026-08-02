@@ -46,6 +46,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        Util.migratePreferences(this)
         spinner = findViewById(R.id.spinner_vow_file)
  
         val values = resources.getStringArray(R.array.file_choice_values)
@@ -65,11 +66,11 @@ class StartActivity : AppCompatActivity() {
         updateIntervalDisplay()
 
         findViewById<Button>(R.id.btn_start_faster).setOnClickListener {
-            changeInterval(-0.2)
+            changeInterval(-0.05)
         }
 
         findViewById<Button>(R.id.btn_start_slower).setOnClickListener {
-            changeInterval(0.2)
+            changeInterval(0.05)
         }
 
         findViewById<Button>(R.id.btn_minus_1).setOnClickListener {
@@ -104,7 +105,7 @@ class StartActivity : AppCompatActivity() {
     private fun changeInterval(delta: Double) {
         intervalSec += delta
         if (intervalSec < 1.0) intervalSec = 1.0
-        intervalSec = Math.round(intervalSec * 10.0) / 10.0
+        intervalSec = Math.round(intervalSec * 100.0) / 100.0
         saveInterval()
         updateIntervalDisplayOnly()
     }
@@ -115,7 +116,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun updateIntervalDisplayOnly() {
-        findViewById<TextView>(R.id.tv_interval_value).text = String.format(Locale.US, "%.1f s", intervalSec)
+        findViewById<TextView>(R.id.tv_interval_value).text = String.format(Locale.US, "%.2f s", intervalSec)
     }
 
     private fun saveInterval() {

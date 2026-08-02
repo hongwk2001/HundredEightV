@@ -51,4 +51,12 @@
     <string name="about_title">Giới thiệu &amp; Liên hệ</string>
     <string name="about_content">Ứng dụng 108 Lời Nguyện.\n\nỨng dụng này giúp bạn thực hiện 108 lạy với khoảng thời gian và âm thanh có thể tùy chỉnh.\n\nThông tin liên hệ:\nBilly Wookyoung Hong (홍우경)\nhongwk2001@yahoo.com\n\nVui lòng liên hệ với tôi nếu bạn có ý tưởng mới hoặc văn bản mới muốn thêm vào.</string>
 
+    <string name="tts_speed">Tốc độ đọc</string>
+    <string name="tts_pitch">Cao độ giọng nói</string>
+    <string name="tts_lang">Ngôn ngữ giọng nói</string>
+    <string name="tts_voice">Chọn giọng nói</string>
+    <string name="tts_play_sample">Nghe thử giọng nói</string>
+    <string name="tts_sample_text">Đây là mẫu của giọng nói đã chọn.</string>
+    <string name="close">Đóng</string>
+    <string name="cancel">Hủy</string>
 </resources>

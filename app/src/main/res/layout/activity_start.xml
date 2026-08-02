@@ -71,7 +71,7 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="-0.2s" />
+                android:text="-0.05s" />
 
             <TextView
                 android:id="@+id/tv_interval_value"
@@ -90,7 +90,7 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="+0.2s" />
+                android:text="+0.05s" />
 
             <Button
                 android:id="@+id/btn_plus_1"

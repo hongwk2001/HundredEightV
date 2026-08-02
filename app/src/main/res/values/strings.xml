@@ -150,4 +150,25 @@
     <string name="about_title">About &amp; Contact</string>
     <string name="about_content">Hundred Eight Vows Application.\n\nThis app helps you perform 108 bows with customizable intervals and sound.\n\nContact Info:\nBilly Wookyoung Hong\nhongwk2001@yahoo.com\n\nPlease contact me for new ideas or if you have new text you would like to add.</string>
 
+    <string name="tts_speed">Speech Speed</string>
+    <string name="tts_pitch">Speech Pitch</string>
+    <string name="tts_lang">Voice Language</string>
+    <string name="tts_voice">Voice Selection</string>
+    <string name="tts_play_sample">Play Voice Sample</string>
+    <string name="tts_sample_text">This is a sample of the selected voice.</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+
+    <string-array name="tts_lang_entries">
+        <item>Korean</item>
+        <item>English</item>
+        <item>Vietnamese</item>
+        <item>All</item>
+    </string-array>
+    <string-array name="tts_lang_values">
+        <item>ko</item>
+        <item>en</item>
+        <item>vi</item>
+        <item>all</item>
+    </string-array>
 </resources>

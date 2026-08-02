@@ -11,6 +11,7 @@
     <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
+        android:digits="0123456789"
         android:key="count_a"
         android:maxLines="1"
         android:selectAllOnFocus="true"
@@ -23,6 +24,7 @@
     <EditTextPreference
         android:defaultValue="0"
         android:inputType="number"
+        android:digits="0123456789"
         android:key="count_b"
         android:maxLines="1"
         android:selectAllOnFocus="true"
@@ -62,6 +64,46 @@
         android:key="bgcolor"
         android:title="@string/bgcolor"
         app:useSimpleSummaryProvider="true"
+        android:layout="@layout/preference_horizontal" />
+
+    <PreferenceCategory android:title="TTS Settings" />
+
+    <EditTextPreference
+        android:defaultValue="1.0"
+        android:key="tts_speed"
+        android:title="@string/tts_speed"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."
+        app:useSimpleSummaryProvider="true"
+        android:layout="@layout/preference_horizontal" />
+
+    <EditTextPreference
+        android:defaultValue="1.0"
+        android:key="tts_pitch"
+        android:title="@string/tts_pitch"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."
+        app:useSimpleSummaryProvider="true"
+        android:layout="@layout/preference_horizontal" />
+
+    <ListPreference
+        android:defaultValue="all"
+        android:entries="@array/tts_lang_entries"
+        android:entryValues="@array/tts_lang_values"
+        android:key="tts_lang"
+        android:title="@string/tts_lang"
+        app:useSimpleSummaryProvider="true"
+        android:layout="@layout/preference_horizontal" />
+
+    <com.tkprof.hundredeightv.VoicePreference
+        android:key="tts_voice"
+        android:title="@string/tts_voice"
+        app:useSimpleSummaryProvider="true"
+        android:layout="@layout/preference_horizontal" />
+
+    <Preference
+        android:key="tts_play_sample"
+        android:title="@string/tts_play_sample"
         android:layout="@layout/preference_horizontal" />
 
     <PreferenceCategory />
