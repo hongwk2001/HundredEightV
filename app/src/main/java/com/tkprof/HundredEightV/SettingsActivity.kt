@@ -180,6 +180,14 @@ class SettingsActivity : AppCompatActivity() {
 
         private fun updateVoicePreference(langOverride: String? = null) {
             val langPref = findPreference<ListPreference>("tts_lang")
+            
+            // If no language is set, default to system language if supported
+            if (langPref != null && langPref.value == null && langOverride == null) {
+                val systemLang = java.util.Locale.getDefault().language
+                val supportedLangs = listOf("ko", "en", "vi")
+                langPref.value = if (systemLang in supportedLangs) systemLang else "all"
+            }
+
             val selectedLang = langOverride ?: langPref?.value ?: "all"
 
             val voices = tts?.voices?.toList() ?: emptyList()
@@ -201,6 +209,26 @@ class SettingsActivity : AppCompatActivity() {
                     // If current selection is not in filtered list and a specific language is selected, reset it
                     if (selectedLang != "all" && voicePreference.value != null && !voiceNames.contains(voicePreference.value)) {
                         voicePreference.value = null
+                    }
+
+                    // If no voice is selected, find the best default based on system locale and quality
+                    if (voicePreference.value == null) {
+                        val systemLocaleTag = java.util.Locale.getDefault().toLanguageTag().lowercase()
+                        
+                        // Priority 1: Locale match AND "-language" suffix (usually higher quality)
+                        // Priority 2: Locale match
+                        // Priority 3: "-language" suffix
+                        // Priority 4: First available
+                        val bestMatch = filteredVoices.find { 
+                            val name = it.name.lowercase()
+                            name.contains(systemLocaleTag) && name.endsWith("-language")
+                        } ?: filteredVoices.find { 
+                            it.name.lowercase().contains(systemLocaleTag)
+                        } ?: filteredVoices.find { 
+                            it.name.lowercase().endsWith("-language")
+                        } ?: filteredVoices.firstOrNull()
+                        
+                        voicePreference.value = bestMatch?.name
                     }
                     
                     // The summary will be updated by the SummaryProvider set in onCreatePreferences

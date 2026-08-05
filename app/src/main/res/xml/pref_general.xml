@@ -87,7 +87,6 @@
         android:layout="@layout/preference_horizontal" />
 
     <ListPreference
-        android:defaultValue="all"
         android:entries="@array/tts_lang_entries"
         android:entryValues="@array/tts_lang_values"
         android:key="tts_lang"
