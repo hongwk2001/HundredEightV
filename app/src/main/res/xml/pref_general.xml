@@ -98,7 +98,6 @@
     <com.tkprof.hundredeightv.VoicePreference
         android:key="tts_voice"
         android:title="@string/tts_voice"
-        app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
     <Preference

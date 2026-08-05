@@ -68,4 +68,5 @@
     <string name="tts_sample_text">선택된 음성의 샘플입니다.</string>
     <string name="close">닫기</string>
     <string name="cancel">취소</string>
+    <string name="pref_not_set">설정되지 않음</string>
 </resources>

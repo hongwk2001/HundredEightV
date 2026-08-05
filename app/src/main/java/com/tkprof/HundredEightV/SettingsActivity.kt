@@ -134,6 +134,15 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
+            findPreference<ListPreference>("tts_voice")?.summaryProvider = Preference.SummaryProvider<ListPreference> { preference ->
+                val value = preference.value
+                if (value.isNullOrEmpty()) {
+                    getString(R.string.pref_not_set)
+                } else {
+                    value
+                }
+            }
+
             setupNumericInput()
             loadVoices()
         }
@@ -184,13 +193,17 @@ class SettingsActivity : AppCompatActivity() {
                     else -> voices
                 }
 
-                val voiceNames = filteredVoices.map { it.name }.toTypedArray()
-                voicePreference.entries = voiceNames
-                voicePreference.entryValues = voiceNames
+                if (filteredVoices.isNotEmpty()) {
+                    val voiceNames = filteredVoices.map { it.name }.toTypedArray()
+                    voicePreference.entries = voiceNames
+                    voicePreference.entryValues = voiceNames
 
-                // If current selection is not in filtered list, reset it
-                if (voicePreference.value != null && !voiceNames.contains(voicePreference.value)) {
-                    voicePreference.value = null
+                    // If current selection is not in filtered list and a specific language is selected, reset it
+                    if (selectedLang != "all" && voicePreference.value != null && !voiceNames.contains(voicePreference.value)) {
+                        voicePreference.value = null
+                    }
+                    
+                    // The summary will be updated by the SummaryProvider set in onCreatePreferences
                 }
             }
         }
