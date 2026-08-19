@@ -11,7 +11,7 @@
 # If you use any custom data classes for JSON mapping,
 # consider adding @androidx.annotation.Keep to the classes
 # or use the rule below to keep all classes in your model package:
-# -keep class com.tkprof.hundredeightv.models.** { *; }
+# -keep class com.tkprof.HundredEightV.models.** { *; }
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
@@ -22,4 +22,4 @@
 -renamesourcefileattribute SourceFile
 
 # Keep Application class to prevent instantiation errors
--keep class com.tkprof.hundredeightv.AppApplication { *; }
+-keep class com.tkprof.HundredEightV.AppApplication { *; }

@@ -1,11 +1,11 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.tkprof.hundredeightv.R
+import com.tkprof.HundredEightV.R
 
 class AboutActivity : AppCompatActivity() {
 

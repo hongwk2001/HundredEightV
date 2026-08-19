@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.tkprof.hundredeightv.R
+import com.tkprof.HundredEightV.R
 import java.util.Locale
 
 class StartActivity : AppCompatActivity() {
@@ -105,7 +105,7 @@ class StartActivity : AppCompatActivity() {
     private fun changeInterval(delta: Double) {
         intervalSec += delta
         if (intervalSec < 1.0) intervalSec = 1.0
-        intervalSec = Math.round(intervalSec * 100.0) / 100.0
+        intervalSec = kotlin.math.round(intervalSec * 100.0) / 100.0
         saveInterval()
         updateIntervalDisplayOnly()
     }

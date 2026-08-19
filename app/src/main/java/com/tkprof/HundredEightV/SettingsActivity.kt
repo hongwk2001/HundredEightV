@@ -1,8 +1,10 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -13,23 +15,29 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.tkprof.hundredeightv.R
+import com.tkprof.HundredEightV.R
+import java.util.Locale
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
     private var adView: AdView? = null
+    private var sharedPref: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
         // Apply window insets to prevent the UI from being covered by system bars
         val mainView = findViewById<View>(R.id.settings_container)?.parent as? View
@@ -40,6 +48,8 @@ class SettingsActivity : AppCompatActivity() {
                 insets
             }
         }
+
+        applyBackgroundColor()
 
         // Set up toolbar
         val toolbar: Toolbar = findViewById(R.id.settings_toolbar)
@@ -72,6 +82,24 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "bgcolor") {
+            applyBackgroundColor()
+        }
+    }
+
+    private fun applyBackgroundColor() {
+        val mainView = findViewById<View>(R.id.settings_container)?.parent as? View
+        val colorName = sharedPref?.getString("bgcolor", "white") ?: "white"
+        val colorResId = resources.getIdentifier(colorName, "color", packageName)
+
+        if (colorResId != 0 && mainView != null) {
+            mainView.setBackgroundColor(ContextCompat.getColor(this, colorResId))
+        } else if (mainView != null) {
+            mainView.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -80,10 +108,12 @@ class SettingsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         adView?.resume()
+        sharedPref?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         adView?.pause()
+        sharedPref?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 

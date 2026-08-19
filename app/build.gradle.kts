@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "com.tkprof.hundredeightv"
+    namespace = "com.tkprof.HundredEightV"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.tkprof.hundredeightv"
+        applicationId = "com.tkprof.HundredEightV"
         minSdk = 27
         targetSdk = 37
-        versionCode = 22
-        versionName = "07/31/2026"
+        versionCode = 23
+        versionName = "08/09/2026"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +37,10 @@ android {
         viewBinding = true
         resValues = true
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
@@ -53,6 +57,7 @@ dependencies {
     // Google Ads & Media
     implementation(libs.play.services.ads)
     implementation(libs.interactivemedia)
+    implementation(libs.play.feature.delivery)
 
     // Core library desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)

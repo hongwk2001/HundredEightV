@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Context
 import androidx.preference.PreferenceManager

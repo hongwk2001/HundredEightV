@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -18,6 +18,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 
@@ -94,5 +95,33 @@ class StartActivityTest {
             hasComponent(MainActivity::class.java.name),
             hasExtra("AUTO_START", true)
         ))
+    }
+
+    @Test
+    fun testSelectDhammapadaAndStart() {
+        // Open the spinner
+        onView(withId(R.id.spinner_vow_file)).perform(click())
+
+        // Select "법구경_p1_108" from the dropdown
+        // The adapter uses displayValues (filenames without .json)
+        androidx.test.espresso.Espresso.onData(org.hamcrest.Matchers.`is`("법구경_p1_108"))
+            .perform(click())
+
+        // Click the Begin button
+        onView(withId(R.id.btn_begin)).perform(click())
+
+        // Verify MainActivity is launched with AUTO_START
+        intended(allOf(
+            hasComponent(MainActivity::class.java.name),
+            hasExtra("AUTO_START", true)
+        ))
+
+        // Give it a moment to load and start in MainActivity
+        Thread.sleep(2000)
+
+        // Verify that some text from the Dhammapada is displayed in MainActivity
+        // The first verse is: "모든 것은 우리의 마음으로부터 나왔고..."
+        onView(withId(R.id.text)).check(matches(isDisplayed()))
+        onView(withId(R.id.count)).check(matches(withText("1")))
     }
 }

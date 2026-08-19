@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -30,10 +30,10 @@ import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
-import com.tkprof.hundredeightv.R
-import com.tkprof.hundredeightv.Util.initSound
-import com.tkprof.hundredeightv.Util.loadFile2String
-import com.tkprof.hundredeightv.Util.playSound
+import com.tkprof.HundredEightV.R
+import com.tkprof.HundredEightV.Util.initSound
+import com.tkprof.HundredEightV.Util.loadFile2String
+import com.tkprof.HundredEightV.Util.playSound
 import org.json.JSONArray
 import org.json.JSONException
 import java.text.SimpleDateFormat
@@ -43,27 +43,27 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     var ct: CountDownTimer? = null
-    var ct_remain: CountDownTimer? = null
-    var file_line_cnt: Int = 0
+    var remainTimer: CountDownTimer? = null
+    var fileLineCount: Int = 0
     private var previousCount = 0
 
-    // Default value for user to just f_Start without setup
-    var interval_sec: Double? = null
+    // Default value for user to just startVows without setup
+    var intervalSec: Double? = null
 
 
     var saveCurrentCount: Boolean = false
 
     var sharedPref: SharedPreferences? = null
 
-    var tv_Cnt: TextView? = null
-    var t_cnta: TextView? = null
-    var t_cntb: TextView? = null
+    var tvCount: TextView? = null
+    var tvCountToday: TextView? = null
+    var tvCountTotal: TextView? = null
 
-    var t_text: TextView? = null
+    var tvVowText: TextView? = null
 
-    var cbx_tts_number: CheckBox? = null
-    var cbx_tts_text: CheckBox? = null
-    var tb1: ToggleButton? = null
+    var cbTtsNumber: CheckBox? = null
+    var cbTtsText: CheckBox? = null
+    var btnToggle: ToggleButton? = null
     var progressBar: ProgressBar? = null
 
 
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     private val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        f_LoadVariables()
+        loadVariables()
         saveCurrentCount = false
         toggle_on = false
     }
@@ -90,15 +90,15 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     ) {
         sharedPref = sharedPreferences
         if (key == null) {
-            f_LoadVariables()
+            loadVariables()
             return
         }
 
         when (key) {
             "interval" -> {
-                interval_sec = sharedPreferences.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
-                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", interval_sec)
-                Log.d("Main.onPrefChanged", "interval_sec updated: $interval_sec")
+                intervalSec = sharedPreferences.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+                findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", intervalSec)
+                Log.d("Main.onPrefChanged", "intervalSec updated: $intervalSec")
             }
             "bgcolor" -> applyBackgroundColor()
             "bellsound" -> {
@@ -107,26 +107,26 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             }
             "file_name" -> {
                 val fileName = sharedPreferences.getString("file_name", "불교방송_나를_깨우는_108배.json") ?: "불교방송_나를_깨우는_108배.json"
-                f_File2JsonArray(fileName)
+                file2JsonArray(fileName)
             }
             "tts_number" -> {
                 val checked = sharedPreferences.getBoolean("tts_number", true)
-                if (cbx_tts_number?.isChecked != checked) {
-                    cbx_tts_number?.isChecked = checked
+                if (cbTtsNumber?.isChecked != checked) {
+                    cbTtsNumber?.isChecked = checked
                 }
             }
             "tts_text" -> {
                 val checked = sharedPreferences.getBoolean("tts_text", true)
-                if (cbx_tts_text?.isChecked != checked) {
-                    cbx_tts_text?.isChecked = checked
+                if (cbTtsText?.isChecked != checked) {
+                    cbTtsText?.isChecked = checked
                 }
             }
             "tts_speed", "tts_pitch", "tts_voice" -> applyTtsSettings()
             "current_cnt", "count_a", "count_b" -> {
                 // Optional: Update counts if changed elsewhere (e.g. SettingsActivity)
-                tv_Cnt?.text = sharedPreferences.getString("current_cnt", "0")
-                t_cnta?.text = sharedPreferences.getString("count_a", "0")
-                t_cntb?.text = sharedPreferences.getString("count_b", "0")
+                tvCount?.text = sharedPreferences.getString("current_cnt", "0")
+                tvCountToday?.text = sharedPreferences.getString("count_a", "0")
+                tvCountTotal?.text = sharedPreferences.getString("count_b", "0")
             }
         }
     }
@@ -139,20 +139,20 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     override fun onPause() {
         super.onPause()
         sharedPref?.unregisterOnSharedPreferenceChangeListener(this)
-        f_SaveSharedpref()
+        saveSharedPrefs()
 
         // Automatically pause when the app loses focus (e.g., incoming phone call)
         if (toggle_on) {
-            tb1?.isChecked = false
+            btnToggle?.isChecked = false
             toggle_on = false
-            f_Pause()
+            pauseVows()
         }
         Log.d("Main:onPause", "Called")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         Util.migratePreferences(this)
@@ -167,8 +167,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             }
         }
 
-        f_CheckDailyReset()
-        f_LoadVariables()
+        checkDailyReset()
+        loadVariables()
         
         mDetector = GestureDetector(this, this)
         mDetector!!.setOnDoubleTapListener(this)
@@ -198,18 +198,18 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     private fun attemptAutoStart() {
         if (intent.getBooleanExtra("AUTO_START", false) && ttsReady && soundReady && !isAutoStartTriggered) {
             isAutoStartTriggered = true
-            tb1?.isChecked = true
+            btnToggle?.isChecked = true
             toggle_on = true
-            f_Start(isResume = false)
+            startVows(isResume = false)
         }
     }
 
     private fun showPauseDialog() {
         val wasRunning = toggle_on
-        f_Pause()
+        pauseVows()
         
         if (wasRunning) {
-            tb1?.isChecked = false
+            btnToggle?.isChecked = false
             toggle_on = false
         }
 
@@ -220,9 +220,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             .create()
 
         dialogView.findViewById<Button>(R.id.btn_continue).setOnClickListener {
-            tb1?.isChecked = true
+            btnToggle?.isChecked = true
             toggle_on = true
-            f_Start(isResume = true)
+            startVows(isResume = true)
             dialog.dismiss()
         }
 
@@ -233,7 +233,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
 
         dialogView.findViewById<Button>(R.id.btn_back_to_start).setOnClickListener {
-            f_SaveSharedpref()
+            saveSharedPrefs()
             val intent = Intent(this@MainActivity, StartActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
@@ -242,8 +242,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
 
         dialogView.findViewById<Button>(R.id.btn_go_to_end).setOnClickListener {
-            f_SaveSharedpref()
-            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            saveSharedPrefs()
+            val bowsDoneToday = tvCountToday?.text?.toString()?.toIntOrNull() ?: 0
             val intent = Intent(this@MainActivity, EndActivity::class.java)
             intent.putExtra("DONE_TODAY", bowsDoneToday)
             startActivity(intent)
@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
         dialogView.findViewById<Button>(R.id.btn_exit_app).setOnClickListener {
             saveCurrentCount = true
-            f_SaveSharedpref()
+            saveSharedPrefs()
             finishAffinity()
             dialog.dismiss()
         }
@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         dialog.show()
     }
 
-    private fun f_CheckDailyReset() {
+    private fun checkDailyReset() {
         val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         val today = sdf.format(Date())
         val lastDate = sharedPref?.getString("last_use_date", "")
@@ -276,13 +276,13 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     private fun setupUI() {
         // Save current values if they exist
-        val currentCnt = tv_Cnt?.text?.toString()
-        val currentCntA = t_cnta?.text?.toString()
-        val currentCntB = t_cntb?.text?.toString()
-        val currentText = t_text?.text?.toString()
-        val isToggled = tb1?.isChecked ?: false
-        val isTtsNumberChecked = cbx_tts_number?.isChecked ?: sharedPref?.getBoolean("tts_number", true) ?: true
-        val isTtsTextChecked = cbx_tts_text?.isChecked ?: sharedPref?.getBoolean("tts_text", true) ?: true
+        val currentCnt = tvCount?.text?.toString()
+        val currentCntA = tvCountToday?.text?.toString()
+        val currentCntB = tvCountTotal?.text?.toString()
+        val currentText = tvVowText?.text?.toString()
+        val isToggled = btnToggle?.isChecked ?: false
+        val isTtsNumberChecked = cbTtsNumber?.isChecked ?: sharedPref?.getBoolean("tts_number", true) ?: true
+        val isTtsTextChecked = cbTtsText?.isChecked ?: sharedPref?.getBoolean("tts_text", true) ?: true
 
         setContentView(R.layout.activity_main)
 
@@ -298,32 +298,32 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         val toolbar = findViewById<Toolbar?>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        tv_Cnt = findViewById(R.id.count)
-        t_cnta = findViewById(R.id.count_a)
-        t_cntb = findViewById(R.id.count_b)
-        t_text = findViewById(R.id.text)
-        tb1 = findViewById(R.id.tgb_begin_pause)
+        tvCount = findViewById(R.id.count)
+        tvCountToday = findViewById(R.id.count_a)
+        tvCountTotal = findViewById(R.id.count_b)
+        tvVowText = findViewById(R.id.text)
+        btnToggle = findViewById(R.id.tgb_begin_pause)
         progressBar = findViewById(R.id.progress_remain)
 
-        cbx_tts_number = findViewById(R.id.cbx_tts_number)
-        cbx_tts_text = findViewById(R.id.cbx_tts_text)
+        cbTtsNumber = findViewById(R.id.cbx_tts_number)
+        cbTtsText = findViewById(R.id.cbx_tts_text)
 
         // Restore values
-        if (currentCnt != null) tv_Cnt?.text = currentCnt
-        if (currentCntA != null) t_cnta?.text = currentCntA
-        if (currentCntB != null) t_cntb?.text = currentCntB
-        if (currentText != null) t_text?.text = currentText
-        tb1?.isChecked = isToggled
+        if (currentCnt != null) tvCount?.text = currentCnt
+        if (currentCntA != null) tvCountToday?.text = currentCntA
+        if (currentCntB != null) tvCountTotal?.text = currentCntB
+        if (currentText != null) tvVowText?.text = currentText
+        btnToggle?.isChecked = isToggled
         
-        cbx_tts_number?.isChecked = isTtsNumberChecked
-        cbx_tts_text?.isChecked = isTtsTextChecked
+        cbTtsNumber?.isChecked = isTtsNumberChecked
+        cbTtsText?.isChecked = isTtsTextChecked
 
         // Add listeners to save state immediately and prevent reverting when other preferences change
-        cbx_tts_number?.setOnCheckedChangeListener { _, isChecked ->
-            sharedPref?.edit()?.putBoolean("tts_number", isChecked)?.apply()
+        cbTtsNumber?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit { putBoolean("tts_number", isChecked) }
         }
-        cbx_tts_text?.setOnCheckedChangeListener { _, isChecked ->
-            sharedPref?.edit()?.putBoolean("tts_text", isChecked)?.apply()
+        cbTtsText?.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref?.edit { putBoolean("tts_text", isChecked) }
         }
 
         // Re-apply background color
@@ -331,20 +331,20 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
     private fun changeInterval(delta: Double) {
-        interval_sec = (interval_sec ?: 9.4) + delta
-        if (interval_sec!! < 1.0) interval_sec = 1.0
-        interval_sec = Math.round(interval_sec!! * 100.0) / 100.0
+        intervalSec = (intervalSec ?: 9.4) + delta
+        if (intervalSec!! < 1.0) intervalSec = 1.0
+        intervalSec = kotlin.math.round(intervalSec!! * 100.0) / 100.0
         saveInterval()
-        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", interval_sec)
+        findViewById<TextView>(R.id.remain_e)?.text = String.format(Locale.US, "%.2f", intervalSec)
         
         if (toggle_on) {
-            f_RestartTimerOnly()
+            restartTimerOnly()
         }
         
-        Toast.makeText(this, "Interval: $interval_sec", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Interval: $intervalSec", Toast.LENGTH_SHORT).show()
     }
 
-    private fun f_RestartTimerOnly() {
+    private fun restartTimerOnly() {
         if (ct != null) {
             ct!!.cancel()
             ct = null
@@ -352,9 +352,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         
         remainSecs()
 
-        val current_cnt_val = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
-        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
-        val interval_ms = (interval_sec!! * 1000).toLong()
+        val current_cnt_val = tvCount?.text?.toString()?.toIntOrNull() ?: 0
+        val remainingItemsAfterCurrent = fileLineCount - current_cnt_val
+        val interval_ms = (intervalSec!! * 1000).toLong()
 
         if (remainingItemsAfterCurrent > 0) {
             val total_ms = remainingItemsAfterCurrent * interval_ms
@@ -362,16 +362,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             ct = object : CountDownTimer(total_ms + 200, interval_ms) {
                 override fun onTick(millisUntilFinished: Long) {
                     if (millisUntilFinished > total_ms) return
-                    f_NextWords(1, true)
+                    nextWords(1, true)
                 }
 
                 override fun onFinish() {
-                    f_GoToEndActivity()
+                    goToEndActivity()
                 }
             }
             ct!!.start()
         } else {
-            f_GoToEndActivity()
+            goToEndActivity()
         }
     }
 
@@ -411,42 +411,42 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("saved_cnt", tv_Cnt?.text.toString())
-        outState.putString("saved_cnta", t_cnta?.text.toString())
-        outState.putString("saved_cntb", t_cntb?.text.toString())
+        outState.putString("saved_cnt", tvCount?.text.toString())
+        outState.putString("saved_cnta", tvCountToday?.text.toString())
+        outState.putString("saved_cntb", tvCountTotal?.text.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        tv_Cnt?.text = savedInstanceState.getString("saved_cnt", "0")
-        t_cnta?.text = savedInstanceState.getString("saved_cnta", "0")
-        t_cntb?.text = savedInstanceState.getString("saved_cntb", "0")
-        tb1?.isChecked = false
+        tvCount?.text = savedInstanceState.getString("saved_cnt", "0")
+        tvCountToday?.text = savedInstanceState.getString("saved_cnta", "0")
+        tvCountTotal?.text = savedInstanceState.getString("saved_cntb", "0")
+        btnToggle?.isChecked = false
         saveCurrentCount = false
     }
 
 
     /* get saved values */
-    private fun f_LoadVariables() {
+    private fun loadVariables() {
         val current_val = sharedPref!!.getString("current_cnt", "0")
-        if (tv_Cnt?.text.toString() == "0" || tv_Cnt?.text.toString() == "") {
-             tv_Cnt!!.setText(current_val)
+        if (tvCount?.text.toString() == "0" || tvCount?.text.toString() == "") {
+             tvCount!!.setText(current_val)
         }
 
-        if (t_cnta?.text.toString() == "0" || t_cnta?.text.toString() == "") {
-            t_cnta!!.setText(sharedPref!!.getString("count_a", "0"))
+        if (tvCountToday?.text.toString() == "0" || tvCountToday?.text.toString() == "") {
+            tvCountToday!!.setText(sharedPref!!.getString("count_a", "0"))
         }
-        if (t_cntb?.text.toString() == "0" || t_cntb?.text.toString() == "") {
-            t_cntb!!.setText(sharedPref!!.getString("count_b", "0"))
+        if (tvCountTotal?.text.toString() == "0" || tvCountTotal?.text.toString() == "") {
+            tvCountTotal!!.setText(sharedPref!!.getString("count_b", "0"))
         }
 
-        cbx_tts_number?.isChecked = sharedPref!!.getBoolean("tts_number", true)
-        cbx_tts_text?.isChecked = sharedPref!!.getBoolean("tts_text", true)
+        cbTtsNumber?.isChecked = sharedPref!!.getBoolean("tts_number", true)
+        cbTtsText?.isChecked = sharedPref!!.getBoolean("tts_text", true)
 
-        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
-        Log.d("Main.f_LoadVariables", "interval_sec: $interval_sec")
+        intervalSec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+        Log.d("Main.loadVariables", "intervalSec: $intervalSec")
 
-        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", interval_sec))
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", intervalSec))
 
         val fileName: String = sharedPref!!.getString("file_name", "불교방송_나를_깨우는_108배.json")!!
         
@@ -461,12 +461,12 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             runOnUiThread { attemptAutoStart() }
         }
 
-        f_File2JsonArray(fileName)
+        file2JsonArray(fileName)
         
         // Update text if count > 0
-        val count = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
+        val count = tvCount?.text?.toString()?.toIntOrNull() ?: 0
         if (count > 0) {
-            f_ReadJsonObject(count)
+            readJsonObject(count)
         }
     }
 
@@ -484,14 +484,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
 
-    private fun f_SaveSharedpref() {
-        val currnet_cnt = if (toggle_on || saveCurrentCount) tv_Cnt?.text?.toString() ?: "0" else "0"
+    private fun saveSharedPrefs() {
+        val currnet_cnt = if (toggle_on || saveCurrentCount) tvCount?.text?.toString() ?: "0" else "0"
         sharedPref?.edit {
             putString("current_cnt", currnet_cnt)
-            putString("count_a", t_cnta?.text?.toString() ?: "0")
-            putString("count_b", t_cntb?.text?.toString() ?: "0")
-            putBoolean("tts_number", cbx_tts_number?.isChecked ?: true)
-            putBoolean("tts_text", cbx_tts_text?.isChecked ?: true)
+            putString("count_a", tvCountToday?.text?.toString() ?: "0")
+            putString("count_b", tvCountTotal?.text?.toString() ?: "0")
+            putBoolean("tts_number", cbTtsNumber?.isChecked ?: true)
+            putBoolean("tts_text", cbTtsText?.isChecked ?: true)
         }
     }
 
@@ -506,33 +506,33 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         val isChecked = (view as ToggleButton).isChecked
         if (isChecked) {
             toggle_on = true
-            f_Start(isResume = false)
+            startVows(isResume = false)
         }
         else {
             showPauseDialog()
         }
     }
 
-    fun f_Start(isResume: Boolean) {
-        f_Pause() 
+    fun startVows(isResume: Boolean) {
+        pauseVows() 
 
-        var current_cnt_val = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
-        interval_sec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
+        var current_cnt_val = tvCount?.text?.toString()?.toIntOrNull() ?: 0
+        intervalSec = sharedPref!!.getString("interval", "9.4")?.toDoubleOrNull() ?: 9.4
 
-        if (!isResume && current_cnt_val >= file_line_cnt) {
+        if (!isResume && current_cnt_val >= fileLineCount) {
             current_cnt_val = 0
-            tv_Cnt?.text = "0"
+            tvCount?.text = "0"
         }
 
         if (!isResume) {
-            f_NextWords(1, true)
-            current_cnt_val = tv_Cnt?.text?.toString()?.toInt() ?: 0
+            nextWords(1, true)
+            current_cnt_val = tvCount?.text?.toString()?.toInt() ?: 0
         } else {
             remainSecs()
         }
 
-        val remainingItemsAfterCurrent = file_line_cnt - current_cnt_val
-        val interval_ms = (interval_sec!! * 1000).toLong()
+        val remainingItemsAfterCurrent = fileLineCount - current_cnt_val
+        val interval_ms = (intervalSec!! * 1000).toLong()
 
         if (remainingItemsAfterCurrent > 0) {
             val total_ms = remainingItemsAfterCurrent * interval_ms
@@ -540,28 +540,28 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             ct = object : CountDownTimer(total_ms + 200, interval_ms) {
                 override fun onTick(millisUntilFinished: Long) {
                     if (millisUntilFinished > total_ms) return
-                    f_NextWords(1, true)
+                    nextWords(1, true)
                 }
 
                 override fun onFinish() {
-                    f_GoToEndActivity()
+                    goToEndActivity()
                 }
             }
             ct!!.start()
         } else {
-            f_GoToEndActivity()
+            goToEndActivity()
         }
     }
 
-    fun f_Pause() {
+    fun pauseVows() {
         if (ct != null) {
             ct!!.cancel()
             ct = null
         }
 
-        if (ct_remain != null) {
-            ct_remain!!.cancel()
-            ct_remain = null
+        if (remainTimer != null) {
+            remainTimer!!.cancel()
+            remainTimer = null
         }
 
         endRunnable?.let { endHandler?.removeCallbacks(it) }
@@ -569,7 +569,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         ttobj?.stop()
     }
 
-    private fun f_GoToEndActivity() {
+    private fun goToEndActivity() {
         if (endHandler == null) {
             endHandler = Handler(Looper.getMainLooper())
         }
@@ -578,13 +578,13 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         endRunnable = Runnable {
             if (isFinishing || isDestroyed) return@Runnable
 
-            tb1?.isChecked = false
+            btnToggle?.isChecked = false
             toggle_on = false
             saveCurrentCount = false
-            f_Pause()
-            f_SaveSharedpref()
+            pauseVows()
+            saveSharedPrefs()
 
-            val bowsDoneToday = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
+            val bowsDoneToday = tvCountToday?.text?.toString()?.toIntOrNull() ?: 0
             val intent = Intent(this@MainActivity, EndActivity::class.java)
             intent.putExtra("DONE_TODAY", bowsDoneToday)
             startActivity(intent)
@@ -592,27 +592,27 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }
 
         // Wait for the final interval to finish + 3 seconds extra
-        val finalDelay = ((interval_sec ?: 9.4) * 1000).toLong() + 3000L
+        val finalDelay = ((intervalSec ?: 9.4) * 1000).toLong() + 3000L
         endHandler?.postDelayed(endRunnable!!, finalDelay)
     }
 
 
-    private fun f_ManualJump(i: Int) {
+    private fun manualJump(i: Int) {
         val wasRunning = toggle_on
-        f_Pause() 
+        pauseVows() 
         
-        f_NextWords(i, true)
+        nextWords(i, true)
 
         if (wasRunning) {
-            f_RestartTimerOnly()
+            restartTimerOnly()
         }
     }
 
-    private fun f_NextWords(i: Int, setRemainSeconds: Boolean) {
-        var currentCnt = tv_Cnt?.text?.toString()?.toIntOrNull() ?: 0
+    private fun nextWords(i: Int, setRemainSeconds: Boolean) {
+        var currentCnt = tvCount?.text?.toString()?.toIntOrNull() ?: 0
 
         val nextCnt = currentCnt + i
-        if (nextCnt < 0 || nextCnt > file_line_cnt) {
+        if (nextCnt < 0 || nextCnt > fileLineCount) {
             return
         }
         
@@ -622,23 +622,23 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             playSound(this)
         }
 
-        f_ReadJsonObject(currentCnt, shouldSpeak = true)
+        readJsonObject(currentCnt, shouldSpeak = true)
 
         if (setRemainSeconds) {
             remainSecs()
         }
 
-        var currentCa = t_cnta?.text?.toString()?.toIntOrNull() ?: 0
-        var currentCb = t_cntb?.text?.toString()?.toIntOrNull() ?: 0
+        var currentCa = tvCountToday?.text?.toString()?.toIntOrNull() ?: 0
+        var currentCb = tvCountTotal?.text?.toString()?.toIntOrNull() ?: 0
 
         currentCa += i
         currentCb += i
 
-        tv_Cnt?.text = String.format(Locale.US, "%d", currentCnt)
-        t_cnta?.text = String.format(Locale.US, "%d", currentCa)
-        t_cntb?.text = String.format(Locale.US, "%d", currentCb)
+        tvCount?.text = String.format(Locale.US, "%d", currentCnt)
+        tvCountToday?.text = String.format(Locale.US, "%d", currentCa)
+        tvCountTotal?.text = String.format(Locale.US, "%d", currentCb)
 
-        tv_Cnt?.let { blinkView(it) }
+        tvCount?.let { blinkView(it) }
     }
 
     private fun blinkView(view: View) {
@@ -647,14 +647,14 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
         }.start()
     }
 
-    fun f_ReadText() {
+    fun readText() {
         var toSpeak = ""
-        if (cbx_tts_number?.isChecked == true) {
-            toSpeak = tv_Cnt?.text?.toString() ?: ""
+        if (cbTtsNumber?.isChecked == true) {
+            toSpeak = tvCount?.text?.toString() ?: ""
         }
 
-        if (cbx_tts_text?.isChecked == true) {
-            toSpeak = toSpeak + " " + (t_text?.text?.toString() ?: "")
+        if (cbTtsText?.isChecked == true) {
+            toSpeak = toSpeak + " " + (tvVowText?.text?.toString() ?: "")
         }
 
         if (toSpeak.isNotEmpty()) {
@@ -663,26 +663,26 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
     }
 
 
-    fun f_onClickSlower(view: View) {
+    fun onClickSlower(view: View) {
         changeInterval(0.05)
     }
 
-    fun f_onClickFaster(view: View) {
+    fun onClickFaster(view: View) {
         changeInterval(-0.05)
     }
 
     private fun saveInterval() {
-        sharedPref?.edit { putString("interval", interval_sec.toString()) }
+        sharedPref?.edit { putString("interval", intervalSec.toString()) }
     }
 
     private fun remainSecs() {
-        ct_remain?.cancel()
-        val totalMs = ((interval_sec ?: 9.4) * 1000).toLong()
+        remainTimer?.cancel()
+        val totalMs = ((intervalSec ?: 9.4) * 1000).toLong()
         progressBar?.max = totalMs.toInt()
         progressBar?.progress = totalMs.toInt()
-        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", interval_sec))
+        findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", intervalSec))
 
-        ct_remain = object : CountDownTimer(totalMs, 40) {
+        remainTimer = object : CountDownTimer(totalMs, 40) {
             override fun onTick(millisUntilFinished: Long) {
                 val remain = millisUntilFinished.toDouble() / 1000
                 findViewById<TextView>(R.id.remain_e)?.setText(String.format(Locale.US, "%.2f", remain))
@@ -698,20 +698,20 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
 
     private var jsonArray: JSONArray? = null
 
-    private fun f_File2JsonArray(fileName: String) {
+    private fun file2JsonArray(fileName: String) {
         try {
             val jsonString = loadFile2String(this, fileName)
             jsonArray = JSONArray(jsonString)
-            file_line_cnt = jsonArray!!.length()
+            fileLineCount = jsonArray!!.length()
         } catch (e: JSONException) {
             e.printStackTrace()
-            file_line_cnt = 0
+            fileLineCount = 0
         }
     }
 
-    private fun f_ReadJsonObject(count: Int, shouldSpeak: Boolean = false) {
+    private fun readJsonObject(count: Int, shouldSpeak: Boolean = false) {
         if (jsonArray == null || count <= 0 || count > jsonArray!!.length()) {
-            t_text?.setText("")
+            tvVowText?.setText("")
             previousCount = count
             return
         }
@@ -720,27 +720,27 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
             val jsonObject = jsonArray!!.getJSONObject(count - 1)
             val text = jsonObject.getString("text")
             
-            if (t_text?.text?.toString() != text) {
+            if (tvVowText?.text?.toString() != text) {
                 val goingForward = count >= previousCount
-                val screenWidth = t_text?.width?.toFloat() ?: 1000f
+                val screenWidth = tvVowText?.width?.toFloat() ?: 1000f
                 val outTranslation = if (goingForward) -screenWidth else screenWidth
                 val inTranslation = if (goingForward) screenWidth else -screenWidth
 
-                t_text?.animate()?.translationX(outTranslation)?.alpha(0f)?.setDuration(200)?.withEndAction {
-                    t_text?.setText(text)
-                    t_text?.translationX = inTranslation
-                    t_text?.animate()?.translationX(0f)?.alpha(1f)?.setDuration(200)?.withEndAction {
-                        if (shouldSpeak) f_ReadText()
+                tvVowText?.animate()?.translationX(outTranslation)?.alpha(0f)?.setDuration(200)?.withEndAction {
+                    tvVowText?.setText(text)
+                    tvVowText?.translationX = inTranslation
+                    tvVowText?.animate()?.translationX(0f)?.alpha(1f)?.setDuration(200)?.withEndAction {
+                        if (shouldSpeak) readText()
                     }?.start()
                 }?.start()
             } else {
-                t_text?.setText(text)
-                if (shouldSpeak) f_ReadText()
+                tvVowText?.setText(text)
+                if (shouldSpeak) readText()
             }
             previousCount = count
         } catch (e: JSONException) {
             e.printStackTrace()
-            t_text?.setText("")
+            tvVowText?.setText("")
         }
     }
 
@@ -780,9 +780,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener,
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         lastFlingTime = currentTime
                         if (diffX > 0) {
-                            f_ManualJump(-1)
+                            manualJump(-1)
                         } else {
-                            f_ManualJump(1)
+                            manualJump(1)
                         }
                         return true
                     }

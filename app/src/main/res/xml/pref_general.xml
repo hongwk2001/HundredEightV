@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.tkprof.hundredeightv.IntervalPreference
+    <com.tkprof.HundredEightV.IntervalPreference
         android:defaultValue="10.0"
         android:key="interval"
         android:title="@string/interval" />
@@ -57,7 +57,7 @@
 
     <PreferenceCategory />
 
-    <com.tkprof.hundredeightv.ColorListPreference
+    <com.tkprof.HundredEightV.ColorListPreference
         android:defaultValue="@string/white"
         android:entries="@array/colorLabels"
         android:entryValues="@array/colorValues"
@@ -94,7 +94,7 @@
         app:useSimpleSummaryProvider="true"
         android:layout="@layout/preference_horizontal" />
 
-    <com.tkprof.hundredeightv.VoicePreference
+    <com.tkprof.HundredEightV.VoicePreference
         android:key="tts_voice"
         android:title="@string/tts_voice"
         android:layout="@layout/preference_horizontal" />

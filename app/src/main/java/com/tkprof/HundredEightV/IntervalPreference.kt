@@ -1,4 +1,4 @@
-package com.tkprof.hundredeightv
+package com.tkprof.HundredEightV
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import com.tkprof.hundredeightv.R
+import com.tkprof.HundredEightV.R
 import java.util.Locale
 import kotlin.math.roundToLong
 
