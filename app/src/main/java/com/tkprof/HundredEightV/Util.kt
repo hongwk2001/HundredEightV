@@ -86,7 +86,8 @@ object Util {
             val currentFileName = sharedPref.getString("file_name", null)
             when (currentFileName) {
                 "법구경_p1_106.json" -> putString("file_name", "법구경_p1_108.json")
-                "법구경_p2_105.json" -> putString("file_name", "법구경_p2_106.json")
+                "법구경_p2_105.json" -> putString("file_name", "법구경_p2_105.json")
+                "법구경_p2_106.json" -> putString("file_name", "법구경_p2_105.json")
                 "법구경_p3_106.json" -> putString("file_name", "법구경_p3_109.json")
                 "법구경_p4_103.json" -> putString("file_name", "법구경_p4_106.json")
             }

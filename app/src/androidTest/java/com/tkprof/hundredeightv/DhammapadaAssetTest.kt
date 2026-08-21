@@ -22,17 +22,17 @@ class DhammapadaAssetTest {
 
     @Test
     fun testDhammapadaP2() {
-        verifyAssetFile("법구경_p2_106.json", 106, 109, 214)
+        verifyAssetFile("법구경_p2_105.json", 105, 109, 213)
     }
 
     @Test
     fun testDhammapadaP3() {
-        verifyAssetFile("법구경_p3_109.json", 109, 215, 323)
+        verifyAssetFile("법구경_p3_109.json", 109, 214, 322)
     }
 
     @Test
     fun testDhammapadaP4() {
-        verifyAssetFile("법구경_p4_106.json", 106, 324, 429)
+        verifyAssetFile("법구경_p4_106.json", 106, 323, 428)
     }
 
     private fun verifyAssetFile(fileName: String, expectedCount: Int, startId: Int, endId: Int) {
